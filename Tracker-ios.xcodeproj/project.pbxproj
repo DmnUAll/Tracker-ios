@@ -11,12 +11,20 @@
 		617A808929CC42DA00F9744D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617A808829CC42DA00F9744D /* SceneDelegate.swift */; };
 		617A809129CC42DA00F9744D /* Tracker_ios.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 617A808F29CC42DA00F9744D /* Tracker_ios.xcdatamodeld */; };
 		617A809329CC42DB00F9744D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 617A809229CC42DB00F9744D /* Assets.xcassets */; };
+		61B3AB8929CCBA1F00EF87D6 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B3AB8829CCBA1E00EF87D6 /* UserDefaultsManager.swift */; };
 		61F1639C29CC89C700C8357A /* LaunchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F1639B29CC89C700C8357A /* LaunchScreenView.swift */; };
 		61F1639E29CC8AB900C8357A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F1639D29CC8AB900C8357A /* Constants.swift */; };
 		61F163A029CC8AEE00C8357A /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F1639F29CC8AEE00C8357A /* UIColor+Extensions.swift */; };
 		61F163A329CC8C4C00C8357A /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F163A229CC8C4C00C8357A /* UIView+Extensions.swift */; };
 		61F163A529CC8DA600C8357A /* LaunchScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F163A429CC8DA600C8357A /* LaunchScreenController.swift */; };
 		61F163AA29CC8F5000C8357A /* LaunchScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F163A929CC8F5000C8357A /* LaunchScreenPresenter.swift */; };
+		61F163AF29CCA04B00C8357A /* OnboardingScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F163AE29CCA04B00C8357A /* OnboardingScreenView.swift */; };
+		61F163B129CCA0AA00C8357A /* UICreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F163B029CCA0AA00C8357A /* UICreator.swift */; };
+		61F163B729CCA55100C8357A /* SF-Pro-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 61F163B529CCA55100C8357A /* SF-Pro-Italic.ttf */; };
+		61F163B829CCA55100C8357A /* SF-Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 61F163B629CCA55100C8357A /* SF-Pro.ttf */; };
+		61F163BA29CCA61900C8357A /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F163B929CCA61900C8357A /* UIFont+Extensions.swift */; };
+		61F163BC29CCAA0E00C8357A /* OnboardingScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F163BB29CCAA0E00C8357A /* OnboardingScreenController.swift */; };
+		61F163BF29CCAA8700C8357A /* OnboardingScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F163BE29CCAA8700C8357A /* OnboardingScreenPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,12 +34,20 @@
 		617A809029CC42DA00F9744D /* Tracker_ios.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tracker_ios.xcdatamodel; sourceTree = "<group>"; };
 		617A809229CC42DB00F9744D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		617A809729CC42DB00F9744D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		61B3AB8829CCBA1E00EF87D6 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		61F1639B29CC89C700C8357A /* LaunchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenView.swift; sourceTree = "<group>"; };
 		61F1639D29CC8AB900C8357A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		61F1639F29CC8AEE00C8357A /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		61F163A229CC8C4C00C8357A /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		61F163A429CC8DA600C8357A /* LaunchScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenController.swift; sourceTree = "<group>"; };
 		61F163A929CC8F5000C8357A /* LaunchScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenPresenter.swift; sourceTree = "<group>"; };
+		61F163AE29CCA04B00C8357A /* OnboardingScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingScreenView.swift; sourceTree = "<group>"; };
+		61F163B029CCA0AA00C8357A /* UICreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICreator.swift; sourceTree = "<group>"; };
+		61F163B529CCA55100C8357A /* SF-Pro-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Italic.ttf"; sourceTree = "<group>"; };
+		61F163B629CCA55100C8357A /* SF-Pro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro.ttf"; sourceTree = "<group>"; };
+		61F163B929CCA61900C8357A /* UIFont+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
+		61F163BB29CCAA0E00C8357A /* OnboardingScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingScreenController.swift; sourceTree = "<group>"; };
+		61F163BE29CCAA8700C8357A /* OnboardingScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingScreenPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,8 +80,9 @@
 		617A808529CC42DA00F9744D /* Tracker-ios */ = {
 			isa = PBXGroup;
 			children = (
-				61F1639829CC898F00C8357A /* LaunchScreen */,
 				61F1639529CC894500C8357A /* Model */,
+				61F1639829CC898F00C8357A /* LaunchScreen */,
+				61F163AB29CC9FF400C8357A /* OnboardingScreen */,
 				61F1639629CC896400C8357A /* Supporting Files */,
 			);
 			path = "Tracker-ios";
@@ -74,6 +91,7 @@
 		61F1639529CC894500C8357A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				61B3AB8829CCBA1E00EF87D6 /* UserDefaultsManager.swift */,
 				617A808F29CC42DA00F9744D /* Tracker_ios.xcdatamodeld */,
 				61F1639D29CC8AB900C8357A /* Constants.swift */,
 			);
@@ -83,6 +101,7 @@
 		61F1639629CC896400C8357A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				61F163B429CCA54100C8357A /* Fonts */,
 				61F1639729CC897900C8357A /* Helpers */,
 				617A808629CC42DA00F9744D /* AppDelegate.swift */,
 				617A808829CC42DA00F9744D /* SceneDelegate.swift */,
@@ -95,7 +114,9 @@
 		61F1639729CC897900C8357A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				61F163B029CCA0AA00C8357A /* UICreator.swift */,
 				61F1639F29CC8AEE00C8357A /* UIColor+Extensions.swift */,
+				61F163B929CCA61900C8357A /* UIFont+Extensions.swift */,
 				61F163A229CC8C4C00C8357A /* UIView+Extensions.swift */,
 			);
 			path = Helpers;
@@ -131,6 +152,49 @@
 			isa = PBXGroup;
 			children = (
 				61F163A929CC8F5000C8357A /* LaunchScreenPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		61F163AB29CC9FF400C8357A /* OnboardingScreen */ = {
+			isa = PBXGroup;
+			children = (
+				61F163AC29CCA00900C8357A /* View */,
+				61F163AD29CCA01400C8357A /* Controller */,
+				61F163BD29CCAA7400C8357A /* Presenter */,
+			);
+			path = OnboardingScreen;
+			sourceTree = "<group>";
+		};
+		61F163AC29CCA00900C8357A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				61F163AE29CCA04B00C8357A /* OnboardingScreenView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		61F163AD29CCA01400C8357A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				61F163BB29CCAA0E00C8357A /* OnboardingScreenController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		61F163B429CCA54100C8357A /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				61F163B529CCA55100C8357A /* SF-Pro-Italic.ttf */,
+				61F163B629CCA55100C8357A /* SF-Pro.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		61F163BD29CCAA7400C8357A /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				61F163BE29CCAA8700C8357A /* OnboardingScreenPresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -195,6 +259,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				617A809329CC42DB00F9744D /* Assets.xcassets in Resources */,
+				61F163B829CCA55100C8357A /* SF-Pro.ttf in Resources */,
+				61F163B729CCA55100C8357A /* SF-Pro-Italic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,13 +294,19 @@
 			files = (
 				61F163A329CC8C4C00C8357A /* UIView+Extensions.swift in Sources */,
 				61F1639E29CC8AB900C8357A /* Constants.swift in Sources */,
+				61F163B129CCA0AA00C8357A /* UICreator.swift in Sources */,
 				61F163AA29CC8F5000C8357A /* LaunchScreenPresenter.swift in Sources */,
 				61F163A029CC8AEE00C8357A /* UIColor+Extensions.swift in Sources */,
 				617A808729CC42DA00F9744D /* AppDelegate.swift in Sources */,
 				617A809129CC42DA00F9744D /* Tracker_ios.xcdatamodeld in Sources */,
 				617A808929CC42DA00F9744D /* SceneDelegate.swift in Sources */,
 				61F163A529CC8DA600C8357A /* LaunchScreenController.swift in Sources */,
+				61F163BF29CCAA8700C8357A /* OnboardingScreenPresenter.swift in Sources */,
+				61F163BC29CCAA0E00C8357A /* OnboardingScreenController.swift in Sources */,
+				61B3AB8929CCBA1F00EF87D6 /* UserDefaultsManager.swift in Sources */,
 				61F1639C29CC89C700C8357A /* LaunchScreenView.swift in Sources */,
+				61F163BA29CCA61900C8357A /* UIFont+Extensions.swift in Sources */,
+				61F163AF29CCA04B00C8357A /* OnboardingScreenView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -4,16 +4,11 @@ import UIKit
 final class LaunchScreenView: UIView {
 
     // MARK: - Properties and Initializers
-    private let logoImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.toAutolayout()
-        imageView.image = UIImage(named: K.IconNames.logoIcon)
-        return imageView
-    }()
+    private let logoImage: UIImageView = UICreator.shared.makeImageView(withImage: K.IconNames.logoIcon)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        toAutolayout()
+        setupAutolayout()
         addSubview(logoImage)
         setupConstraints()
     }
@@ -25,6 +20,11 @@ final class LaunchScreenView: UIView {
 
 // MARK: - Helpers
 extension LaunchScreenView {
+
+    private func setupAutolayout() {
+        toAutolayout()
+        logoImage.toAutolayout()
+    }
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
