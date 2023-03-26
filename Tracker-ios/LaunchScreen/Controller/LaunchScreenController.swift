@@ -4,6 +4,10 @@ import UIKit
 final class LaunchScreenController: UIViewController {
 
     // MARK: - Properties and Initializers
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
+
     let launchScreenView = LaunchScreenView()
     private var presenter: LaunchScreenPresenter?
 

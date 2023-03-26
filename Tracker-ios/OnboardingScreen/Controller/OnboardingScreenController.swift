@@ -4,6 +4,10 @@ import UIKit
 final class OnboardingScreenController: UIViewController {
 
     // MARK: - Properties and Initializers
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
+
     let onboardingScreenView = OnboardingScreenView()
     private var presenter: OnboardingScreenPresenter?
 
@@ -17,7 +21,6 @@ final class OnboardingScreenController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
     }
 }
 

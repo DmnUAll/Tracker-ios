@@ -16,12 +16,11 @@ final class LaunchScreenPresenter {
 extension LaunchScreenPresenter {
 
     func checkIfNeedToShowOnboarding() {
-        print(123)
-        print(UserDefaultsManager.shared.isOnboardAccepted)
         if UserDefaultsManager.shared.isOnboardAccepted {
-            print("accepted")
+            UIApplication.shared.windows.first?.rootViewController = TabBarController()
         } else {
-            print("declined")
+            UIApplication.shared.windows.first?.rootViewController = OnboardingScreenController()
         }
+        UIApplication.shared.windows.first?.makeKeyAndVisible()
     }
 }

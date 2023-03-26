@@ -21,13 +21,17 @@ struct UICreator {
         return label
     }
 
-    func makeView(bacgroundColor: UIColor = .clear) -> UIView {
+    func makeView(bacgroundColor: UIColor = .clear, cornerRadius: CGFloat? = nil) -> UIView {
         let uiView = UIView()
         uiView.backgroundColor = bacgroundColor
+        if let cornerRadius {
+            uiView.layer.cornerRadius = cornerRadius
+            uiView.layer.masksToBounds = true
+        }
         return uiView
     }
 
-    func makeImageView(withImage: String?) -> UIImageView {
+    func makeImageView(withImage: String? = nil) -> UIImageView {
         let imageView = UIImageView()
         guard let imageName = withImage else { return imageView }
         imageView.image = UIImage(named: imageName)
@@ -35,19 +39,45 @@ struct UICreator {
     }
 
     func makeButton(withTitle title: String? = nil,
+                    font: UIFont = UIFont.appFont(.medium, withSize: 16),
+                    fontColor: UIColor = .ypWhite,
                     backgroundColor: UIColor = .ypBlack,
                     cornerRadius: CGFloat = 16,
                     action: Selector
     ) -> UIButton {
         let button = UIButton()
         button.backgroundColor = backgroundColor
-        button.titleLabel?.font = UIFont.appFont(.medium, withSize: 16)
-        button.titleLabel?.textColor = .ypWhite
+        button.titleLabel?.font = font
+        button.titleLabel?.textColor = fontColor
         button.setTitle(title, for: .normal)
         button.layer.cornerRadius = cornerRadius
         button.layer.masksToBounds = true
         button.addTarget(nil, action: action, for: .touchUpInside)
         return button
+    }
+
+    func makeTextField() -> UITextField {
+        let textField = UITextField()
+        textField.backgroundColor = .ypGrayLight.withAlphaComponent(0.12)
+        return textField
+    }
+
+    func makeSearchTextField() -> UISearchTextField {
+        let searchField = UISearchTextField()
+        searchField.placeholder = "Поиск"
+        searchField.backgroundColor = .ypGrayLight.withAlphaComponent(0.12)
+        return searchField
+    }
+
+    func makeStackView(withAxis axis: NSLayoutConstraint.Axis = .vertical,
+                       distribution: UIStackView.Distribution = .fill,
+                       andSpacing spacing: CGFloat = 16
+    ) -> UIStackView {
+        let stackView = UIStackView()
+        stackView.axis = axis
+        stackView.distribution = distribution
+        stackView.spacing = spacing
+        return stackView
     }
 
     func makeScrollView() -> UIScrollView {
@@ -67,5 +97,17 @@ struct UICreator {
         pageControl.pageIndicatorTintColor = .ypBlack.withAlphaComponent(0.3)
         pageControl.numberOfPages = 2
         return pageControl
+    }
+
+    func makeDatePicker() -> UIDatePicker {
+        let datePicker = UIDatePicker()
+        datePicker.backgroundColor = .ypGrayLight.withAlphaComponent(0.12)
+        datePicker.layer.masksToBounds = true
+        datePicker.layer.cornerRadius = 8
+        datePicker.tintColor = .blue
+        datePicker.datePickerMode = .date
+        datePicker.preferredDatePickerStyle = .compact
+        datePicker.locale = Locale(identifier: "ru")
+        return datePicker
     }
 }

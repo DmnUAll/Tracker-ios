@@ -57,5 +57,7 @@ extension OnboardingScreenPresenter: OnboardingScreenViewDelegate {
 
     func acceptAndProceedToMainScreen() {
         UserDefaultsManager.shared.saveOnboardingState()
+        UIApplication.shared.windows.first?.rootViewController = TabBarController()
+        UIApplication.shared.windows.first?.makeKeyAndVisible()
     }
 }
