@@ -43,8 +43,6 @@ extension TrackersScreenPresenter {
                                        forCollectionView collectionView: UICollectionView,
                                        atIndexPath indexPath: IndexPath
     ) -> UICollectionReusableView {
-        print(777)
-        print(categories[indexPath.section].name)
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             guard let castedView = collectionView.dequeueReusableSupplementaryView(

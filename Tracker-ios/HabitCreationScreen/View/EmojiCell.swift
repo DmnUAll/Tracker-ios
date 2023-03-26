@@ -1,24 +1,19 @@
 import UIKit
 
-// MARK: - ColorCell
-final class ColorCell: UICollectionViewCell {
+// MARK: - EmojiCell
+final class EmojiCell: UICollectionViewCell {
 
     // MARK: - Properties and Initializers
     var frameView: UIView = {
         let uiView = UICreator.shared.makeView()
-        uiView.backgroundColor = .ypWhite
-        uiView.layer.cornerRadius = 11
+        uiView.layer.cornerRadius = 8
         uiView.layer.masksToBounds = true
-        uiView.layer.borderColor = UIColor.clear.cgColor
+        uiView.backgroundColor = .ypGrayField
+        uiView.isHidden = true
         return uiView
     }()
 
-    var colorView: UIView = {
-        let uiView = UICreator.shared.makeView()
-        uiView.layer.cornerRadius = 8
-        uiView.layer.masksToBounds = true
-        return uiView
-    }()
+    var emojiIcon = UICreator.shared.makeLabel(font: UIFont.appFont(.bold, withSize: 32))
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,16 +28,16 @@ final class ColorCell: UICollectionViewCell {
 }
 
 // MARK: - Helpers
-extension ColorCell {
+extension EmojiCell {
 
     private func setupAutolayout() {
         frameView.toAutolayout()
-        colorView.toAutolayout()
+        emojiIcon.toAutolayout()
     }
 
     private func addSubviews() {
         addSubview(frameView)
-        addSubview(colorView)
+        addSubview(emojiIcon)
     }
 
     private func setupConstraints() {
@@ -51,10 +46,8 @@ extension ColorCell {
             frameView.topAnchor.constraint(equalTo: topAnchor),
             frameView.trailingAnchor.constraint(equalTo: trailingAnchor),
             frameView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            colorView.widthAnchor.constraint(equalToConstant: 40),
-            colorView.heightAnchor.constraint(equalTo: colorView.widthAnchor, multiplier: 1),
-            colorView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            colorView.centerYAnchor.constraint(equalTo: centerYAnchor)
+            emojiIcon.centerXAnchor.constraint(equalTo: centerXAnchor),
+            emojiIcon.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
 }

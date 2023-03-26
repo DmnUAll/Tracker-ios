@@ -48,7 +48,7 @@ struct UICreator {
         let button = UIButton()
         button.backgroundColor = backgroundColor
         button.titleLabel?.font = font
-        button.titleLabel?.textColor = fontColor
+        button.setTitleColor(fontColor, for: .normal)
         button.setTitle(title, for: .normal)
         button.layer.cornerRadius = cornerRadius
         button.layer.masksToBounds = true
@@ -71,6 +71,7 @@ struct UICreator {
 
     func makeStackView(withAxis axis: NSLayoutConstraint.Axis = .vertical,
                        distribution: UIStackView.Distribution = .fill,
+                       align: UIStackView.Alignment = .fill,
                        andSpacing spacing: CGFloat = 16
     ) -> UIStackView {
         let stackView = UIStackView()

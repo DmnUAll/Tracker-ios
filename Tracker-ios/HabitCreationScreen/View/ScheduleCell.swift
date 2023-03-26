@@ -6,14 +6,18 @@ final class ScheduleCell: UITableViewCell {
     // MARK: - Properties and Initializers
     private let stackView = UICreator.shared.makeStackView()
     private let titleLabel = UICreator.shared.makeLabel(text: "Расписание",
-                                                        font: UIFont.appFont(.regular, withSize: 17))
-    let infoLabel = UICreator.shared.makeLabel(font: UIFont.appFont(.regular, withSize: 17), color: .ypGray)
+                                                        font: UIFont.appFont(.regular, withSize: 17),
+                                                        alignment: .natural)
+    let infoLabel = UICreator.shared.makeLabel(font: UIFont.appFont(.regular, withSize: 17),
+                                               color: .ypGray,
+                                               alignment: .natural)
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupAutolayout()
         addSubviews()
         setupConstraints()
+        infoLabel.isHidden = true
     }
 
     required init?(coder aDecoder: NSCoder) {
