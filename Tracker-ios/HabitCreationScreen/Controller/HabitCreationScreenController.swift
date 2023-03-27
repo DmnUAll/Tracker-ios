@@ -17,16 +17,14 @@ final class HabitCreationScreenController: UIViewController {
         view.addSubview(habitCreationScreenView)
         setupConstraints()
         presenter = HabitCreationScreenPresenter(viewController: self)
+        habitCreationScreenView.delegate = self
+        habitCreationScreenView.trackerNameTextField.delegate = self
         habitCreationScreenView.optionsTableView.dataSource = self
         habitCreationScreenView.optionsTableView.delegate = self
         habitCreationScreenView.emojiCollectionView.dataSource = self
         habitCreationScreenView.emojiCollectionView.delegate = self
         habitCreationScreenView.colorCollectionView.dataSource = self
         habitCreationScreenView.colorCollectionView.delegate = self
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
     }
 }
 
@@ -43,6 +41,29 @@ extension HabitCreationScreenController {
     }
 }
 
+// MARK: - UITextFieldDelegate
+extension HabitCreationScreenController: UITextFieldDelegate {
+    func textField(_ textField: UITextField,
+                   shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String
+    ) -> Bool {
+        let currentText = textField.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+        if updatedText.count >= 38 {
+            habitCreationScreenView.errorLabel.isHidden = false
+        } else {
+            habitCreationScreenView.errorLabel.isHidden = true
+        }
+        return updatedText.count <= 38
+    }
+
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        habitCreationScreenView.errorLabel.isHidden = true
+        return true
+    }
+}
+
 // MARK: - UITableViewDataSource
 extension HabitCreationScreenController: UITableViewDataSource {
 
@@ -53,15 +74,23 @@ extension HabitCreationScreenController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         presenter?.configureCell(forTableView: tableView, atIndexPath: indexPath) ?? UITableViewCell()
     }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        75
-    }
 }
 
 // MARK: - UITableViewDelegate
 extension HabitCreationScreenController: UITableViewDelegate {
 
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        75
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            present(TrackerCategoryScreenController(), animated: true)
+        } else {
+            present(ScheduleConfigurationScreenController(), animated: true)
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
 
 // MARK: - UICollectionViewDataSource
@@ -102,6 +131,7 @@ extension HabitCreationScreenController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - UICollectionViewDelegate
 extension HabitCreationScreenController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -122,5 +152,16 @@ extension HabitCreationScreenController: UICollectionViewDelegate {
             guard let cell = collectionView.cellForItem(at: indexPath) as? ColorCell else { return }
             cell.frameView.layer.borderWidth = 0
         }
+    }
+}
+
+// MARK: - HabitCreationScreenViewDelegate
+extension HabitCreationScreenController: HabitCreationScreenViewDelegate {
+    func createTracker() {
+        print(#function)
+    }
+
+    func cancelCreation() {
+        self.dismiss(animated: true)
     }
 }

@@ -10,11 +10,12 @@ final class TrackersScreenPresenter {
 
     init(viewController: TrackersScreenController? = nil) {
         self.viewController = viewController
+        // swiftlint:disable line_length
         categories.append(TrackerCategory(name: "Test", trackers: [Tracker(id: UUID(), name: "Test Test Test Test Test Test Test Test Test", color: .red, emoji: "😀", schedule: [Date()]),
                                                                    Tracker(id: UUID(), name: "Test Test2", color: .green, emoji: "😍", schedule: [Date()])]))
         categories.append(TrackerCategory(name: "Test2", trackers: [Tracker(id: UUID(), name: "Test Test", color: .red, emoji: "😀", schedule: [Date()]),
                                                                    Tracker(id: UUID(), name: "Test Test2 Test Test2 Test Test2", color: .green, emoji: "😍", schedule: [Date()])]))
-        
+        // swiftlint:enable line_length
         checkForData()
     }
 }
@@ -23,7 +24,6 @@ final class TrackersScreenPresenter {
 extension TrackersScreenPresenter {
 
     private func checkForData() {
-        print(#function)
         if categories.isEmpty {
             viewController?.hideCollectionView()
         } else {

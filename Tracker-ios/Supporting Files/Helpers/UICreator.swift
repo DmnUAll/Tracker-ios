@@ -69,6 +69,13 @@ struct UICreator {
         return searchField
     }
 
+    func makeSwitch(withTag tag: Int) -> UISwitch {
+        let uiSwitch = UISwitch(frame: .zero)
+        uiSwitch.onTintColor = .ypBlue
+        uiSwitch.tag = tag
+        return uiSwitch
+    }
+
     func makeStackView(withAxis axis: NSLayoutConstraint.Axis = .vertical,
                        distribution: UIStackView.Distribution = .fill,
                        align: UIStackView.Alignment = .fill,
@@ -88,6 +95,14 @@ struct UICreator {
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
         return scrollView
+    }
+
+    func makeTableView() -> UITableView {
+        let tableView = UITableView()
+        tableView.backgroundColor = .ypGrayField.withAlphaComponent(0.3)
+        tableView.layer.cornerRadius = 16
+        tableView.layer.masksToBounds = true
+        return tableView
     }
 
     func makePageControll() -> UIPageControl {

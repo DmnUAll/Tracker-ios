@@ -1,6 +1,6 @@
 import UIKit
 
-// MARK: - HabitCreationScreenView protocol
+// MARK: - HabitCreationScreenViewDelegate protocol
 protocol HabitCreationScreenViewDelegate: AnyObject {
     func createTracker()
     func cancelCreation()
@@ -23,6 +23,8 @@ final class HabitCreationScreenView: UIView {
         return scrollView
     }()
 
+    let stackView = UICreator.shared.makeStackView()
+
     let trackerNameTextField: UITextField = {
         let textField = UICreator.shared.makeTextField()
         textField.placeholder = "Введите название трекера"
@@ -36,14 +38,18 @@ final class HabitCreationScreenView: UIView {
         return textField
     }()
 
+    let errorLabel: UILabel = {
+       let label = UICreator.shared.makeLabel(text: "Ограничение 38 символов",
+                                              font: UIFont.appFont(.regular, withSize: 17),
+                                              color: .ypRedLight)
+        label.isHidden = true
+        return label
+    }()
+
     let optionsTableView: UITableView = {
-        let tableView = UITableView()
-        tableView.backgroundColor = .ypGrayField.withAlphaComponent(0.3)
-        tableView.layer.cornerRadius = 16
-        tableView.layer.masksToBounds = true
+        let tableView = UICreator.shared.makeTableView()
         tableView.register(CategoryCell.self, forCellReuseIdentifier: K.CollectionElementNames.categoryCell)
         tableView.register(ScheduleCell.self, forCellReuseIdentifier: K.CollectionElementNames.scheduleCell)
-        tableView.allowsSelection = false
         return tableView
     }()
 
@@ -77,7 +83,7 @@ final class HabitCreationScreenView: UIView {
         let button = UICreator.shared.makeButton(withTitle: "Отмена",
                                                  fontColor: .ypRedLight,
                                                  backgroundColor: .ypWhite,
-                                                 action: #selector(createButtonTapped))
+                                                 action: #selector(cancelButtonTapped))
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.ypRedLight.cgColor
         return button
@@ -112,7 +118,9 @@ extension HabitCreationScreenView {
         toAutolayout()
         scrollView.toAutolayout()
         titleLabel.toAutolayout()
+        stackView.toAutolayout()
         trackerNameTextField.toAutolayout()
+        errorLabel.toAutolayout()
         optionsTableView.toAutolayout()
         buttonsStackView.toAutolayout()
         emojiTitleLabel.toAutolayout()
@@ -123,7 +131,9 @@ extension HabitCreationScreenView {
 
     private func addSubviews() {
         addSubview(titleLabel)
-        scrollView.addSubview(trackerNameTextField)
+        stackView.addArrangedSubview(trackerNameTextField)
+        stackView.addArrangedSubview(errorLabel)
+        scrollView.addSubview(stackView)
         scrollView.addSubview(optionsTableView)
         scrollView.addSubview(emojiTitleLabel)
         scrollView.addSubview(emojiCollectionView)
@@ -143,11 +153,11 @@ extension HabitCreationScreenView {
             scrollView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 14),
             scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            trackerNameTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            trackerNameTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             trackerNameTextField.heightAnchor.constraint(equalToConstant: 75),
             optionsTableView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            optionsTableView.topAnchor.constraint(equalTo: trackerNameTextField.bottomAnchor, constant: 24),
+            optionsTableView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 24),
             optionsTableView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             optionsTableView.heightAnchor.constraint(equalToConstant: 150),
             emojiTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 28),

@@ -10,9 +10,9 @@ final class HabitCreationScreenPresenter {
                           "😇", "😡", "🥶", "🤔", "🙌", "🍔",
                           "🥦", "🏓", "🥇", "🎸", "🏝", "😪"]
 
-    private let colors: [UIColor] = [.t0, .t1, .t2, .t3, .t4, .t5,
-                                   .t6, .t7, .t8, .t9, .t10, .t11,
-                                   .t12, .t13, .t14, .t15, .t16, .t17]
+    private let colors: [UIColor] = [.tr0, .tr1, .tr2, .tr3, .tr4, .tr5,
+                                   .tr6, .tr7, .tr8, .tr9, .tr10, .tr11,
+                                   .tr12, .tr13, .tr14, .tr15, .tr16, .tr17]
 
     init(viewController: HabitCreationScreenController? = nil) {
         self.viewController = viewController

@@ -22,5 +22,7 @@ struct K {
         static let scheduleCell = "ScheduleCell"
         static let emojiCell = "EmojiCell"
         static let colorCell = "ColorCell"
+        static let categorySelectionCell = "CategorySelectionCell"
+        static let daySelectionCell = "DaySelectionCell"
     }
 }
