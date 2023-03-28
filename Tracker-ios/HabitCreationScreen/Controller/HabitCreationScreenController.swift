@@ -15,6 +15,7 @@ final class HabitCreationScreenController: UIViewController {
     override func viewDidLoad() {
         view.backgroundColor = .ypWhite
         view.addSubview(habitCreationScreenView)
+        view.addKeyboardHiddingFeature()
         setupConstraints()
         presenter = HabitCreationScreenPresenter(viewController: self)
         habitCreationScreenView.delegate = self
@@ -43,6 +44,7 @@ extension HabitCreationScreenController {
 
 // MARK: - UITextFieldDelegate
 extension HabitCreationScreenController: UITextFieldDelegate {
+
     func textField(_ textField: UITextField,
                    shouldChangeCharactersIn range: NSRange,
                    replacementString string: String
@@ -61,6 +63,11 @@ extension HabitCreationScreenController: UITextFieldDelegate {
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         habitCreationScreenView.errorLabel.isHidden = true
         return true
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
 }
 
@@ -85,9 +92,11 @@ extension HabitCreationScreenController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            present(TrackerCategoryScreenController(), animated: true)
+            let nextViewController = TrackerCategoryScreenController(delegate: presenter)
+            present(nextViewController, animated: true)
         } else {
-            present(ScheduleConfigurationScreenController(), animated: true)
+            let nextViewController = ScheduleConfigurationScreenController(delegate: presenter)
+            present(nextViewController, animated: true)
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }

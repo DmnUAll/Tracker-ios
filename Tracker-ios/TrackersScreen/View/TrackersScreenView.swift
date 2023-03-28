@@ -2,6 +2,7 @@ import UIKit
 
 // MARK: - TrackersScreenViewDelegate protocol
 protocol TrackersScreenViewDelegate: AnyObject {
+    func cancelSearch()
     func showFilters()
 }
 
@@ -14,9 +15,21 @@ final class TrackersScreenView: UIView {
     let noDataImage = UICreator.shared.makeImageView(withImage: K.ImageNames.noDataImage)
     let noDataLabel = UICreator.shared.makeLabel(text: "Что будем отслеживать?",
                                                  font: UIFont.appFont(.medium, withSize: 12))
+    private let stackView = UICreator.shared.makeStackView(withAxis: .horizontal, andSpacing: 14)
     let searchTextField = UICreator.shared.makeSearchTextField()
+    let cancelButton: UIButton = {
+        let button = UICreator.shared.makeButton(withTitle: "Отменить",
+                                                 font: UIFont.appFont(.regular, withSize: 17),
+                                                 backgroundColor: .clear,
+                                                 action: #selector(cancelButtonTapped))
+        button.setTitleColor(.ypBlue, for: .normal)
+        button.isHidden = true
+        return button
+    }()
+
     let collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.backgroundColor = .clear
         collectionView.register(TrackerCell.self,
                                 forCellWithReuseIdentifier: K.CollectionElementNames.trackerCell)
         collectionView.register(HeaderSupplementaryView.self,
@@ -24,6 +37,7 @@ final class TrackersScreenView: UIView {
                                 withReuseIdentifier: K.CollectionElementNames.trackerHeader)
         collectionView.allowsMultipleSelection = false
         collectionView.contentInset = UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0)
+        collectionView.keyboardDismissMode = UIScrollView.KeyboardDismissMode.onDrag
         return collectionView
     }()
     let filterButton = UICreator.shared.makeButton(withTitle: "Фильтры",
@@ -46,6 +60,10 @@ final class TrackersScreenView: UIView {
 // MARK: - Helpers
 extension TrackersScreenView {
 
+    @objc private func cancelButtonTapped() {
+        delegate?.cancelSearch()
+    }
+
     @objc private func filterButtonTapped() {
         delegate?.showFilters()
     }
@@ -54,7 +72,7 @@ extension TrackersScreenView {
         toAutolayout()
         noDataImage.toAutolayout()
         noDataLabel.toAutolayout()
-        searchTextField.toAutolayout()
+        stackView.toAutolayout()
         collectionView.toAutolayout()
         filterButton.toAutolayout()
     }
@@ -62,7 +80,9 @@ extension TrackersScreenView {
     private func addSubviews() {
         addSubview(noDataImage)
         addSubview(noDataLabel)
-        addSubview(searchTextField)
+        stackView.addArrangedSubview(searchTextField)
+        stackView.addArrangedSubview(cancelButton)
+        addSubview(stackView)
         addSubview(collectionView)
         addSubview(filterButton)
     }
@@ -75,9 +95,9 @@ extension TrackersScreenView {
             noDataImage.centerYAnchor.constraint(equalTo: centerYAnchor),
             noDataLabel.topAnchor.constraint(equalTo: noDataImage.bottomAnchor, constant: 8),
             noDataLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            searchTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            searchTextField.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            searchTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            stackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             collectionView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),

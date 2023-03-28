@@ -14,6 +14,7 @@ final class CategoryCreationScreenController: UIViewController {
     override func viewDidLoad() {
         view.backgroundColor = .ypWhite
         view.addSubview(categoryCreationScreenView)
+        view.addKeyboardHiddingFeature()
         setupConstraints()
         categoryCreationScreenView.delegate = self
         categoryCreationScreenView.categoryNameTextField.delegate = self
@@ -53,6 +54,11 @@ extension CategoryCreationScreenController: UITextFieldDelegate {
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         categoryCreationScreenView.errorLabel.isHidden = true
         return true
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
 }
 

@@ -6,7 +6,7 @@ final class EmojiCell: UICollectionViewCell {
     // MARK: - Properties and Initializers
     var frameView: UIView = {
         let uiView = UICreator.shared.makeView()
-        uiView.layer.cornerRadius = 8
+        uiView.layer.cornerRadius = 16
         uiView.layer.masksToBounds = true
         uiView.backgroundColor = .ypGrayField
         uiView.isHidden = true

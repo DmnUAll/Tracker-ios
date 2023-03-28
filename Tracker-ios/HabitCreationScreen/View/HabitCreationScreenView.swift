@@ -20,6 +20,7 @@ final class HabitCreationScreenView: UIView {
         scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width,
                                         height: 820)
         scrollView.isPagingEnabled = false
+        scrollView.keyboardDismissMode = UIScrollView.KeyboardDismissMode.onDrag
         return scrollView
     }()
 
@@ -31,7 +32,6 @@ final class HabitCreationScreenView: UIView {
         textField.layer.cornerRadius = 16
         textField.layer.masksToBounds = true
         textField.backgroundColor = .ypGrayField.withAlphaComponent(0.3)
-        textField.clearButtonMode = .always
         textField.clearButtonMode = .whileEditing
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: textField.frame.height))
         textField.leftViewMode = .always
@@ -61,6 +61,7 @@ final class HabitCreationScreenView: UIView {
                                 forCellWithReuseIdentifier: K.CollectionElementNames.emojiCell)
         collectionView.allowsMultipleSelection = false
         collectionView.tag = 1
+        collectionView.backgroundColor = .clear
         return collectionView
     }()
 
@@ -72,6 +73,7 @@ final class HabitCreationScreenView: UIView {
                                 forCellWithReuseIdentifier: K.CollectionElementNames.colorCell)
         collectionView.allowsMultipleSelection = false
         collectionView.tag = 2
+        collectionView.backgroundColor = .clear
         return collectionView
     }()
 
@@ -150,7 +152,7 @@ extension HabitCreationScreenView {
             titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 27),
             scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            scrollView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 14),
+            scrollView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 38),
             scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),

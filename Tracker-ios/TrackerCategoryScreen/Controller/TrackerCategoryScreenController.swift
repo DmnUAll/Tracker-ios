@@ -1,5 +1,10 @@
 import UIKit
 
+// MARK: - TrackerCategoryConfigurationDelegate protocol
+protocol TrackerCategoryConfigurationDelegate: AnyObject {
+    func updateCategory(withCategory category: String)
+}
+
 // MARK: - TrackerCategoryScreenController
 final class TrackerCategoryScreenController: UIViewController {
 
@@ -10,6 +15,12 @@ final class TrackerCategoryScreenController: UIViewController {
 
     let trackerCategoryScreenView = TrackerCategoryScreenView()
     private var presenter: TrackerCategoryScreenPresenter?
+    weak var delegate: TrackerCategoryConfigurationDelegate?
+
+    convenience init(delegate: TrackerCategoryConfigurationDelegate?) {
+        self.init()
+        self.delegate = delegate
+    }
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -47,6 +58,21 @@ extension TrackerCategoryScreenController {
         trackerCategoryScreenView.noDataLabel.isHidden = true
         trackerCategoryScreenView.categoriesTableView.isHidden = false
     }
+
+    func showDeletionAlert(for indexPath: IndexPath) {
+        let alertController = UIAlertController(title: "Эта категория точно не нужна?",
+                                                message: nil,
+                                                preferredStyle: .actionSheet)
+        let deleteAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
+            guard let self = self else { return }
+            self.presenter?.deleteItem(at: indexPath.row)
+            self.trackerCategoryScreenView.categoriesTableView.reloadData()
+        }
+        let cancelAction = UIAlertAction(title: "Отменить", style: .cancel)
+        alertController.addAction(deleteAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true)
+    }
 }
 
 // MARK: - UITableViewDataSource
@@ -68,11 +94,34 @@ extension TrackerCategoryScreenController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension TrackerCategoryScreenController: UITableViewDelegate {
 
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        delegate?.updateCategory(withCategory: presenter?.giveSelectedCategory(forIndexPath: indexPath) ?? "")
+        tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        dismiss(animated: true)
+    }
+
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         DispatchQueue.main.async {
 //            tableView.heightAnchor.constraint(equalToConstant: tableView.contentSize.height).isActive = true
             tableView.setNeedsLayout()
         }
+    }
+
+    func tableView(_ tableView: UITableView,
+                   contextMenuConfigurationForRowAt indexPath: IndexPath,
+                   point: CGPoint
+    ) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(actionProvider: { [weak self] _ in
+            guard let self else { return nil }
+            return UIMenu(children: [
+                UIAction(title: "Редактировать") { _ in
+                    self.presenter?.editItem(at: indexPath.row)
+                },
+                UIAction(title: "Удалить", attributes: .destructive) { _ in
+                    self.showDeletionAlert(for: indexPath)
+                }
+            ])
+        })
     }
 }
 

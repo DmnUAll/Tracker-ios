@@ -59,6 +59,14 @@ struct UICreator {
     func makeTextField() -> UITextField {
         let textField = UITextField()
         textField.backgroundColor = .ypGrayLight.withAlphaComponent(0.12)
+        textField.textColor = .ypBlack
+        textField.attributedPlaceholder = NSAttributedString(
+            string: "Placeholder Text",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.ypGray])
+        if let button = textField.value(forKey: "clearButton") as? UIButton {
+          button.tintColor = .ypGray
+          button.setImage(UIImage(systemName: "xmark.circle.fill")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        }
         return textField
     }
 
@@ -66,6 +74,15 @@ struct UICreator {
         let searchField = UISearchTextField()
         searchField.placeholder = "Поиск"
         searchField.backgroundColor = .ypGrayLight.withAlphaComponent(0.12)
+        searchField.textColor = .ypBlack
+        searchField.attributedPlaceholder = NSAttributedString(string: searchField.placeholder ?? "",
+                                                               attributes: [
+                                                                NSAttributedString.Key.foregroundColor: UIColor.ypGray])
+        if let leftView = searchField.leftView as? UIImageView {
+            leftView.image = leftView.image?.withRenderingMode(.alwaysTemplate)
+            leftView.tintColor = UIColor.ypGray
+        }
+        searchField.clearButtonMode = .never
         return searchField
     }
 
@@ -126,4 +143,23 @@ struct UICreator {
         datePicker.locale = Locale(identifier: "ru")
         return datePicker
     }
+
+    private func tintImage(image: UIImage, color: UIColor) -> UIImage {
+           let size = image.size
+
+           UIGraphicsBeginImageContextWithOptions(size, false, image.scale)
+           let context = UIGraphicsGetCurrentContext()
+           image.draw(at: .zero, blendMode: CGBlendMode.normal, alpha: 1.0)
+
+           context?.setFillColor(color.cgColor)
+           context?.setBlendMode(CGBlendMode.sourceIn)
+           context?.setAlpha(1.0)
+
+           let rect = CGRect(x: CGPoint.zero.x, y: CGPoint.zero.y, width: image.size.width, height: image.size.height)
+           UIGraphicsGetCurrentContext()?.fill(rect)
+           let tintedImage = UIGraphicsGetImageFromCurrentImageContext()
+           UIGraphicsEndImageContext()
+
+           return tintedImage ?? UIImage()
+       }
 }

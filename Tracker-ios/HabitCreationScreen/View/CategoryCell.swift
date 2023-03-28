@@ -4,7 +4,7 @@ import UIKit
 final class CategoryCell: UITableViewCell {
 
     // MARK: - Properties and Initializers
-    private let stackView = UICreator.shared.makeStackView()
+    private let stackView = UICreator.shared.makeStackView(andSpacing: 2)
     private let titleLabel = UICreator.shared.makeLabel(text: "Категория",
                                                         font: UIFont.appFont(.regular, withSize: 17),
                                                         alignment: .natural)

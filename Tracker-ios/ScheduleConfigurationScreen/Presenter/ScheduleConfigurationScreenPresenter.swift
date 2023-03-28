@@ -7,7 +7,7 @@ final class ScheduleConfigurationScreenPresenter {
     private weak var viewController: ScheduleConfigurationScreenController?
 
     private let days: [String] = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"]
-    private var scheduledDays: [String] = []
+    private var selectedDays: [String] = []
 
     init(viewController: ScheduleConfigurationScreenController? = nil) {
         self.viewController = viewController
@@ -19,9 +19,9 @@ extension ScheduleConfigurationScreenPresenter {
 
     @objc private func switchChanged(_ sender: UISwitch) {
         if sender.isOn {
-            scheduledDays.append(days[sender.tag])
+            selectedDays.append(days[sender.tag])
         } else {
-            scheduledDays.removeAll(where: {$0 == days[sender.tag]})
+            selectedDays.removeAll(where: {$0 == days[sender.tag]})
         }
   }
 
@@ -45,5 +45,9 @@ extension ScheduleConfigurationScreenPresenter {
             return cell
         }
         return UITableViewCell()
+    }
+
+    func giveSelectedDays() -> [String] {
+        return selectedDays
     }
 }

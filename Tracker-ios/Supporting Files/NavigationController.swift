@@ -22,11 +22,13 @@ final class NavigationController: UINavigationController {
 extension NavigationController {
 
     @objc private func addTapped() {
+        navigationController?.viewControllers.first?.view.endEditing(true)
         present(TrackerChoosingScreenController(), animated: true)
     }
 
     private func configureNavigationController(forVC viewController: UIViewController) {
         navigationBar.tintColor = .ypBlack
+        navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.ypBlack]
         navigationBar.prefersLargeTitles = true
         if viewController is TrackersScreenController {
             navigationBar.topItem?.title = "Трекеры"

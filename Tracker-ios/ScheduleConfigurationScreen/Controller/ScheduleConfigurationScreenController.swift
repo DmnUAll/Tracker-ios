@@ -1,5 +1,10 @@
 import UIKit
 
+// MARK: - ScheduleConfigurationDelegate protocol
+protocol ScheduleConfigurationDelegate: AnyObject {
+    func updateSchedule(withDays days: [String])
+}
+
 // MARK: - ScheduleConfigurationScreenController
 final class ScheduleConfigurationScreenController: UIViewController {
 
@@ -10,6 +15,12 @@ final class ScheduleConfigurationScreenController: UIViewController {
 
     let scheduleConfigurationScreenView = ScheduleConfigurationScreenView()
     private var presenter: ScheduleConfigurationScreenPresenter?
+    weak var delegate: ScheduleConfigurationDelegate?
+
+    convenience init(delegate: ScheduleConfigurationDelegate?) {
+        self.init()
+        self.delegate = delegate
+    }
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -58,6 +69,7 @@ extension ScheduleConfigurationScreenController: UITableViewDelegate {
 // MARK: - ScheduleConfigurationScreenViewDelegate
 extension ScheduleConfigurationScreenController: ScheduleConfigurationScreenViewDelegate {
     func applySchedule() {
-        print(#function)
+        delegate?.updateSchedule(withDays: presenter?.giveSelectedDays() ?? [])
+        dismiss(animated: true)
     }
 }

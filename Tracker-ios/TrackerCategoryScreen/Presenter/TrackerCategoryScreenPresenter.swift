@@ -39,8 +39,21 @@ extension TrackerCategoryScreenPresenter {
                 cell.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
             }
             cell.backgroundColor = .clear
+            cell.selectionStyle = .none
             return cell
         }
         return UITableViewCell()
+    }
+
+    func giveSelectedCategory(forIndexPath indexPath: IndexPath) -> String {
+        return categoryNames[indexPath.row]
+    }
+
+    func deleteItem(at index: Int) {
+        categoryNames.remove(at: index)
+    }
+
+    func editItem(at index: Int) {
+
     }
 }

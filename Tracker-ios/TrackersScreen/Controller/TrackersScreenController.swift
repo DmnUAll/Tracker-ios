@@ -15,9 +15,12 @@ final class TrackersScreenController: UIViewController {
     override func viewDidLoad() {
         view.addSubview(trackersScreenView)
         view.backgroundColor = .ypWhite
+        view.addKeyboardHiddingFeature()
         setupConstraints()
         hideCollectionView()
         presenter = TrackersScreenPresenter(viewController: self)
+        trackersScreenView.delegate = self
+        trackersScreenView.searchTextField.delegate = self
         trackersScreenView.collectionView.dataSource = self
         trackersScreenView.collectionView.delegate = self
     }
@@ -47,6 +50,43 @@ extension TrackersScreenController {
         trackersScreenView.noDataLabel.isHidden = true
         trackersScreenView.collectionView.isHidden = false
         trackersScreenView.filterButton.isHidden = false
+    }
+}
+
+// MARK: TrackersScreenViewDelegate
+extension TrackersScreenController: TrackersScreenViewDelegate {
+    func cancelSearch() {
+        trackersScreenView.searchTextField.text = ""
+        trackersScreenView.cancelButton.isHidden = true
+        becomeFirstResponder()
+    }
+
+    func showFilters() {
+        print(#function)
+    }
+}
+
+// MARK: - UISearchTextFieldDelegate
+extension TrackersScreenController: UISearchTextFieldDelegate {
+
+    func textField(_ textField: UITextField,
+                   shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String
+    ) -> Bool {
+        let currentText = textField.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+        if updatedText.count > 0 {
+            trackersScreenView.cancelButton.isHidden = false
+        } else {
+            trackersScreenView.cancelButton.isHidden = true
+        }
+        return true
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
 }
 
