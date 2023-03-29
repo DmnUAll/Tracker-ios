@@ -1,5 +1,10 @@
 import UIKit
 
+// MARK: - DateReceiveDelegate protocol
+protocol DateReceiveDelegate: AnyObject {
+    func applyDate(_ date: Date)
+}
+
 // MARK: - NavigationController
 final class NavigationController: UINavigationController {
 
@@ -7,6 +12,7 @@ final class NavigationController: UINavigationController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return topViewController?.preferredStatusBarStyle ?? .default
     }
+    weak var dateReceiverDelegate: DateReceiveDelegate?
 
     override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
@@ -26,6 +32,10 @@ extension NavigationController {
         present(TrackerChoosingScreenController(), animated: true)
     }
 
+    @objc private func datePicked(_ sender: UIDatePicker) {
+        dateReceiverDelegate?.applyDate(sender.date)
+    }
+
     private func configureNavigationController(forVC viewController: UIViewController) {
         navigationBar.tintColor = .ypBlack
         navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.ypBlack]
@@ -37,6 +47,7 @@ extension NavigationController {
                                                                        action: #selector(addTapped))
             let datePicker = UICreator.shared.makeDatePicker()
             datePicker.toAutolayout()
+            datePicker.addTarget(nil, action: #selector(datePicked(_:)), for: .valueChanged)
             navigationBar.addSubview(datePicker)
             NSLayoutConstraint.activate([
                 datePicker.rightAnchor.constraint(equalTo: navigationBar.rightAnchor, constant: -16),

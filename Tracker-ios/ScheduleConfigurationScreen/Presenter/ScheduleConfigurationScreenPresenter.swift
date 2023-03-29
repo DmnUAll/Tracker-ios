@@ -6,7 +6,7 @@ final class ScheduleConfigurationScreenPresenter {
     // MARK: - Properties and Initializers
     private weak var viewController: ScheduleConfigurationScreenController?
 
-    private let days: [String] = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"]
+    private let days: [String] = WeekDay.allCases.map { $0.rawValue }
     private var selectedDays: [String] = []
 
     init(viewController: ScheduleConfigurationScreenController? = nil) {

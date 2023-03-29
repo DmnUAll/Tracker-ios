@@ -36,8 +36,13 @@ final class CategoryCreationScreenView: UIView {
         return label
     }()
 
-    let doneButton = UICreator.shared.makeButton(withTitle: "Добавить категорию",
-                                                        action: #selector(doneButtonTapped))
+    let doneButton: UIButton = {
+        let button = UICreator.shared.makeButton(withTitle: "Готово",
+                                                 backgroundColor: .ypGray,
+                                                 action: #selector(doneButtonTapped))
+        button.isEnabled = false
+        return button
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)

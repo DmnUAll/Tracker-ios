@@ -19,6 +19,7 @@ final class TrackersScreenController: UIViewController {
         setupConstraints()
         hideCollectionView()
         presenter = TrackersScreenPresenter(viewController: self)
+        (navigationController as? NavigationController)?.dateReceiverDelegate = self
         trackersScreenView.delegate = self
         trackersScreenView.searchTextField.delegate = self
         trackersScreenView.collectionView.dataSource = self
@@ -58,6 +59,7 @@ extension TrackersScreenController: TrackersScreenViewDelegate {
     func cancelSearch() {
         trackersScreenView.searchTextField.text = ""
         trackersScreenView.cancelButton.isHidden = true
+        presenter?.searchTracks(named: "")
         becomeFirstResponder()
     }
 
@@ -81,6 +83,7 @@ extension TrackersScreenController: UISearchTextFieldDelegate {
         } else {
             trackersScreenView.cancelButton.isHidden = true
         }
+        presenter?.searchTracks(named: updatedText)
         return true
     }
 
@@ -137,7 +140,7 @@ extension TrackersScreenController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int
     ) -> UIEdgeInsets {
-        UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
+        UIEdgeInsets(top: 12, left: 16, bottom: 32, right: 16)
     }
 
     func collectionView(_ collectionView: UICollectionView,
@@ -165,5 +168,13 @@ extension TrackersScreenController: UICollectionViewDelegate {
         presenter?.configureSupplementaryElement(ofKind: kind,
                                                  forCollectionView: collectionView,
                                                  atIndexPath: indexPath) ?? UICollectionReusableView()
+    }
+}
+
+// MARK: - DateReceiveDelegate
+extension TrackersScreenController: DateReceiveDelegate {
+    func applyDate(_ date: Date) {
+        presenter?.updateCurrentDate(to: date)
+        presenter?.searchTracks(named: trackersScreenView.searchTextField.text ?? "")
     }
 }

@@ -36,7 +36,7 @@ final class TrackersScreenView: UIView {
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                 withReuseIdentifier: K.CollectionElementNames.trackerHeader)
         collectionView.allowsMultipleSelection = false
-        collectionView.contentInset = UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0)
+        collectionView.contentInset = UIEdgeInsets(top: 24, left: 0, bottom: 80, right: 0)
         collectionView.keyboardDismissMode = UIScrollView.KeyboardDismissMode.onDrag
         return collectionView
     }()
@@ -99,7 +99,7 @@ extension TrackersScreenView {
             stackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            collectionView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor),
+            collectionView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: 10),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
             filterButton.heightAnchor.constraint(equalToConstant: 50),

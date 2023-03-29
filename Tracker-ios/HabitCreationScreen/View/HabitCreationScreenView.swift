@@ -91,7 +91,13 @@ final class HabitCreationScreenView: UIView {
         return button
     }()
 
-    private let createButton = UICreator.shared.makeButton(withTitle: "Создать", action: #selector(createButtonTapped))
+    let createButton: UIButton = {
+        let button = UICreator.shared.makeButton(withTitle: "Создать",
+                                                 backgroundColor: .ypGray,
+                                                 action: #selector(createButtonTapped))
+        button.isEnabled = false
+        return button
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)

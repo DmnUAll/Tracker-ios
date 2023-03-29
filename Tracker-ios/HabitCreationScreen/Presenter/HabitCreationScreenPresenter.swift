@@ -1,5 +1,10 @@
 import UIKit
 
+// MARK: - HabitCreationDelegate protocol
+protocol HabitCreationDelegate: AnyObject {
+    
+}
+
 // MARK: - HabitCreationScreeenPresenter
 final class HabitCreationScreenPresenter {
 
@@ -24,6 +29,8 @@ final class HabitCreationScreenPresenter {
 
     private var selectedCategory: String = ""
     private var selectedDays: [String] = []
+    private var selectedEmoji: String = ""
+    private var selectedColor: UIColor?
 
     init(viewController: HabitCreationScreenController? = nil) {
         self.viewController = viewController
@@ -96,23 +103,48 @@ extension HabitCreationScreenPresenter {
         }
         return UICollectionViewCell()
     }
+
+    func setPickedEmoji(to emoji: String) {
+        selectedEmoji = emoji
+    }
+
+    func setPickedColor(to color: UIColor?) {
+        selectedColor = color
+    }
+
+    func checkIfCanCreateHabit() -> Bool {
+        guard !(viewController?.habitCreationScreenView.trackerNameTextField.text ?? "").isEmpty,
+              !selectedCategory.isEmpty,
+              !selectedDays.isEmpty,
+              !selectedEmoji.isEmpty,
+              selectedColor != nil else {
+            return false
+        }
+        return true
+    }
 }
 
 // MARK: - ScheduleConfigurationDelegate
 extension HabitCreationScreenPresenter: ScheduleConfigurationDelegate {
     func updateSchedule(withDays days: [String]) {
-        days.forEach { item in
-            if let key = dayKeys[item] {
-                selectedDays.append(key)
-            }
-        }
         guard let cell = viewController?.habitCreationScreenView.optionsTableView.cellForRow(
             at: IndexPath(row: 1, section: 0)
         ) as? ScheduleCell else {
             return
         }
+        if days.count == 7 {
+            cell.infoLabel.text = "Каждый день"
+            cell.infoLabel.isHidden = false
+            return
+        }
+        days.forEach { item in
+            if let key = dayKeys[item] {
+                selectedDays.append(key)
+            }
+        }
         cell.infoLabel.text = String(selectedDays.joined(separator: ", "))
         cell.infoLabel.isHidden = false
+        viewController?.checkIfCanUnlockCreateeButton()
     }
 }
 
@@ -127,5 +159,6 @@ extension HabitCreationScreenPresenter: TrackerCategoryConfigurationDelegate {
         }
         cell.infoLabel.text = selectedCategory
         cell.infoLabel.isHidden = false
+        viewController?.checkIfCanUnlockCreateeButton()
     }
 }

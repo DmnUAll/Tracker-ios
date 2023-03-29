@@ -57,6 +57,7 @@ extension HabitCreationScreenController: UITextFieldDelegate {
         } else {
             habitCreationScreenView.errorLabel.isHidden = true
         }
+        checkIfCanUnlockCreateeButton()
         return updatedText.count <= 38
     }
 
@@ -68,6 +69,16 @@ extension HabitCreationScreenController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
+    }
+
+    func checkIfCanUnlockCreateeButton() {
+        if presenter?.checkIfCanCreateHabit() ?? false {
+            habitCreationScreenView.createButton.backgroundColor = .ypBlack
+            habitCreationScreenView.createButton.isEnabled = true
+        } else {
+            habitCreationScreenView.createButton.backgroundColor = .ypGray
+            habitCreationScreenView.createButton.isEnabled = false
+        }
     }
 }
 
@@ -147,10 +158,16 @@ extension HabitCreationScreenController: UICollectionViewDelegate {
         if collectionView.tag == 1 {
             guard let cell = collectionView.cellForItem(at: indexPath) as? EmojiCell else { return }
             cell.frameView.isHidden = false
+            presenter?.setPickedEmoji(to: cell.emojiIcon.text ?? "")
         } else {
             guard let cell = collectionView.cellForItem(at: indexPath) as? ColorCell else { return }
             cell.frameView.layer.borderWidth = 3
+            presenter?.setPickedColor(to: cell.colorView.backgroundColor)
         }
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        checkIfCanUnlockCreateeButton()
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {

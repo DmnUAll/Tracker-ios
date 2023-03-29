@@ -17,7 +17,7 @@ extension TabBarController {
 //        tabBar.shadowImage = UIImage()
 //        tabBar.backgroundImage = UIImage()
 //        tabBar.tintColor = .ypWhite
-//        tabBar.backgroundColor = .ypBlack
+        tabBar.backgroundColor = .ypWhite
         let trackersNavigationController = NavigationController(rootViewController: TrackersScreenController())
         let statisticsNavigationController = NavigationController(rootViewController: TrackersScreenController())
         self.viewControllers = [

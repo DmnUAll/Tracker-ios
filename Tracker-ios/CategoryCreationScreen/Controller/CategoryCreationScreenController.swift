@@ -60,6 +60,16 @@ extension CategoryCreationScreenController: UITextFieldDelegate {
         self.view.endEditing(true)
         return false
     }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if !(textField.text ?? "").isEmpty {
+            categoryCreationScreenView.doneButton.backgroundColor = .ypBlack
+            categoryCreationScreenView.doneButton.isEnabled = true
+        } else {
+            categoryCreationScreenView.doneButton.backgroundColor = .ypGray
+            categoryCreationScreenView.doneButton.isEnabled = false
+        }
+    }
 }
 
 // MARK: - CategoryCreationScreenViewDelegate
