@@ -1,5 +1,10 @@
 import UIKit
 
+// MARK: - CategorySavingDelegate protocol
+protocol CategorySavingDelegate: AnyObject {
+    func saveNewCategory(named name: String)
+}
+
 // MARK: - CategoryCreationScreenController
 final class CategoryCreationScreenController: UIViewController {
 
@@ -9,6 +14,12 @@ final class CategoryCreationScreenController: UIViewController {
     }
 
     let categoryCreationScreenView = CategoryCreationScreenView()
+    weak var delegate: CategorySavingDelegate?
+
+    convenience init(delegate: CategorySavingDelegate? = nil) {
+        self.init()
+        self.delegate = delegate
+    }
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -74,7 +85,8 @@ extension CategoryCreationScreenController: UITextFieldDelegate {
 
 // MARK: - CategoryCreationScreenViewDelegate
 extension CategoryCreationScreenController: CategoryCreationScreenViewDelegate {
-    func saveNewCategory() {
-        print(#function)
+    func transferNewCategory() {
+        delegate?.saveNewCategory(named: categoryCreationScreenView.categoryNameTextField.text ?? "")
+        self.dismiss(animated: true)
     }
 }

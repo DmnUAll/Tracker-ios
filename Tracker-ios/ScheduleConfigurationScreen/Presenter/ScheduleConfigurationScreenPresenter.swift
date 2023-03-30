@@ -33,15 +33,22 @@ extension ScheduleConfigurationScreenPresenter {
         if let cell = tableView.dequeueReusableCell(withIdentifier: K.CollectionElementNames.daySelectionCell,
                                                     for: indexPath) as? DaySelectionCell {
             cell.dayLabel.text = days[indexPath.row]
+            cell.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
             if indexPath.row == days.count - 1 {
                 cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: tableView.bounds.width)
-            } else {
-                cell.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+                cell.layer.masksToBounds = true
+                cell.layer.cornerRadius = 16
+                cell.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+            } else if indexPath.row == 0 {
+                cell.layer.masksToBounds = true
+                cell.layer.cornerRadius = 16
+                cell.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
             }
-            cell.backgroundColor = .clear
+            cell.backgroundColor = .ypGrayField.withAlphaComponent(0.3)
             let accessory = UICreator.shared.makeSwitch(withTag: indexPath.row)
             accessory.addTarget(self, action: #selector(switchChanged(_:)), for: .valueChanged)
             cell.accessoryView = accessory
+            cell.selectionStyle = .none
             return cell
         }
         return UITableViewCell()

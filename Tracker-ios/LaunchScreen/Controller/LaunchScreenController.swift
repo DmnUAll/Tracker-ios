@@ -16,9 +16,8 @@ final class LaunchScreenController: UIViewController {
         view.backgroundColor = .ypBlue
         view.addSubview(launchScreenView)
         setupConstraints()
-        presenter = LaunchScreenPresenter(viewController: self)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.show(OnboardingScreenController(), sender: nil)
+            self.presenter = LaunchScreenPresenter(viewController: self)
         }
     }
 }

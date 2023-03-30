@@ -18,7 +18,8 @@ final class ScheduleConfigurationScreenView: UIView {
         let tableView = UICreator.shared.makeTableView()
         tableView.register(DaySelectionCell.self,
                            forCellReuseIdentifier: K.CollectionElementNames.daySelectionCell)
-        tableView.isScrollEnabled = false
+        tableView.backgroundColor = .ypWhite
+        tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
 
@@ -64,7 +65,7 @@ extension ScheduleConfigurationScreenView {
             daysTableView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             daysTableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 38),
             daysTableView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            daysTableView.heightAnchor.constraint(equalToConstant: 525),
+            daysTableView.bottomAnchor.constraint(equalTo: doneButton.topAnchor, constant: -24),
             doneButton.heightAnchor.constraint(equalToConstant: 60),
             doneButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             doneButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),

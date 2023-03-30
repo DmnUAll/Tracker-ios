@@ -129,6 +129,6 @@ extension TrackerCategoryScreenController: UITableViewDelegate {
 extension TrackerCategoryScreenController: TrackerCategoryScreenViewDelegate {
 
     func createNewCategory() {
-        present(CategoryCreationScreenController(), animated: true)
+        present(CategoryCreationScreenController(delegate: presenter), animated: true)
     }
 }

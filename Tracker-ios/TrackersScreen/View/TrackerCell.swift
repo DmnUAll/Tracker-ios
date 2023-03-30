@@ -2,7 +2,7 @@ import UIKit
 
 // MARK: - TrackerCellDelegate protocol
 protocol TrackerCellDelegate: AnyObject {
-    func increaseCount()
+    func proceedTask(forID trackerID: UUID)
 }
 
 // MARK: - TrackerCell
@@ -10,6 +10,7 @@ final class TrackerCell: UICollectionViewCell {
 
     // MARK: - Properties and Initializers
     weak var delegate: TrackerCellDelegate?
+    var trackerID: UUID?
 
     let taskView: UIView = {
         let uiView = UICreator.shared.makeView()
@@ -35,6 +36,7 @@ final class TrackerCell: UICollectionViewCell {
         button.tintColor = .white
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 17
+        button.isAccessibilityElement = true
         return button
     }()
 
@@ -54,7 +56,9 @@ final class TrackerCell: UICollectionViewCell {
 extension TrackerCell {
 
     @objc private func counterButtonTapped() {
-        delegate?.increaseCount()
+        if let trackerID = trackerID {
+            delegate?.proceedTask(forID: trackerID)
+        }
     }
 
     private func setupAutolayout() {

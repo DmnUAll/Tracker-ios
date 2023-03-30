@@ -23,6 +23,7 @@ final class TrackerCategoryScreenView: UIView {
         tableView.register(CategorySelectionCell.self,
                            forCellReuseIdentifier: K.CollectionElementNames.categorySelectionCell)
         tableView.showsVerticalScrollIndicator = false
+        tableView.backgroundColor = .ypWhite
         return tableView
     }()
 
@@ -82,7 +83,7 @@ extension TrackerCategoryScreenView {
             categoriesTableView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             categoriesTableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 38),
             categoriesTableView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            categoriesTableView.bottomAnchor.constraint(equalTo: addButton.topAnchor, constant: -38)
+            categoriesTableView.bottomAnchor.constraint(equalTo: addButton.topAnchor, constant: -24)
         ])
     }
 }

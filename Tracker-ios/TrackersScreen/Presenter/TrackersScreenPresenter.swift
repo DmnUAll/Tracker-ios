@@ -7,7 +7,7 @@ final class TrackersScreenPresenter {
     private weak var viewController: TrackersScreenController?
     private var categories: [TrackerCategory] = []
     private var allCategories: [TrackerCategory] = []
-    private var completedTrackers: [TrackerRecord] = []
+    private var completedTrackers: Set<TrackerRecord> = []
     private var currentDate: Date = Date()
     private var currentWeekDay: WeekDay {
         switch currentDate.weekDayIndex {
@@ -96,11 +96,20 @@ extension TrackersScreenPresenter {
             return UICollectionViewCell()
         }
         let tracker = categories[indexPath.section].trackers[indexPath.row]
+        let timesCompleted = completedTrackers.filter({ $0.id == tracker.id }).count
+        if !completedTrackers.filter({ $0.id == tracker.id && $0.date == currentDate.dateString }).isEmpty {
+            cell.counterButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
+            cell.counterButton.backgroundColor = tracker.color.withAlphaComponent(0.3)
+        } else {
+            cell.counterButton.setImage(UIImage(systemName: "plus"), for: .normal)
+            cell.counterButton.backgroundColor = tracker.color
+        }
+        cell.trackerID = tracker.id
         cell.taskView.backgroundColor = tracker.color
-        cell.counterButton.backgroundColor = tracker.color
-        cell.counterLabel.text = "0 дней"
+        cell.counterLabel.text = "\(timesCompleted) \(timesCompleted.days())"
         cell.taskIcon.text = tracker.emoji
         cell.taskName.text = tracker.name
+        cell.delegate = self
         return cell
     }
 
@@ -144,7 +153,6 @@ extension TrackersScreenPresenter {
             updatedAllCategories.append(data)
             allCategories = updatedAllCategories
             searchTracks(named: viewController?.trackersScreenView.searchTextField.text ?? "")
-            print(allCategories)
             return
         }
         var trackersList = updatedAllCategories[index].trackers
@@ -153,6 +161,18 @@ extension TrackersScreenPresenter {
                                                       trackers: trackersList)
         allCategories = updatedAllCategories
         searchTracks(named: viewController?.trackersScreenView.searchTextField.text ?? "")
-        print(allCategories)
+    }
+}
+
+// MARK: - TrackerCellDelegate
+extension TrackersScreenPresenter: TrackerCellDelegate {
+    func proceedTask(forID trackerID: UUID) {
+        let proceededTask = TrackerRecord(id: trackerID, date: currentDate.dateString)
+        if completedTrackers.contains(proceededTask) {
+            completedTrackers.remove(proceededTask)
+        } else {
+            completedTrackers.insert(proceededTask)
+        }
+        viewController?.trackersScreenView.collectionView.reloadData()
     }
 }

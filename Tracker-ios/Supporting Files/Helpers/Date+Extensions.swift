@@ -1,12 +1,13 @@
 import Foundation
 
-private let dateTimeDefaultFormatter: DateFormatter = {
+private let dateDefaultFormatter: DateFormatter = {
     let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "dd.MM.YY hh:mm"
+    dateFormatter.locale = Locale(identifier: "ru_RU")
+    dateFormatter.dateFormat = "dd.MM.YY"
     return dateFormatter
 }()
 
 extension Date {
-    var dateTimeString: String { dateTimeDefaultFormatter.string(from: self) }
+    var dateString: String { dateDefaultFormatter.string(from: self) }
     var weekDayIndex: Int { Calendar.current.component(.weekday, from: self) }
 }

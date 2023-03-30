@@ -2,7 +2,7 @@ import UIKit
 
 // MARK: - CategoryCreationScreenViewDelegate protocol
 protocol CategoryCreationScreenViewDelegate: AnyObject {
-    func saveNewCategory()
+    func transferNewCategory()
 }
 
 // MARK: - CategoryCreationScreenView
@@ -60,7 +60,7 @@ final class CategoryCreationScreenView: UIView {
 extension CategoryCreationScreenView {
 
     @objc private func doneButtonTapped() {
-        delegate?.saveNewCategory()
+        delegate?.transferNewCategory()
     }
 
     private func setupAutolayout() {
