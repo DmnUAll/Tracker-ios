@@ -134,4 +134,25 @@ extension TrackersScreenPresenter {
     func updateCurrentDate(to date: Date) {
         currentDate = date
     }
+
+    func addNewTracker(_ data: TrackerCategory) {
+        var updatedAllCategories = allCategories
+        let index: Int? = updatedAllCategories.firstIndex { category in
+            category.name == data.name
+        }
+        guard let index else {
+            updatedAllCategories.append(data)
+            allCategories = updatedAllCategories
+            searchTracks(named: viewController?.trackersScreenView.searchTextField.text ?? "")
+            print(allCategories)
+            return
+        }
+        var trackersList = updatedAllCategories[index].trackers
+        trackersList.append(contentsOf: data.trackers)
+        updatedAllCategories[index] = TrackerCategory(name: data.name,
+                                                      trackers: trackersList)
+        allCategories = updatedAllCategories
+        searchTracks(named: viewController?.trackersScreenView.searchTextField.text ?? "")
+        print(allCategories)
+    }
 }

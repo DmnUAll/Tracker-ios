@@ -6,7 +6,7 @@ final class TrackerCategoryScreenPresenter {
     // MARK: - Properties and Initializers
     private weak var viewController: TrackerCategoryScreenController?
 
-    private var categoryNames: [String] = ["123", "321", "1", "123", "321", "1", "123", "321", "1"]
+    private var categoryNames: [String] = ["Test1", "Test2", "Test3", "Test4", "1", "2", "3", "4", "5"]
 
     init(viewController: TrackerCategoryScreenController? = nil) {
         self.viewController = viewController

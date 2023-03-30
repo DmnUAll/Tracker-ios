@@ -80,6 +80,10 @@ extension HabitCreationScreenController: UITextFieldDelegate {
             habitCreationScreenView.createButton.isEnabled = false
         }
     }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        checkIfCanUnlockCreateeButton()
+    }
 }
 
 // MARK: - UITableViewDataSource
@@ -164,9 +168,6 @@ extension HabitCreationScreenController: UICollectionViewDelegate {
             cell.frameView.layer.borderWidth = 3
             presenter?.setPickedColor(to: cell.colorView.backgroundColor)
         }
-    }
-
-    func textFieldDidEndEditing(_ textField: UITextField) {
         checkIfCanUnlockCreateeButton()
     }
 
@@ -184,7 +185,13 @@ extension HabitCreationScreenController: UICollectionViewDelegate {
 // MARK: - HabitCreationScreenViewDelegate
 extension HabitCreationScreenController: HabitCreationScreenViewDelegate {
     func createTracker() {
-        print(#function)
+        if let topController = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first?.rootViewController {
+            let destinationViewController = topController.children.first?.children.first as? TrackersScreenController
+            if let presenter = presenter {
+                destinationViewController?.addData(presenter.createNewTracker())
+            }
+        }
+        self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
     }
 
     func cancelCreation() {

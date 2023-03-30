@@ -52,6 +52,10 @@ extension TrackersScreenController {
         trackersScreenView.collectionView.isHidden = false
         trackersScreenView.filterButton.isHidden = false
     }
+
+    func addData(_ data: TrackerCategory) {
+        presenter?.addNewTracker(data)
+    }
 }
 
 // MARK: TrackersScreenViewDelegate

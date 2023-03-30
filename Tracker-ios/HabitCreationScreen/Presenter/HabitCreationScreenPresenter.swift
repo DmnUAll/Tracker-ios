@@ -2,7 +2,6 @@ import UIKit
 
 // MARK: - HabitCreationDelegate protocol
 protocol HabitCreationDelegate: AnyObject {
-    
 }
 
 // MARK: - HabitCreationScreeenPresenter
@@ -24,13 +23,22 @@ final class HabitCreationScreenPresenter {
                            "Среда": "Ср",
                            "Четверг": "Чт",
                            "Пятница": "Пт",
-                           "Суббота": " Сб",
+                           "Суббота": "Сб",
                            "Воскресенье": "Вс"]
+
+    private let scheduleKeys: [String: WeekDay] = ["Понедельник": .monday,
+                                                   "Вторник": .tuesday,
+                                                   "Среда": .wednesday,
+                                                   "Четверг": .thursday,
+                                                   "Пятница": .friday,
+                                                   "Суббота": .saturday,
+                                                   "Воскресенье": .sunday]
 
     private var selectedCategory: String = ""
     private var selectedDays: [String] = []
     private var selectedEmoji: String = ""
     private var selectedColor: UIColor?
+    private var selectedSchedule: [WeekDay] = []
 
     init(viewController: HabitCreationScreenController? = nil) {
         self.viewController = viewController
@@ -122,6 +130,17 @@ extension HabitCreationScreenPresenter {
         }
         return true
     }
+
+    func createNewTracker() -> TrackerCategory {
+        return TrackerCategory(name: selectedCategory,
+                               trackers: [
+                                Tracker(id: UUID(),
+                                        name: viewController?.habitCreationScreenView.trackerNameTextField.text ?? "",
+                                        color: selectedColor ?? UIColor(),
+                                        emoji: selectedEmoji,
+                                        schedule: selectedSchedule)
+                               ])
+    }
 }
 
 // MARK: - ScheduleConfigurationDelegate
@@ -132,17 +151,19 @@ extension HabitCreationScreenPresenter: ScheduleConfigurationDelegate {
         ) as? ScheduleCell else {
             return
         }
-        if days.count == 7 {
-            cell.infoLabel.text = "Каждый день"
-            cell.infoLabel.isHidden = false
-            return
-        }
         days.forEach { item in
             if let key = dayKeys[item] {
                 selectedDays.append(key)
             }
+            if let key = scheduleKeys[item] {
+                selectedSchedule.append(key)
+            }
         }
-        cell.infoLabel.text = String(selectedDays.joined(separator: ", "))
+        if days.count == 7 {
+            cell.infoLabel.text = "Каждый день"
+        } else {
+            cell.infoLabel.text = String(selectedDays.joined(separator: ", "))
+        }
         cell.infoLabel.isHidden = false
         viewController?.checkIfCanUnlockCreateeButton()
     }
