@@ -99,10 +99,12 @@ extension CategoryCreationScreenController: UITextFieldDelegate {
 // MARK: - CategoryCreationScreenViewDelegate
 extension CategoryCreationScreenController: CategoryCreationScreenViewDelegate {
     func transferNewCategory() {
+        let categoryName = categoryCreationScreenView.categoryNameTextField.text ?? ""
         if delegate?.categoryToEdit != "" {
-            delegate?.updateCategory(toName: categoryCreationScreenView.categoryNameTextField.text ?? "")
+            delegate?.updateCategory(toName: categoryName)
+        } else {
+            delegate?.saveNewCategory(named: categoryName)
         }
-        delegate?.saveNewCategory(named: categoryCreationScreenView.categoryNameTextField.text ?? "")
         self.dismiss(animated: true)
     }
 }
