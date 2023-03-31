@@ -22,13 +22,18 @@ final class NavigationController: UINavigationController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - Life Cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
 }
 
 // MARK: - Helpers
 extension NavigationController {
 
     @objc private func addTapped() {
-        navigationController?.viewControllers.first?.view.endEditing(true)
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         present(TrackerChoosingScreenController(), animated: true)
     }
 

@@ -2,6 +2,9 @@ import UIKit
 
 // MARK: - CategorySavingDelegate protocol
 protocol CategorySavingDelegate: AnyObject {
+    var categoryToEdit: String { get }
+    func updateCategory(toName newCategoryName: String)
+    func categoryEditingWasCanceled()
     func saveNewCategory(named name: String)
 }
 
@@ -29,6 +32,16 @@ final class CategoryCreationScreenController: UIViewController {
         setupConstraints()
         categoryCreationScreenView.delegate = self
         categoryCreationScreenView.categoryNameTextField.delegate = self
+        if delegate?.categoryToEdit != "" {
+            categoryCreationScreenView.titleLabel.text = "Редактирование категории"
+            categoryCreationScreenView.categoryNameTextField.text = delegate?.categoryToEdit ?? ""
+        }
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        if delegate?.categoryToEdit != "" {
+            delegate?.categoryEditingWasCanceled()
+        }
     }
 }
 
@@ -86,6 +99,9 @@ extension CategoryCreationScreenController: UITextFieldDelegate {
 // MARK: - CategoryCreationScreenViewDelegate
 extension CategoryCreationScreenController: CategoryCreationScreenViewDelegate {
     func transferNewCategory() {
+        if delegate?.categoryToEdit != "" {
+            delegate?.updateCategory(toName: categoryCreationScreenView.categoryNameTextField.text ?? "")
+        }
         delegate?.saveNewCategory(named: categoryCreationScreenView.categoryNameTextField.text ?? "")
         self.dismiss(animated: true)
     }

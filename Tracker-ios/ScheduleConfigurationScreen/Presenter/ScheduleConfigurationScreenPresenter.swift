@@ -8,6 +8,18 @@ final class ScheduleConfigurationScreenPresenter {
 
     private let days: [String] = WeekDay.allCases.map { $0.rawValue }
     private var selectedDays: [String] = []
+    private var previouslySelectedDays: [String] = []
+    private var currentSwitchStates: [Bool] {
+        var states: [Bool] = []
+        days.forEach { day in
+            if previouslySelectedDays.contains(day) {
+                states.append(true)
+            } else {
+                states.append(false)
+            }
+        }
+        return states
+    }
 
     init(viewController: ScheduleConfigurationScreenController? = nil) {
         self.viewController = viewController
@@ -24,6 +36,10 @@ extension ScheduleConfigurationScreenPresenter {
             selectedDays.removeAll(where: {$0 == days[sender.tag]})
         }
   }
+
+    func selectPreviouslyChoosenSchedule(withDays days: [String]) {
+        previouslySelectedDays = days
+    }
 
     func giveNumberOfItems() -> Int {
         return days.count
@@ -47,6 +63,10 @@ extension ScheduleConfigurationScreenPresenter {
             cell.backgroundColor = .ypGrayField.withAlphaComponent(0.3)
             let accessory = UICreator.shared.makeSwitch(withTag: indexPath.row)
             accessory.addTarget(self, action: #selector(switchChanged(_:)), for: .valueChanged)
+            if currentSwitchStates[indexPath.row] {
+                accessory.isOn = true
+                selectedDays.append(days[indexPath.row])
+            }
             cell.accessoryView = accessory
             cell.selectionStyle = .none
             return cell

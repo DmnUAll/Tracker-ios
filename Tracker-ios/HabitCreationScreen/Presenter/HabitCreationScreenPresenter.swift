@@ -1,9 +1,5 @@
 import UIKit
 
-// MARK: - HabitCreationDelegate protocol
-protocol HabitCreationDelegate: AnyObject {
-}
-
 // MARK: - HabitCreationScreeenPresenter
 final class HabitCreationScreenPresenter {
 
@@ -35,6 +31,7 @@ final class HabitCreationScreenPresenter {
                                                    "Воскресенье": .sunday]
 
     private var selectedCategory: String = ""
+    private var selectedDaysRaw: [String] = []
     private var selectedDays: [String] = []
     private var selectedEmoji: String = ""
     private var selectedColor: UIColor?
@@ -145,7 +142,14 @@ extension HabitCreationScreenPresenter {
 
 // MARK: - ScheduleConfigurationDelegate
 extension HabitCreationScreenPresenter: ScheduleConfigurationDelegate {
+
+    var previousSelectedSchedule: [String] {
+        selectedDaysRaw
+    }
+
     func updateSchedule(withDays days: [String]) {
+        selectedDays = []
+        selectedDaysRaw = days
         guard let cell = viewController?.habitCreationScreenView.optionsTableView.cellForRow(
             at: IndexPath(row: 1, section: 0)
         ) as? ScheduleCell else {
@@ -171,6 +175,11 @@ extension HabitCreationScreenPresenter: ScheduleConfigurationDelegate {
 
 // MARK: - TrackerCategoryConfigurationDelegate
 extension HabitCreationScreenPresenter: TrackerCategoryConfigurationDelegate {
+
+    var previousSelectedCategory: String {
+        selectedCategory
+    }
+
     func updateCategory(withCategory category: String) {
         selectedCategory = category
         guard let cell = viewController?.habitCreationScreenView.optionsTableView.cellForRow(

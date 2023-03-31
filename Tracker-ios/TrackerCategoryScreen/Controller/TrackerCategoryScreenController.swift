@@ -2,6 +2,7 @@ import UIKit
 
 // MARK: - TrackerCategoryConfigurationDelegate protocol
 protocol TrackerCategoryConfigurationDelegate: AnyObject {
+    var previousSelectedCategory: String { get }
     func updateCategory(withCategory category: String)
 }
 
@@ -29,6 +30,7 @@ final class TrackerCategoryScreenController: UIViewController {
         setupConstraints()
         hideTableView()
         presenter = TrackerCategoryScreenPresenter(viewController: self)
+        presenter?.selectPreviouslyChoosenCategory(withName: delegate?.previousSelectedCategory ?? "")
         trackerCategoryScreenView.delegate = self
         trackerCategoryScreenView.categoriesTableView.dataSource = self
         trackerCategoryScreenView.categoriesTableView.delegate = self
@@ -98,13 +100,6 @@ extension TrackerCategoryScreenController: UITableViewDelegate {
         delegate?.updateCategory(withCategory: presenter?.giveSelectedCategory(forIndexPath: indexPath) ?? "")
         tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         dismiss(animated: true)
-    }
-
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        DispatchQueue.main.async {
-//            tableView.heightAnchor.constraint(equalToConstant: tableView.contentSize.height).isActive = true
-            tableView.setNeedsLayout()
-        }
     }
 
     func tableView(_ tableView: UITableView,

@@ -7,6 +7,9 @@ final class TrackerCategoryScreenPresenter {
     private weak var viewController: TrackerCategoryScreenController?
 
     private var categoryNames: [String] = ["Test1", "Test2", "Test3", "Test4", "1", "2", "3", "4", "5", "6", "7", "8"]
+    private var previouslySelectedCategory: String = ""
+    private var oldCategoryName: String = ""
+
     init(viewController: TrackerCategoryScreenController? = nil) {
         self.viewController = viewController
         checkForData()
@@ -22,6 +25,10 @@ extension TrackerCategoryScreenPresenter {
         } else {
             viewController?.showTableView()
         }
+    }
+
+    func selectPreviouslyChoosenCategory(withName name: String) {
+        previouslySelectedCategory = name
     }
 
     func giveNumberOfItems() -> Int {
@@ -45,6 +52,12 @@ extension TrackerCategoryScreenPresenter {
             }
             cell.backgroundColor = .ypGrayField.withAlphaComponent(0.3)
             cell.selectionStyle = .none
+        if previouslySelectedCategory != "" {
+            if indexPath.row == categoryNames.firstIndex(of: previouslySelectedCategory) {
+                tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+                cell.accessoryType = .checkmark
+            }
+        }
             return cell
         }
     func giveSelectedCategory(forIndexPath indexPath: IndexPath) -> String {
@@ -56,12 +69,29 @@ extension TrackerCategoryScreenPresenter {
     }
 
     func editItem(at index: Int) {
-
+        oldCategoryName = categoryNames[index]
+        viewController?.present(CategoryCreationScreenController(delegate: self), animated: true)
     }
 }
 
 // MARK: CategorySavingDelegate
 extension TrackerCategoryScreenPresenter: CategorySavingDelegate {
+
+    var categoryToEdit: String {
+        oldCategoryName
+    }
+
+    func updateCategory(toName newCategoryName: String) {
+        let index = categoryNames.firstIndex(of: oldCategoryName) ?? 0
+        categoryNames.remove(at: index)
+        categoryNames.insert(newCategoryName, at: index)
+        viewController?.trackerCategoryScreenView.categoriesTableView.reloadData()
+    }
+
+    func categoryEditingWasCanceled() {
+        oldCategoryName = ""
+    }
+
     func saveNewCategory(named name: String) {
         if !categoryNames.contains(name) {
             categoryNames.append(name)

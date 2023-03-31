@@ -2,6 +2,7 @@ import UIKit
 
 // MARK: - ScheduleConfigurationDelegate protocol
 protocol ScheduleConfigurationDelegate: AnyObject {
+    var previousSelectedSchedule: [String] { get }
     func updateSchedule(withDays days: [String])
 }
 
@@ -28,6 +29,7 @@ final class ScheduleConfigurationScreenController: UIViewController {
         view.addSubview(scheduleConfigurationScreenView)
         setupConstraints()
         presenter = ScheduleConfigurationScreenPresenter(viewController: self)
+        presenter?.selectPreviouslyChoosenSchedule(withDays: delegate?.previousSelectedSchedule ?? [])
         scheduleConfigurationScreenView.delegate = self
         scheduleConfigurationScreenView.daysTableView.dataSource = self
         scheduleConfigurationScreenView.daysTableView.delegate = self
