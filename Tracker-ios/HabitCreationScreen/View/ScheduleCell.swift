@@ -5,7 +5,7 @@ final class ScheduleCell: UITableViewCell {
 
     // MARK: - Properties and Initializers
     private let stackView = UICreator.shared.makeStackView(andSpacing: 2)
-    private let titleLabel = UICreator.shared.makeLabel(text: "Расписание",
+    private let titleLabel = UICreator.shared.makeLabel(text: NSLocalizedString("SCHEDULE", comment: ""),
                                                         font: UIFont.appFont(.regular, withSize: 17),
                                                         alignment: .natural)
     let infoLabel = UICreator.shared.makeLabel(font: UIFont.appFont(.regular, withSize: 17),

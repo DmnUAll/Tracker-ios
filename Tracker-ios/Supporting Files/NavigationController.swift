@@ -46,7 +46,7 @@ extension NavigationController {
         navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.ypBlack]
         navigationBar.prefersLargeTitles = true
         if viewController is TrackersScreenController {
-            navigationBar.topItem?.title = "Трекеры"
+            navigationBar.topItem?.title = NSLocalizedString("TRACKERS", comment: "")
             navigationBar.topItem?.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
                                                                        target: nil,
                                                                        action: #selector(addTapped))

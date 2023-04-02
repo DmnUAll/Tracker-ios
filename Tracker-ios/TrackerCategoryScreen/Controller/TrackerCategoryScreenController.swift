@@ -62,15 +62,18 @@ extension TrackerCategoryScreenController {
     }
 
     func showDeletionAlert(for indexPath: IndexPath) {
-        let alertController = UIAlertController(title: "Эта категория точно не нужна?",
+        let alertController = UIAlertController(title: NSLocalizedString("CATEGORY_DELETION", comment: ""),
                                                 message: nil,
                                                 preferredStyle: .actionSheet)
-        let deleteAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
+        let deleteAction = UIAlertAction(title: NSLocalizedString("DELETE", comment: ""),
+                                         style: .destructive
+        ) { [weak self] _ in
             guard let self = self else { return }
             self.presenter?.deleteItem(at: indexPath.row)
             self.trackerCategoryScreenView.categoriesTableView.reloadData()
+            presenter?.checkForData()
         }
-        let cancelAction = UIAlertAction(title: "Отменить", style: .cancel)
+        let cancelAction = UIAlertAction(title: NSLocalizedString("CANCEL", comment: ""), style: .cancel)
         alertController.addAction(deleteAction)
         alertController.addAction(cancelAction)
         present(alertController, animated: true)
@@ -109,10 +112,10 @@ extension TrackerCategoryScreenController: UITableViewDelegate {
         return UIContextMenuConfiguration(actionProvider: { [weak self] _ in
             guard let self else { return nil }
             return UIMenu(children: [
-                UIAction(title: "Редактировать") { _ in
+                UIAction(title: NSLocalizedString("EDIT", comment: "")) { _ in
                     self.presenter?.editItem(at: indexPath.row)
                 },
-                UIAction(title: "Удалить", attributes: .destructive) { _ in
+                UIAction(title: NSLocalizedString("DELETE", comment: ""), attributes: .destructive) { _ in
                     self.showDeletionAlert(for: indexPath)
                 }
             ])

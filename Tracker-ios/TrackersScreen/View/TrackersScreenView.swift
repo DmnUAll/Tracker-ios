@@ -11,14 +11,17 @@ final class TrackersScreenView: UIView {
 
     // MARK: - Properties and Initializers
     weak var delegate: TrackersScreenViewDelegate?
+    private let uiCreator = UICreator.shared
 
     let noDataImage = UICreator.shared.makeImageView(withImage: K.ImageNames.noDataImage)
-    let noDataLabel = UICreator.shared.makeLabel(text: "Что будем отслеживать?",
-                                                 font: UIFont.appFont(.medium, withSize: 12))
+    let noDataLabel = UICreator.shared.makeLabel(
+        text: NSLocalizedString("WHAT_TO_MONITOR", comment: ""),
+        font: UIFont.appFont(.medium, withSize: 12))
+
     private let stackView = UICreator.shared.makeStackView(withAxis: .horizontal, andSpacing: 14)
     let searchTextField = UICreator.shared.makeSearchTextField()
     let cancelButton: UIButton = {
-        let button = UICreator.shared.makeButton(withTitle: "Отменить",
+        let button = UICreator.shared.makeButton(withTitle: NSLocalizedString("CANCEL", comment: ""),
                                                  font: UIFont.appFont(.regular, withSize: 17),
                                                  backgroundColor: .clear,
                                                  action: #selector(cancelButtonTapped))
@@ -40,7 +43,7 @@ final class TrackersScreenView: UIView {
         collectionView.keyboardDismissMode = UIScrollView.KeyboardDismissMode.onDrag
         return collectionView
     }()
-    let filterButton = UICreator.shared.makeButton(withTitle: "Фильтры",
+    let filterButton = UICreator.shared.makeButton(withTitle: NSLocalizedString("FILTERS", comment: ""),
                                                    font: UIFont.appFont(.regular, withSize: 17),
                                                    backgroundColor: .ypBlue,
                                                    action: #selector(filterButtonTapped))

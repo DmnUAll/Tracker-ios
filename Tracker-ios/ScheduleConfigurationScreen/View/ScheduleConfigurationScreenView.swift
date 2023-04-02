@@ -11,7 +11,7 @@ final class ScheduleConfigurationScreenView: UIView {
     // MARK: - Properties and Initializers
     weak var delegate: ScheduleConfigurationScreenViewDelegate?
 
-    let titleLabel = UICreator.shared.makeLabel(text: "Расписание",
+    let titleLabel = UICreator.shared.makeLabel(text: NSLocalizedString("SCHEDULE", comment: ""),
                                                         font: UIFont.appFont(.medium, withSize: 16))
 
     let daysTableView: UITableView = {
@@ -23,7 +23,7 @@ final class ScheduleConfigurationScreenView: UIView {
         return tableView
     }()
 
-    let doneButton = UICreator.shared.makeButton(withTitle: "Готово",
+    let doneButton = UICreator.shared.makeButton(withTitle: NSLocalizedString("DONE", comment: ""),
                                                         action: #selector(doneButtonTapped))
 
     override init(frame: CGRect) {

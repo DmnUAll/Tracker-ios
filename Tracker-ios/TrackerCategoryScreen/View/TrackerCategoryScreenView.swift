@@ -11,12 +11,12 @@ final class TrackerCategoryScreenView: UIView {
     // MARK: - Properties and Initializers
     weak var delegate: TrackerCategoryScreenViewDelegate?
 
-    let titleLabel = UICreator.shared.makeLabel(text: "Категория",
+    let titleLabel = UICreator.shared.makeLabel(text: NSLocalizedString("CATEGORY", comment: ""),
                                                         font: UIFont.appFont(.medium, withSize: 16))
 
     let noDataImage = UICreator.shared.makeImageView(withImage: K.ImageNames.noDataImage)
 
-    let noDataLabel = UICreator.shared.makeLabel(text: "Привычки и события можно объединить по смыслу",
+    let noDataLabel = UICreator.shared.makeLabel(text: NSLocalizedString("WHAT_TO_CREATE", comment: ""),
                                                  font: UIFont.appFont(.medium, withSize: 12))
     let categoriesTableView: UITableView = {
         let tableView = UICreator.shared.makeTableView()
@@ -27,7 +27,7 @@ final class TrackerCategoryScreenView: UIView {
         return tableView
     }()
 
-    let addButton = UICreator.shared.makeButton(withTitle: "Добавить категорию",
+    let addButton = UICreator.shared.makeButton(withTitle: NSLocalizedString("ADD_CATEGORY", comment: ""),
                                                         action: #selector(addButtonTapped))
 
     override init(frame: CGRect) {

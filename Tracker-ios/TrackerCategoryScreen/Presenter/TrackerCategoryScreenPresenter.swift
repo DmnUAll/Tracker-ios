@@ -6,7 +6,7 @@ final class TrackerCategoryScreenPresenter {
     // MARK: - Properties and Initializers
     private weak var viewController: TrackerCategoryScreenController?
 
-    private var categoryNames: [String] = ["Test1", "Test2", "Test3", "Test4", "1", "2", "3", "4", "5", "6", "7", "8"]
+    private var categoryNames: [String] = ["Test1", "Test2", "Test3", "Test4"]
     private var previouslySelectedCategory: String = ""
     private var oldCategoryName: String = ""
 
@@ -19,7 +19,7 @@ final class TrackerCategoryScreenPresenter {
 // MARK: - Helpers
 extension TrackerCategoryScreenPresenter {
 
-    private func checkForData() {
+    func checkForData() {
         if categoryNames.isEmpty {
             viewController?.hideTableView()
         } else {
@@ -96,6 +96,7 @@ extension TrackerCategoryScreenPresenter: CategorySavingDelegate {
         if !categoryNames.contains(name) {
             categoryNames.append(name)
             viewController?.trackerCategoryScreenView.categoriesTableView.reloadData()
+            checkForData()
         }
     }
 }

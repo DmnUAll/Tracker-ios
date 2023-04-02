@@ -12,7 +12,7 @@ final class HabitCreationScreenView: UIView {
     // MARK: - Properties and Initializers
     weak var delegate: HabitCreationScreenViewDelegate?
 
-    private let titleLabel = UICreator.shared.makeLabel(text: "Новая привычка",
+    private let titleLabel = UICreator.shared.makeLabel(text: NSLocalizedString("NEW_HABIT", comment: ""),
                                                         font: UIFont.appFont(.medium, withSize: 16))
 
     private let scrollView: UIScrollView = {
@@ -28,7 +28,7 @@ final class HabitCreationScreenView: UIView {
 
     let trackerNameTextField: UITextField = {
         let textField = UICreator.shared.makeTextField()
-        textField.placeholder = "Введите название трекера"
+        textField.placeholder = NSLocalizedString("ENTER_TRACKER_NAME", comment: "")
         textField.layer.cornerRadius = 16
         textField.layer.masksToBounds = true
         textField.backgroundColor = .ypGrayField.withAlphaComponent(0.3)
@@ -39,7 +39,7 @@ final class HabitCreationScreenView: UIView {
     }()
 
     let errorLabel: UILabel = {
-       let label = UICreator.shared.makeLabel(text: "Ограничение 38 символов",
+       let label = UICreator.shared.makeLabel(text: NSLocalizedString("SYMBOLS_LIMIT_38", comment: ""),
                                               font: UIFont.appFont(.regular, withSize: 17),
                                               color: .ypRedLight)
         label.isHidden = true
@@ -65,7 +65,8 @@ final class HabitCreationScreenView: UIView {
         return collectionView
     }()
 
-    private let colorTitleLabel = UICreator.shared.makeLabel(text: "Цвет", font: UIFont.appFont(.bold, withSize: 19))
+    private let colorTitleLabel = UICreator.shared.makeLabel(text: NSLocalizedString("COLOR", comment: ""),
+                                                             font: UIFont.appFont(.bold, withSize: 19))
 
     let colorCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -82,7 +83,7 @@ final class HabitCreationScreenView: UIView {
                                                                   andSpacing: 8)
 
     private let cancelButton: UIButton = {
-        let button = UICreator.shared.makeButton(withTitle: "Отмена",
+        let button = UICreator.shared.makeButton(withTitle: NSLocalizedString("CANCEL", comment: ""),
                                                  fontColor: .ypRedLight,
                                                  backgroundColor: .ypWhite,
                                                  action: #selector(cancelButtonTapped))
@@ -92,7 +93,7 @@ final class HabitCreationScreenView: UIView {
     }()
 
     let createButton: UIButton = {
-        let button = UICreator.shared.makeButton(withTitle: "Создать",
+        let button = UICreator.shared.makeButton(withTitle: NSLocalizedString("CREATE", comment: ""),
                                                  backgroundColor: .ypGray,
                                                  action: #selector(createButtonTapped))
         button.isEnabled = false

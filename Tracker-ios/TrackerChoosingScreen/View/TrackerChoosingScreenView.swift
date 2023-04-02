@@ -12,12 +12,12 @@ final class TrackerChoosingScreenView: UIView {
     // MARK: - Properties and Initializers
     weak var delegate: TrackerChoosingScreenViewDelegate?
 
-    private let titleLabel = UICreator.shared.makeLabel(text: "Создание трекера",
+    private let titleLabel = UICreator.shared.makeLabel(text: NSLocalizedString("TRACKER_CREATION", comment: ""),
                                                         font: UIFont.appFont(.medium, withSize: 16))
     private let stackView = UICreator.shared.makeStackView()
-    private let habitButton = UICreator.shared.makeButton(withTitle: "Привычка",
+    private let habitButton = UICreator.shared.makeButton(withTitle: NSLocalizedString("HABIT", comment: ""),
                                                           action: #selector(habitButtonTapped))
-    private let eventButton = UICreator.shared.makeButton(withTitle: "Нерегулярное событие",
+    private let eventButton = UICreator.shared.makeButton(withTitle: NSLocalizedString("NONREGULAR_EVENT", comment: ""),
                                                           action: #selector(eventButtonTapped))
 
     override init(frame: CGRect) {

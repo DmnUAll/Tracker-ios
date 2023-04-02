@@ -22,10 +22,10 @@ extension TabBarController {
         let statisticsNavigationController = NavigationController(rootViewController: TrackersScreenController())
         self.viewControllers = [
             configureTab(withController: trackersNavigationController,
-                         title: "Трекеры",
+                         title: NSLocalizedString("TRACKERS", comment: ""),
                          andImage: UIImage(named: K.IconNames.trackerIcon) ?? UIImage()),
             configureTab(withController: statisticsNavigationController,
-                         title: " Статистика",
+                         title: NSLocalizedString("STATISTICS", comment: ""),
                          andImage: UIImage(named: K.IconNames.statisticsIcon) ?? UIImage())
         ]
     }

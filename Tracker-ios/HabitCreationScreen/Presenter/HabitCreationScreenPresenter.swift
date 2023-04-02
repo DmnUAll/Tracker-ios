@@ -14,21 +14,21 @@ final class HabitCreationScreenPresenter {
                                    .tr6, .tr7, .tr8, .tr9, .tr10, .tr11,
                                    .tr12, .tr13, .tr14, .tr15, .tr16, .tr17]
 
-    private let dayKeys = ["Понедельник": "Пн",
-                           "Вторник": "Вт",
-                           "Среда": "Ср",
-                           "Четверг": "Чт",
-                           "Пятница": "Пт",
-                           "Суббота": "Сб",
-                           "Воскресенье": "Вс"]
+    private let dayKeys = [NSLocalizedString("MONDAY", comment: ""): NSLocalizedString("MONDAY_SHORT", comment: ""),
+                           NSLocalizedString("TUESDAY", comment: ""): NSLocalizedString("TUESDAY_SHORT", comment: ""),
+                           NSLocalizedString("WEDNESDAY", comment: ""): NSLocalizedString("WEDNESDAY_SHORT", comment: ""),
+                           NSLocalizedString("THURSDAY", comment: ""): NSLocalizedString("THURSDAY_SHORT", comment: ""),
+                           NSLocalizedString("FRIDAY", comment: ""): NSLocalizedString("FRIDAY_SHORT", comment: ""),
+                           NSLocalizedString("SATURDAY", comment: ""): NSLocalizedString("SATURDAY_SHORT", comment: ""),
+                           NSLocalizedString("SUNDAY", comment: ""): NSLocalizedString("SUNDAY_SHORT", comment: "")]
 
-    private let scheduleKeys: [String: WeekDay] = ["Понедельник": .monday,
-                                                   "Вторник": .tuesday,
-                                                   "Среда": .wednesday,
-                                                   "Четверг": .thursday,
-                                                   "Пятница": .friday,
-                                                   "Суббота": .saturday,
-                                                   "Воскресенье": .sunday]
+    private let scheduleKeys: [String: WeekDay] = [NSLocalizedString("MONDAY", comment: ""): .monday,
+                                                   NSLocalizedString("TUESDAY", comment: ""): .tuesday,
+                                                   NSLocalizedString("WEDNESDAY", comment: ""): .wednesday,
+                                                   NSLocalizedString("THURSDAY", comment: ""): .thursday,
+                                                   NSLocalizedString("FRIDAY", comment: ""): .friday,
+                                                   NSLocalizedString("SATURDAY", comment: ""): .saturday,
+                                                   NSLocalizedString("SUNDAY", comment: ""): .sunday]
 
     private var selectedCategory: String = ""
     private var selectedDaysRaw: [String] = []
@@ -164,7 +164,7 @@ extension HabitCreationScreenPresenter: ScheduleConfigurationDelegate {
             }
         }
         if days.count == 7 {
-            cell.infoLabel.text = "Каждый день"
+            cell.infoLabel.text = NSLocalizedString("EVERYDAY", comment: "")
         } else {
             cell.infoLabel.text = String(selectedDays.joined(separator: ", "))
         }
