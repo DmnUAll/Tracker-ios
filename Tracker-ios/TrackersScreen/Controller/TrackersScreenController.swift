@@ -137,7 +137,7 @@ extension TrackersScreenController: UICollectionViewDelegateFlowLayout {
         let availableWidth = collectionView.frame.width - 40
         let cellWidth =  availableWidth / CGFloat(2)
         return CGSize(width: cellWidth,
-                      height: cellWidth * 2 / 3)
+                      height: cellWidth * 2 / 2.5)
     }
 
     func collectionView(_ collectionView: UICollectionView,

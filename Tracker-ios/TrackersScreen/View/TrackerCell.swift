@@ -36,7 +36,6 @@ final class TrackerCell: UICollectionViewCell {
         button.tintColor = .white
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 17
-        button.isAccessibilityElement = true
         return button
     }()
 

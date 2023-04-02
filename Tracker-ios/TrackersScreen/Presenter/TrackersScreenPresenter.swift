@@ -35,11 +35,11 @@ final class TrackersScreenPresenter {
         // swiftlint:disable line_length
         allCategories.append(TrackerCategory(name: "Test1", trackers: [Tracker(id: UUID(), name: "Test0 Test0 Test0 Test0 Test0 Test0 Test0 Test0 Test0", color: .ypBlue, emoji: "😀", schedule: [.monday, .tuesday]),
                                                                     Tracker(id: UUID(), name: "Test1 Test1", color: .green, emoji: "😍", schedule: [.tuesday, .wednesday])]))
-        allCategories.append(TrackerCategory(name: "Test2", trackers: [Tracker(id: UUID(), name: "Test2 Test2", color: .red, emoji: "👻", schedule: [.wednesday, .thursday]),
+        allCategories.append(TrackerCategory(name: "Test2Test2", trackers: [Tracker(id: UUID(), name: "Test2 Test2", color: .red, emoji: "👻", schedule: [.wednesday, .thursday]),
                                                                     Tracker(id: UUID(), name: "Test3 Test3 Test3 Test3 Test3 Test3", color: .purple, emoji: "😼", schedule: [.thursday, .friday])]))
-        allCategories.append(TrackerCategory(name: "Test3", trackers: [Tracker(id: UUID(), name: "Test4 Test4", color: .systemPink, emoji: "💀", schedule: [.friday, .saturday]),
+        allCategories.append(TrackerCategory(name: "Test3Test3Test3", trackers: [Tracker(id: UUID(), name: "Test4 Test4", color: .systemPink, emoji: "💀", schedule: [.friday, .saturday]),
                                                                     Tracker(id: UUID(), name: "Test5 Test5 Test5 Test5 Test5 Test5", color: .gray, emoji: "👎", schedule: [.saturday, .sunday])]))
-        allCategories.append(TrackerCategory(name: "Test4", trackers: [Tracker(id: UUID(), name: "Test6 Test6", color: .brown, emoji: "🤠", schedule: [.monday, .saturday]),
+        allCategories.append(TrackerCategory(name: "Test4Test4Test4Test4", trackers: [Tracker(id: UUID(), name: "Test6 Test6", color: .brown, emoji: "🤠", schedule: [.monday, .saturday]),
                                                                     Tracker(id: UUID(), name: "Test7 Test7 Test7 Test7 Test7 Test7", color: .black, emoji: "🙄", schedule: [.saturday, .monday])]))
         // swiftlint:enable line_length
         searchTracks(named: "")
