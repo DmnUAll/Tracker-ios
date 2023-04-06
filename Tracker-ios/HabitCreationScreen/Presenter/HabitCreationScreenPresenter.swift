@@ -14,13 +14,14 @@ final class HabitCreationScreenPresenter {
                                    .tr6, .tr7, .tr8, .tr9, .tr10, .tr11,
                                    .tr12, .tr13, .tr14, .tr15, .tr16, .tr17]
 
-    private let dayKeys = [NSLocalizedString("MONDAY", comment: ""): NSLocalizedString("MONDAY_SHORT", comment: ""),
-                           NSLocalizedString("TUESDAY", comment: ""): NSLocalizedString("TUESDAY_SHORT", comment: ""),
-                           NSLocalizedString("WEDNESDAY", comment: ""): NSLocalizedString("WEDNESDAY_SHORT", comment: ""),
-                           NSLocalizedString("THURSDAY", comment: ""): NSLocalizedString("THURSDAY_SHORT", comment: ""),
-                           NSLocalizedString("FRIDAY", comment: ""): NSLocalizedString("FRIDAY_SHORT", comment: ""),
-                           NSLocalizedString("SATURDAY", comment: ""): NSLocalizedString("SATURDAY_SHORT", comment: ""),
-                           NSLocalizedString("SUNDAY", comment: ""): NSLocalizedString("SUNDAY_SHORT", comment: "")]
+    private let dayKeys = [
+        NSLocalizedString("MONDAY", comment: ""): NSLocalizedString("MONDAY_SHORT", comment: ""),
+        NSLocalizedString("TUESDAY", comment: ""): NSLocalizedString("TUESDAY_SHORT", comment: ""),
+        NSLocalizedString("WEDNESDAY", comment: ""): NSLocalizedString("WEDNESDAY_SHORT", comment: ""),
+        NSLocalizedString("THURSDAY", comment: ""): NSLocalizedString("THURSDAY_SHORT", comment: ""),
+        NSLocalizedString("FRIDAY", comment: ""): NSLocalizedString("FRIDAY_SHORT", comment: ""),
+        NSLocalizedString("SATURDAY", comment: ""): NSLocalizedString("SATURDAY_SHORT", comment: ""),
+        NSLocalizedString("SUNDAY", comment: ""): NSLocalizedString("SUNDAY_SHORT", comment: "")]
 
     private let scheduleKeys: [String: WeekDay] = [NSLocalizedString("MONDAY", comment: ""): .monday,
                                                    NSLocalizedString("TUESDAY", comment: ""): .tuesday,
@@ -39,6 +40,12 @@ final class HabitCreationScreenPresenter {
 
     init(viewController: HabitCreationScreenController? = nil) {
         self.viewController = viewController
+        if viewController?.isNonRegularEvent ?? false {
+            let day = WeekDay.giveCurrentWeekDay(forDate: Date())
+            if let dayKey = dayKeys[day.localizedString()] {
+                selectedDays.append(dayKey)
+            }
+        }
     }
 }
 
@@ -70,8 +77,11 @@ extension HabitCreationScreenPresenter {
         if indexPath.row == 0 {
             cell = (tableView.dequeueReusableCell(withIdentifier: K.CollectionElementNames.categoryCell,
                                                   for: indexPath) as? CategoryCell) ?? UITableViewCell()
-            cell.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
-
+            if viewController?.isNonRegularEvent ?? false {
+                cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: tableView.bounds.width)
+            } else {
+                cell.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+            }
         } else {
             cell = (tableView.dequeueReusableCell(withIdentifier: K.CollectionElementNames.scheduleCell,
                                                   for: indexPath) as? ScheduleCell) ?? UITableViewCell()
@@ -129,13 +139,15 @@ extension HabitCreationScreenPresenter {
     }
 
     func createNewTracker() -> TrackerCategory {
+        let isSingleDate = viewController?.isNonRegularEvent ?? false
+        let schedule = isSingleDate ? [WeekDay.giveCurrentWeekDay(forDate: Date())] : selectedSchedule
         return TrackerCategory(name: selectedCategory,
                                trackers: [
                                 Tracker(id: UUID(),
                                         name: viewController?.habitCreationScreenView.trackerNameTextField.text ?? "",
                                         color: selectedColor ?? UIColor(),
                                         emoji: selectedEmoji,
-                                        schedule: selectedSchedule)
+                                        schedule: schedule)
                                ])
     }
 }

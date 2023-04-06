@@ -39,6 +39,6 @@ extension TrackerChoosingScreenController: TrackerChoosingScreenViewDelegate {
     }
 
     func proceedToEvent() {
-        print(#function)
+        present(HabitCreationScreenController(isNonRegularEvent: true), animated: true)
     }
 }

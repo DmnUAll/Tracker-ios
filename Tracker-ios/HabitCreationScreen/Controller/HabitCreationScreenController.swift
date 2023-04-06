@@ -10,6 +10,12 @@ final class HabitCreationScreenController: UIViewController {
 
     let habitCreationScreenView = HabitCreationScreenView()
     private var presenter: HabitCreationScreenPresenter?
+    var isNonRegularEvent: Bool = false
+
+    convenience init(isNonRegularEvent: Bool) {
+        self.init()
+        self.isNonRegularEvent = isNonRegularEvent
+    }
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -26,6 +32,11 @@ final class HabitCreationScreenController: UIViewController {
         habitCreationScreenView.emojiCollectionView.delegate = self
         habitCreationScreenView.colorCollectionView.dataSource = self
         habitCreationScreenView.colorCollectionView.delegate = self
+        if isNonRegularEvent {
+            habitCreationScreenView.optionsTableView.heightAnchor.constraint(equalToConstant: 75).isActive = true
+        } else {
+            habitCreationScreenView.optionsTableView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        }
     }
 }
 
@@ -39,6 +50,16 @@ extension HabitCreationScreenController {
             habitCreationScreenView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             habitCreationScreenView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+    }
+
+    func checkIfCanUnlockCreateeButton() {
+        if presenter?.checkIfCanCreateHabit() ?? false {
+            habitCreationScreenView.createButton.backgroundColor = .ypBlack
+            habitCreationScreenView.createButton.isEnabled = true
+        } else {
+            habitCreationScreenView.createButton.backgroundColor = .ypGray
+            habitCreationScreenView.createButton.isEnabled = false
+        }
     }
 }
 
@@ -71,16 +92,6 @@ extension HabitCreationScreenController: UITextFieldDelegate {
         return false
     }
 
-    func checkIfCanUnlockCreateeButton() {
-        if presenter?.checkIfCanCreateHabit() ?? false {
-            habitCreationScreenView.createButton.backgroundColor = .ypBlack
-            habitCreationScreenView.createButton.isEnabled = true
-        } else {
-            habitCreationScreenView.createButton.backgroundColor = .ypGray
-            habitCreationScreenView.createButton.isEnabled = false
-        }
-    }
-
     func textFieldDidEndEditing(_ textField: UITextField) {
         checkIfCanUnlockCreateeButton()
     }
@@ -90,7 +101,11 @@ extension HabitCreationScreenController: UITextFieldDelegate {
 extension HabitCreationScreenController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        2
+        if isNonRegularEvent {
+            return 1
+        } else {
+            return 2
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

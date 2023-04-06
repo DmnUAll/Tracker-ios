@@ -168,7 +168,6 @@ extension HabitCreationScreenView {
             optionsTableView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             optionsTableView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 24),
             optionsTableView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            optionsTableView.heightAnchor.constraint(equalToConstant: 150),
             emojiTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 28),
             emojiTitleLabel.topAnchor.constraint(equalTo: optionsTableView.bottomAnchor, constant: 32),
             emojiCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),

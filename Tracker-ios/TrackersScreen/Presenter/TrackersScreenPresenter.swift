@@ -9,26 +9,6 @@ final class TrackersScreenPresenter {
     private var allCategories: [TrackerCategory] = []
     private var completedTrackers: Set<TrackerRecord> = []
     private var currentDate: Date = Date()
-    private var currentWeekDay: WeekDay {
-        switch currentDate.weekDayIndex {
-        case 1:
-            return .sunday
-        case 2:
-            return .monday
-        case 3:
-            return .tuesday
-        case 4:
-            return .wednesday
-        case 5:
-            return .thursday
-        case 6:
-            return .saturday
-        case 7:
-            return .sunday
-        default:
-            return .monday
-        }
-    }
 
     init(viewController: TrackersScreenController? = nil) {
         self.viewController = viewController
@@ -117,7 +97,9 @@ extension TrackersScreenPresenter {
         categories = []
         if searchText == "" {
             allCategories.forEach { category in
-                let filteredCategory = category.trackers.filter { $0.schedule.contains(currentWeekDay) }
+                let filteredCategory = category.trackers.filter {
+                    $0.schedule.contains(WeekDay.giveCurrentWeekDay(forDate: currentDate))
+                }
                 if filteredCategory.count > 0 {
                     categories.append(TrackerCategory(name: category.name, trackers: filteredCategory))
                 }
@@ -125,7 +107,8 @@ extension TrackersScreenPresenter {
         } else {
             allCategories.forEach { category in
                 let filteredCategory = category.trackers.filter {
-                    $0.name.contains(searchText) && $0.schedule.contains(currentWeekDay)
+                    $0.name.contains(searchText) &&
+                    $0.schedule.contains(WeekDay.giveCurrentWeekDay(forDate: currentDate))
                 }
                 if filteredCategory.count > 0 {
                     categories.append(TrackerCategory(name: category.name, trackers: filteredCategory))
