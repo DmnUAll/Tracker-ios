@@ -5,13 +5,15 @@ final class TrackerCategoryScreenPresenter {
 
     // MARK: - Properties and Initializers
     private weak var viewController: TrackerCategoryScreenController?
-
-    private var categoryNames: [String] = ["Test1", "Test2", "Test3", "Test4"]
+    private let trackerCategoryStore = TrackerCategoryStore()
+    private var categoryNames: [String] = []
     private var previouslySelectedCategory: String = ""
     private var oldCategoryName: String = ""
 
     init(viewController: TrackerCategoryScreenController? = nil) {
         self.viewController = viewController
+        trackerCategoryStore.delegate = self
+        categoryNames = trackerCategoryStore.categories.map { $0.name }
         checkForData()
     }
 }
@@ -32,6 +34,7 @@ extension TrackerCategoryScreenPresenter {
     }
 
     func giveNumberOfItems() -> Int {
+        categoryNames = trackerCategoryStore.categories.map { $0.name }
         return categoryNames.count
     }
 
@@ -65,7 +68,7 @@ extension TrackerCategoryScreenPresenter {
     }
 
     func deleteItem(at index: Int) {
-        categoryNames.remove(at: index)
+        trackerCategoryStore.deleteCategory(withName: categoryNames[index])
     }
 
     func editItem(at index: Int) {
@@ -82,9 +85,7 @@ extension TrackerCategoryScreenPresenter: CategorySavingDelegate {
     }
 
     func updateCategory(toName newCategoryName: String) {
-        let index = categoryNames.firstIndex(of: oldCategoryName) ?? 0
-        categoryNames.remove(at: index)
-        categoryNames.insert(newCategoryName, at: index)
+        trackerCategoryStore.updateExisitingCategoryName(from: oldCategoryName, to: newCategoryName)
         viewController?.trackerCategoryScreenView.categoriesTableView.reloadData()
     }
 
@@ -95,8 +96,22 @@ extension TrackerCategoryScreenPresenter: CategorySavingDelegate {
     func saveNewCategory(named name: String) {
         if !categoryNames.contains(name) {
             categoryNames.append(name)
+            try? trackerCategoryStore.addNewCategory(TrackerCategory(name: name, trackers: []))
             viewController?.trackerCategoryScreenView.categoriesTableView.reloadData()
             checkForData()
+        }
+    }
+}
+
+// MARK: TrackerCategoryStoreDelegate
+extension TrackerCategoryScreenPresenter: TrackerCategoryStoreDelegate {
+    func didUpdate(_ update: TrackerCategoryStoreUpdate) {
+        guard let tableView = viewController?.trackerCategoryScreenView.categoriesTableView else { return }
+        tableView.performBatchUpdates {
+            let insertedIndexPaths = update.insertedIndexes.map { IndexPath(item: $0, section: 0) }
+            let deletedIndexPaths = update.deletedIndexes.map { IndexPath(item: $0, section: 0) }
+            tableView.insertRows(at: insertedIndexPaths, with: .automatic)
+            tableView.deleteRows(at: deletedIndexPaths, with: .fade)
         }
     }
 }
