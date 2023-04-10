@@ -5,7 +5,7 @@ final class TrackerCategoryScreenPresenter {
 
     // MARK: - Properties and Initializers
     private weak var viewController: TrackerCategoryScreenController?
-    private let trackerCategoryStore = TrackerCategoryStore()
+    private let trackerCategoryStore = TrackerCategoryStore.shared
     private var categoryNames: [String] = []
     private var previouslySelectedCategory: String = ""
     private var oldCategoryName: String = ""
@@ -96,7 +96,7 @@ extension TrackerCategoryScreenPresenter: CategorySavingDelegate {
     func saveNewCategory(named name: String) {
         if !categoryNames.contains(name) {
             categoryNames.append(name)
-            try? trackerCategoryStore.addNewCategory(TrackerCategory(name: name, trackers: []))
+            trackerCategoryStore.addNewCategory(TrackerCategory(name: name, trackers: []))
             viewController?.trackerCategoryScreenView.categoriesTableView.reloadData()
             checkForData()
         }

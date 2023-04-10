@@ -20,12 +20,21 @@ protocol TrackerCategoryStoreDelegate: AnyObject {
 
 // MARK: - TrackerCategoryStore
 final class TrackerCategoryStore: NSObject {
+    static let shared = TrackerCategoryStore()
     private let context: NSManagedObjectContext
     private var fetchedResultsController: NSFetchedResultsController<TrackerCategoryCD>!
 
     weak var delegate: TrackerCategoryStoreDelegate?
     private var insertedIndexes: IndexSet?
     private var deletedIndexes: IndexSet?
+
+    var categories: [TrackerCategory] {
+        guard
+            let objects = self.fetchedResultsController.fetchedObjects,
+            let categories = try? objects.map({ try self.getCategory(from: $0) })
+        else { return [] }
+        return categories
+    }
 
     convenience override init() {
         let context = CoreDataManager.context
@@ -52,29 +61,26 @@ final class TrackerCategoryStore: NSObject {
         try controller.performFetch()
     }
 
-    var categories: [TrackerCategory] {
-        guard
-            let objects = self.fetchedResultsController.fetchedObjects,
-            let categories = try? objects.map({ try self.getCategory(from: $0) })
-        else { return [] }
-        return categories
-    }
-
-    func addNewCategory(_ trackerCategory: TrackerCategory) throws {
+    func addNewCategory(_ trackerCategory: TrackerCategory) {
         let trackerCategoryCD = TrackerCategoryCD(context: context)
         updateExistingCategory(trackerCategoryCD, with: trackerCategory)
-        try context.save()
+    }
+
+    func checkForExistingCategory(named name: String) -> TrackerCategoryCD? {
+        let request = NSFetchRequest<TrackerCategoryCD>(entityName: "TrackerCategoryCD")
+        request.returnsObjectsAsFaults = false
+        request.predicate = NSPredicate(format: "name == %@", name)
+        guard let category = try? context.fetch(request).first else { return nil }
+        return category
     }
 
     func updateExisitingCategoryName(from oldName: String, to newName: String) {
         let request = NSFetchRequest<TrackerCategoryCD>(entityName: "TrackerCategoryCD")
         request.returnsObjectsAsFaults = false
-        request.predicate = NSPredicate(format: "name == \(oldName)")
+        request.predicate = NSPredicate(format: "name == %@", oldName)
         guard let category = try? context.fetch(request).first else { return }
         let trackers = category.trackers?.allObjects as? [Tracker] ?? []
         updateExistingCategory(category, with: TrackerCategory(name: newName, trackers: trackers))
-        try? context.save()
-        print(category, trackers)
     }
 
     func updateExistingCategory(_ trackerCategoryCD: TrackerCategoryCD, with category: TrackerCategory) {
@@ -90,12 +96,13 @@ final class TrackerCategoryStore: NSObject {
             trackers.append(trackerCD)
         }
         trackerCategoryCD.trackers = NSSet(array: trackers)
+        try? context.save()
     }
 
     func deleteCategory(withName categoryName: String) {
         let request = NSFetchRequest<TrackerCategoryCD>(entityName: "TrackerCategoryCD")
         request.returnsObjectsAsFaults = false
-        request.predicate = NSPredicate(format: "name == \(categoryName)")
+        request.predicate = NSPredicate(format: "name == %@", categoryName)
         guard let category = try? context.fetch(request).first else { return }
         context.delete(category)
         try? context.save()
@@ -106,6 +113,7 @@ final class TrackerCategoryStore: NSObject {
             throw TrackerCategoryStoreError.decodingErrorInvalidCategoryName
         }
         guard let categoryTrackers = trackerCategoryCD.trackers?.allObjects as? [Tracker] else {
+            print(trackerCategoryCD.trackers?.allObjects.first)
             throw TrackerCategoryStoreError.decodingErrorInvalidUUID
         }
         return TrackerCategory(

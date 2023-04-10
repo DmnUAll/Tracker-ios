@@ -5,6 +5,7 @@ final class TrackersScreenPresenter {
 
     // MARK: - Properties and Initializers
     private weak var viewController: TrackersScreenController?
+    private let trackerCategoryStore = TrackerCategoryStore.shared
     private var categories: [TrackerCategory] = []
     private var allCategories: [TrackerCategory] = []
     private var completedTrackers: Set<TrackerRecord> = []
@@ -12,16 +13,8 @@ final class TrackersScreenPresenter {
 
     init(viewController: TrackersScreenController? = nil) {
         self.viewController = viewController
-        // swiftlint:disable line_length
-        allCategories.append(TrackerCategory(name: "Test1", trackers: [Tracker(id: UUID(), name: "Test0 Test0 Test0 Test0 Test0 Test0 Test0 Test0 Test0", color: .ypBlue, emoji: "😀", schedule: [.monday, .tuesday]),
-                                                                    Tracker(id: UUID(), name: "Test1 Test1", color: .green, emoji: "😍", schedule: [.tuesday, .wednesday])]))
-        allCategories.append(TrackerCategory(name: "Test2Test2", trackers: [Tracker(id: UUID(), name: "Test2 Test2", color: .red, emoji: "👻", schedule: [.wednesday, .thursday]),
-                                                                    Tracker(id: UUID(), name: "Test3 Test3 Test3 Test3 Test3 Test3", color: .purple, emoji: "😼", schedule: [.thursday, .friday])]))
-        allCategories.append(TrackerCategory(name: "Test3Test3Test3", trackers: [Tracker(id: UUID(), name: "Test4 Test4", color: .systemPink, emoji: "💀", schedule: [.friday, .saturday]),
-                                                                    Tracker(id: UUID(), name: "Test5 Test5 Test5 Test5 Test5 Test5", color: .gray, emoji: "👎", schedule: [.saturday, .sunday])]))
-        allCategories.append(TrackerCategory(name: "Test4Test4Test4Test4", trackers: [Tracker(id: UUID(), name: "Test6 Test6", color: .brown, emoji: "🤠", schedule: [.monday, .saturday]),
-                                                                    Tracker(id: UUID(), name: "Test7 Test7 Test7 Test7 Test7 Test7", color: .black, emoji: "🙄", schedule: [.saturday, .monday])]))
-        // swiftlint:enable line_length
+        trackerCategoryStore.delegate = self
+        allCategories = trackerCategoryStore.categories
         searchTracks(named: "")
     }
 }
@@ -128,21 +121,26 @@ extension TrackersScreenPresenter {
     }
 
     func addNewTracker(_ data: TrackerCategory) {
+        allCategories = trackerCategoryStore.categories
         var updatedAllCategories = allCategories
-        let index: Int? = updatedAllCategories.firstIndex { category in
+        let trackerIndex: Int? = updatedAllCategories.firstIndex { category in
             category.name == data.name
         }
-        guard let index else {
+        guard let trackerIndex else {
             updatedAllCategories.append(data)
             allCategories = updatedAllCategories
+            trackerCategoryStore.addNewCategory(data)
             searchTracks(named: viewController?.trackersScreenView.searchTextField.text ?? "")
             return
         }
-        var trackersList = updatedAllCategories[index].trackers
+        var trackersList = updatedAllCategories[trackerIndex].trackers
         trackersList.append(contentsOf: data.trackers)
-        updatedAllCategories[index] = TrackerCategory(name: data.name,
+        updatedAllCategories[trackerIndex] = TrackerCategory(name: data.name,
                                                       trackers: trackersList)
         allCategories = updatedAllCategories
+        if let existingCategory = trackerCategoryStore.checkForExistingCategory(named: data.name) {
+            trackerCategoryStore.updateExistingCategory(existingCategory, with: data)
+        }
         searchTracks(named: viewController?.trackersScreenView.searchTextField.text ?? "")
     }
 }
@@ -157,5 +155,10 @@ extension TrackersScreenPresenter: TrackerCellDelegate {
             completedTrackers.insert(proceededTask)
         }
         viewController?.trackersScreenView.collectionView.reloadData()
+    }
+}
+
+extension TrackersScreenPresenter: TrackerCategoryStoreDelegate {
+    func didUpdate(_ update: TrackerCategoryStoreUpdate) {
     }
 }
