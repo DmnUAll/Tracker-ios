@@ -14,9 +14,8 @@ final class TrackersScreenPresenter {
 
     init(viewController: TrackersScreenController? = nil) {
         self.viewController = viewController
-        allCategories = trackerCategoryStore.categories
         completedTrackers = Set(trackerRecordStore.trackers)
-        searchTracks(named: "")
+        updateDataForUI()
     }
 }
 

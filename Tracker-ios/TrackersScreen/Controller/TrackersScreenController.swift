@@ -60,7 +60,6 @@ extension TrackersScreenController {
     func updateCollectionView() {
         presenter?.updateDataForUI()
         trackersScreenView.collectionView.reloadData()
-        print(123)
     }
 }
 
