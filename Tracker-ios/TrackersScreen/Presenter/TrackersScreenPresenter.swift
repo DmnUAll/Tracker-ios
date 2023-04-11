@@ -6,6 +6,7 @@ final class TrackersScreenPresenter {
     // MARK: - Properties and Initializers
     private weak var viewController: TrackersScreenController?
     private let trackerCategoryStore = TrackerCategoryStore.shared
+    private let trackerRecordStore = TrackerRecordStore()
     private var categories: [TrackerCategory] = []
     private var allCategories: [TrackerCategory] = []
     private var completedTrackers: Set<TrackerRecord> = []
@@ -15,6 +16,7 @@ final class TrackersScreenPresenter {
         self.viewController = viewController
         trackerCategoryStore.delegate = self
         allCategories = trackerCategoryStore.categories
+        completedTrackers = Set(trackerRecordStore.trackers)
         searchTracks(named: "")
     }
 }
@@ -139,7 +141,8 @@ extension TrackersScreenPresenter {
                                                       trackers: trackersList)
         allCategories = updatedAllCategories
         if let existingCategory = trackerCategoryStore.checkForExistingCategory(named: data.name) {
-            trackerCategoryStore.updateExistingCategory(existingCategory, with: data)
+            trackerCategoryStore.updateExistingCategory(existingCategory, with: TrackerCategory(name: data.name,
+                                                                                                trackers: trackersList))
         }
         searchTracks(named: viewController?.trackersScreenView.searchTextField.text ?? "")
     }
@@ -151,8 +154,10 @@ extension TrackersScreenPresenter: TrackerCellDelegate {
         let proceededTask = TrackerRecord(id: trackerID, date: currentDate.dateString)
         if completedTrackers.contains(proceededTask) {
             completedTrackers.remove(proceededTask)
+            trackerRecordStore.deleteTracker(proceededTask)
         } else {
             completedTrackers.insert(proceededTask)
+            trackerRecordStore.addNewRecord(proceededTask)
         }
         viewController?.trackersScreenView.collectionView.reloadData()
     }

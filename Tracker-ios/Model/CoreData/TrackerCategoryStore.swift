@@ -112,13 +112,24 @@ final class TrackerCategoryStore: NSObject {
         guard let categoryName = trackerCategoryCD.name else {
             throw TrackerCategoryStoreError.decodingErrorInvalidCategoryName
         }
-        guard let categoryTrackers = trackerCategoryCD.trackers?.allObjects as? [Tracker] else {
-            print(trackerCategoryCD.trackers?.allObjects.first)
+        guard let categoryTrackers = trackerCategoryCD.trackers?.allObjects as? [TrackerCD] else {
             throw TrackerCategoryStoreError.decodingErrorInvalidUUID
+        }
+        var trackers: [Tracker] = []
+        categoryTrackers.forEach { tracker in
+            var schedule: [WeekDay] = []
+            tracker.schedule?.forEach { day in
+                schedule.append(WeekDay(rawValue: day) ?? .monday)
+            }
+            trackers.append(Tracker(id: tracker.id ?? UUID(),
+                                    name: tracker.name ?? "",
+                                    color: UIColor().color(from: tracker.color ?? ""),
+                                    emoji: tracker.emoji ?? "",
+                                    schedule: schedule))
         }
         return TrackerCategory(
             name: categoryName,
-            trackers: categoryTrackers
+            trackers: trackers
         )
     }
 }
