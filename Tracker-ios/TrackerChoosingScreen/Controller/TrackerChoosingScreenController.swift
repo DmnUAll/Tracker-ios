@@ -17,6 +17,13 @@ final class TrackerChoosingScreenController: UIViewController {
         setupConstraints()
         trackerChoosingScreenView.delegate = self
     }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        if let topController = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first?.rootViewController {
+            let destinationViewController = topController.children.first?.children.first as? TrackersScreenController
+            destinationViewController?.updateCollectionView()
+        }
+    }
 }
 
 // MARK: - Helpers

@@ -79,8 +79,9 @@ final class TrackerCategoryStore: NSObject {
         request.returnsObjectsAsFaults = false
         request.predicate = NSPredicate(format: "name == %@", oldName)
         guard let category = try? context.fetch(request).first else { return }
-        let trackers = category.trackers?.allObjects as? [Tracker] ?? []
-        updateExistingCategory(category, with: TrackerCategory(name: newName, trackers: trackers))
+        let categoryTrackers = category.trackers?.allObjects as? [TrackerCD] ?? []
+        updateExistingCategory(category, with: TrackerCategory(name: newName,
+                                                               trackers: castTrackerCD(categoryTrackers)))
     }
 
     func updateExistingCategory(_ trackerCategoryCD: TrackerCategoryCD, with category: TrackerCategory) {
@@ -115,8 +116,15 @@ final class TrackerCategoryStore: NSObject {
         guard let categoryTrackers = trackerCategoryCD.trackers?.allObjects as? [TrackerCD] else {
             throw TrackerCategoryStoreError.decodingErrorInvalidUUID
         }
+        return TrackerCategory(
+            name: categoryName,
+            trackers: castTrackerCD(categoryTrackers)
+        )
+    }
+
+    func castTrackerCD(_ trackerCD: [TrackerCD]) -> [Tracker] {
         var trackers: [Tracker] = []
-        categoryTrackers.forEach { tracker in
+        trackerCD.forEach { tracker in
             var schedule: [WeekDay] = []
             tracker.schedule?.forEach { day in
                 schedule.append(WeekDay(rawValue: day) ?? .monday)
@@ -127,10 +135,7 @@ final class TrackerCategoryStore: NSObject {
                                     emoji: tracker.emoji ?? "",
                                     schedule: schedule))
         }
-        return TrackerCategory(
-            name: categoryName,
-            trackers: trackers
-        )
+        return trackers
     }
 }
 

@@ -14,7 +14,6 @@ final class TrackersScreenPresenter {
 
     init(viewController: TrackersScreenController? = nil) {
         self.viewController = viewController
-        trackerCategoryStore.delegate = self
         allCategories = trackerCategoryStore.categories
         completedTrackers = Set(trackerRecordStore.trackers)
         searchTracks(named: "")
@@ -146,6 +145,11 @@ extension TrackersScreenPresenter {
         }
         searchTracks(named: viewController?.trackersScreenView.searchTextField.text ?? "")
     }
+
+    func updateDataForUI() {
+        allCategories = trackerCategoryStore.categories
+        searchTracks(named: viewController?.trackersScreenView.searchTextField.text ?? "")
+    }
 }
 
 // MARK: - TrackerCellDelegate
@@ -160,10 +164,5 @@ extension TrackersScreenPresenter: TrackerCellDelegate {
             trackerRecordStore.addNewRecord(proceededTask)
         }
         viewController?.trackersScreenView.collectionView.reloadData()
-    }
-}
-
-extension TrackersScreenPresenter: TrackerCategoryStoreDelegate {
-    func didUpdate(_ update: TrackerCategoryStoreUpdate) {
     }
 }
