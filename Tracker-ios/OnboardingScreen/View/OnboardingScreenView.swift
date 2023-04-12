@@ -12,7 +12,7 @@ final class OnboardingScreenView: UIView {
     weak var delegate: OnboardingScreenViewDelegate?
     let scrollView = UICreator.shared.makeScrollView()
     private let pageControl = UICreator.shared.makePageControll()
-    private let continueButton = UICreator.shared.makeButton(withTitle: "Вот это технологии!",
+    private let continueButton = UICreator.shared.makeButton(withTitle: "WHAT_A_TECHNOLOGY".localized,
                                                              action: #selector(continueButtonTapped))
 
     override init(frame: CGRect) {

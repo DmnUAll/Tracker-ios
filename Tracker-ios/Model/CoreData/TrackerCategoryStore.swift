@@ -67,7 +67,7 @@ final class TrackerCategoryStore: NSObject {
     }
 
     func checkForExistingCategory(named name: String) -> TrackerCategoryCD? {
-        let request = NSFetchRequest<TrackerCategoryCD>(entityName: "TrackerCategoryCD")
+        let request = NSFetchRequest<TrackerCategoryCD>(entityName: K.EntityNames.trackerCategoryCD)
         request.returnsObjectsAsFaults = false
         request.predicate = NSPredicate(format: "name == %@", name)
         guard let category = try? context.fetch(request).first else { return nil }
@@ -75,7 +75,7 @@ final class TrackerCategoryStore: NSObject {
     }
 
     func updateExisitingCategoryName(from oldName: String, to newName: String) {
-        let request = NSFetchRequest<TrackerCategoryCD>(entityName: "TrackerCategoryCD")
+        let request = NSFetchRequest<TrackerCategoryCD>(entityName: K.EntityNames.trackerCategoryCD)
         request.returnsObjectsAsFaults = false
         request.predicate = NSPredicate(format: "name == %@", oldName)
         guard let category = try? context.fetch(request).first else { return }
@@ -101,7 +101,7 @@ final class TrackerCategoryStore: NSObject {
     }
 
     func deleteCategory(withName categoryName: String) {
-        let request = NSFetchRequest<TrackerCategoryCD>(entityName: "TrackerCategoryCD")
+        let request = NSFetchRequest<TrackerCategoryCD>(entityName: K.EntityNames.trackerCategoryCD)
         request.returnsObjectsAsFaults = false
         request.predicate = NSPredicate(format: "name == %@", categoryName)
         guard let category = try? context.fetch(request).first else { return }
@@ -146,11 +146,14 @@ extension TrackerCategoryStore: NSFetchedResultsControllerDelegate {
     }
 
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        delegate?.didUpdate(TrackerCategoryStoreUpdate(
-                insertedIndexes: insertedIndexes!,
-                deletedIndexes: deletedIndexes!
+        if let insertedIndexes,
+           let deletedIndexes {
+            delegate?.didUpdate(TrackerCategoryStoreUpdate(
+                insertedIndexes: insertedIndexes,
+                deletedIndexes: deletedIndexes
             )
-        )
+            )
+        }
         insertedIndexes = nil
         deletedIndexes = nil
     }

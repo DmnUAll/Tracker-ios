@@ -14,18 +14,15 @@ final class TabBarController: UITabBarController {
 extension TabBarController {
 
     private func configureTabBarController() {
-//        tabBar.shadowImage = UIImage()
-//        tabBar.backgroundImage = UIImage()
-//        tabBar.tintColor = .ypWhite
         tabBar.backgroundColor = .ypWhite
         let trackersNavigationController = NavigationController(rootViewController: TrackersScreenController())
         let statisticsNavigationController = NavigationController(rootViewController: TrackersScreenController())
         self.viewControllers = [
             configureTab(withController: trackersNavigationController,
-                         title: NSLocalizedString("TRACKERS", comment: ""),
+                         title: "TRACKERS".localized,
                          andImage: UIImage(named: K.IconNames.trackerIcon) ?? UIImage()),
             configureTab(withController: statisticsNavigationController,
-                         title: NSLocalizedString("STATISTICS", comment: ""),
+                         title: "STATISTICS".localized,
                          andImage: UIImage(named: K.IconNames.statisticsIcon) ?? UIImage())
         ]
     }

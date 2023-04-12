@@ -1,15 +1,15 @@
 extension Int {
     func days() -> String {
         if self % 100 / 10 == 1 {
-            return "дней"
+            return "DAYS".localized
         }
         switch self % 10 {
         case 1:
-            return "день"
+            return "DAY".localized
         case 2...4:
-            return "дня"
+            return "DAYS_LANGUAGE_SENSITIVE".localized
         default:
-            return "дней"
+            return "DAYS".localized
         }
     }
 }

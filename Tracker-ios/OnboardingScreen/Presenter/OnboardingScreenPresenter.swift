@@ -6,8 +6,8 @@ final class OnboardingScreenPresenter {
     // MARK: - Properties and Initializers
     private weak var viewController: OnboardingScreenController?
     private let onboardingTexts = [
-        "Отслеживайте только то, что хотите",
-        "Даже если это не литры воды и йога"
+        "MONITOR_WHAT_YOU_NEED".localized,
+        "EVEN_IF_THIS_IS_NOT_YOGA".localized
     ]
 
     init(viewController: OnboardingScreenController? = nil) {

@@ -101,11 +101,7 @@ extension HabitCreationScreenController: UITextFieldDelegate {
 extension HabitCreationScreenController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isNonRegularEvent {
-            return 1
-        } else {
-            return 2
-        }
+        isNonRegularEvent ? 1: 2
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

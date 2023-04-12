@@ -65,7 +65,7 @@ final class TrackerRecordStore: NSObject {
     }
 
     func deleteTracker(_ tracker: TrackerRecord) {
-        let request = NSFetchRequest<TrackerRecordCD>(entityName: "TrackerRecordCD")
+        let request = NSFetchRequest<TrackerRecordCD>(entityName: K.EntityNames.trackerRecordCD)
         request.returnsObjectsAsFaults = false
         request.predicate = NSPredicate(format: "id == %@ and date == %@", tracker.id as CVarArg, tracker.date)
         guard let category = try? context.fetch(request).first else { return }

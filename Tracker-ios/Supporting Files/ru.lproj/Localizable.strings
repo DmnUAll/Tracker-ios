@@ -1,4 +1,8 @@
+"MONITOR_WHAT_YOU_NEED" = "Отслеживайте только то, что хотите";
+"EVEN_IF_THIS_IS_NOT_YOGA" = "Даже если это не литры воды и йога";
+"WHAT_A_TECHNOLOGY" = "Вот это технологии!";
 "WHAT_TO_MONITOR" = "Что будем отслеживать?";
+"SEARCH" = "Поиск";
 "CANCEL" = "Отменить";
 "FILTERS" = "Фильтры";
 "TRACKER_CREATION" = "Создание трекера";
@@ -38,3 +42,6 @@
 "SATURDAY_SHORT" = "Сб";
 "SUNDAY_SHORT" = "Вс";
 "EVERYDAY" = "Каждый день";
+"DAY" = "день";
+"DAYS" = "дней";
+"DAYS_LANGUAGE_SENSITIVE" = "дня";

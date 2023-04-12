@@ -14,23 +14,6 @@ final class HabitCreationScreenPresenter {
                                    .tr6, .tr7, .tr8, .tr9, .tr10, .tr11,
                                    .tr12, .tr13, .tr14, .tr15, .tr16, .tr17]
 
-    private let dayKeys = [
-        NSLocalizedString("MONDAY", comment: ""): NSLocalizedString("MONDAY_SHORT", comment: ""),
-        NSLocalizedString("TUESDAY", comment: ""): NSLocalizedString("TUESDAY_SHORT", comment: ""),
-        NSLocalizedString("WEDNESDAY", comment: ""): NSLocalizedString("WEDNESDAY_SHORT", comment: ""),
-        NSLocalizedString("THURSDAY", comment: ""): NSLocalizedString("THURSDAY_SHORT", comment: ""),
-        NSLocalizedString("FRIDAY", comment: ""): NSLocalizedString("FRIDAY_SHORT", comment: ""),
-        NSLocalizedString("SATURDAY", comment: ""): NSLocalizedString("SATURDAY_SHORT", comment: ""),
-        NSLocalizedString("SUNDAY", comment: ""): NSLocalizedString("SUNDAY_SHORT", comment: "")]
-
-    private let scheduleKeys: [String: WeekDay] = [NSLocalizedString("MONDAY", comment: ""): .monday,
-                                                   NSLocalizedString("TUESDAY", comment: ""): .tuesday,
-                                                   NSLocalizedString("WEDNESDAY", comment: ""): .wednesday,
-                                                   NSLocalizedString("THURSDAY", comment: ""): .thursday,
-                                                   NSLocalizedString("FRIDAY", comment: ""): .friday,
-                                                   NSLocalizedString("SATURDAY", comment: ""): .saturday,
-                                                   NSLocalizedString("SUNDAY", comment: ""): .sunday]
-
     private var selectedCategory: String = ""
     private var selectedDaysRaw: [String] = []
     private var selectedDays: [String] = []
@@ -42,7 +25,7 @@ final class HabitCreationScreenPresenter {
         self.viewController = viewController
         if viewController?.isNonRegularEvent ?? false {
             let day = WeekDay.giveCurrentWeekDay(forDate: Date())
-            if let dayKey = dayKeys[day.localizedString()] {
+            if let dayKey = WeekDay.giveShortWeekDayKey(for: day) {
                 selectedDays.append(dayKey)
             }
         }
@@ -168,15 +151,15 @@ extension HabitCreationScreenPresenter: ScheduleConfigurationDelegate {
             return
         }
         days.forEach { item in
-            if let key = dayKeys[item] {
+            if let key = WeekDay.giveShortWeekDayKey(for: item) {
                 selectedDays.append(key)
             }
-            if let key = scheduleKeys[item] {
+            if let key = WeekDay.giveWeekDayKey(for: item) {
                 selectedSchedule.append(key)
             }
         }
         if days.count == 7 {
-            cell.infoLabel.text = NSLocalizedString("EVERYDAY", comment: "")
+            cell.infoLabel.text = "EVERYDAY".localized
         } else {
             cell.infoLabel.text = String(selectedDays.joined(separator: ", "))
         }

@@ -62,18 +62,18 @@ extension TrackerCategoryScreenController {
     }
 
     func showDeletionAlert(for indexPath: IndexPath) {
-        let alertController = UIAlertController(title: NSLocalizedString("CATEGORY_DELETION", comment: ""),
+        let alertController = UIAlertController(title: "CATEGORY_DELETION".localized,
                                                 message: nil,
                                                 preferredStyle: .actionSheet)
-        let deleteAction = UIAlertAction(title: NSLocalizedString("DELETE", comment: ""),
+        let deleteAction = UIAlertAction(title: "DELETE".localized,
                                          style: .destructive
         ) { [weak self] _ in
             guard let self = self else { return }
             self.presenter?.deleteItem(at: indexPath.row)
             self.trackerCategoryScreenView.categoriesTableView.reloadData()
-            presenter?.checkForData()
+            self.presenter?.checkForData()
         }
-        let cancelAction = UIAlertAction(title: NSLocalizedString("CANCEL", comment: ""), style: .cancel)
+        let cancelAction = UIAlertAction(title: "CANCEL".localized, style: .cancel)
         alertController.addAction(deleteAction)
         alertController.addAction(cancelAction)
         present(alertController, animated: true)
@@ -112,10 +112,10 @@ extension TrackerCategoryScreenController: UITableViewDelegate {
         return UIContextMenuConfiguration(actionProvider: { [weak self] _ in
             guard let self else { return nil }
             return UIMenu(children: [
-                UIAction(title: NSLocalizedString("EDIT", comment: "")) { _ in
+                UIAction(title: "EDIT".localized) { _ in
                     self.presenter?.editItem(at: indexPath.row)
                 },
-                UIAction(title: NSLocalizedString("DELETE", comment: ""), attributes: .destructive) { _ in
+                UIAction(title: "DELETE".localized, attributes: .destructive) { _ in
                     self.showDeletionAlert(for: indexPath)
                 }
             ])
