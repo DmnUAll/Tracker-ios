@@ -72,7 +72,7 @@ struct UICreator {
 
     func makeSearchTextField() -> UISearchTextField {
         let searchField = UISearchTextField()
-        searchField.placeholder = "Поиск"
+        searchField.placeholder = "SEARCH".localized
         searchField.backgroundColor = .ypGrayLight.withAlphaComponent(0.12)
         searchField.textColor = .ypBlack
         searchField.attributedPlaceholder = NSAttributedString(string: searchField.placeholder ?? "",

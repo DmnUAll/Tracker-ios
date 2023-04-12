@@ -33,7 +33,7 @@ final class CategoryCreationScreenController: UIViewController {
         categoryCreationScreenView.delegate = self
         categoryCreationScreenView.categoryNameTextField.delegate = self
         if delegate?.categoryToEdit != "" {
-            categoryCreationScreenView.titleLabel.text = NSLocalizedString("CATEGORY_EDITING", comment: "")
+            categoryCreationScreenView.titleLabel.text = "CATEGORY_EDITING".localized
             categoryCreationScreenView.categoryNameTextField.text = delegate?.categoryToEdit ?? ""
         }
     }

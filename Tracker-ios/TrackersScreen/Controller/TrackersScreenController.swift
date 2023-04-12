@@ -56,6 +56,11 @@ extension TrackersScreenController {
     func addData(_ data: TrackerCategory) {
         presenter?.addNewTracker(data)
     }
+
+    func updateCollectionView() {
+        presenter?.updateDataForUI()
+        trackersScreenView.collectionView.reloadData()
+    }
 }
 
 // MARK: TrackersScreenViewDelegate

@@ -5,44 +5,17 @@ final class TrackersScreenPresenter {
 
     // MARK: - Properties and Initializers
     private weak var viewController: TrackersScreenController?
+    private let trackerCategoryStore = TrackerCategoryStore.shared
+    private let trackerRecordStore = TrackerRecordStore()
     private var categories: [TrackerCategory] = []
     private var allCategories: [TrackerCategory] = []
     private var completedTrackers: Set<TrackerRecord> = []
     private var currentDate: Date = Date()
-    private var currentWeekDay: WeekDay {
-        switch currentDate.weekDayIndex {
-        case 1:
-            return .sunday
-        case 2:
-            return .monday
-        case 3:
-            return .tuesday
-        case 4:
-            return .wednesday
-        case 5:
-            return .thursday
-        case 6:
-            return .saturday
-        case 7:
-            return .sunday
-        default:
-            return .monday
-        }
-    }
 
     init(viewController: TrackersScreenController? = nil) {
         self.viewController = viewController
-        // swiftlint:disable line_length
-        allCategories.append(TrackerCategory(name: "Test1", trackers: [Tracker(id: UUID(), name: "Test0 Test0 Test0 Test0 Test0 Test0 Test0 Test0 Test0", color: .ypBlue, emoji: "😀", schedule: [.monday, .tuesday]),
-                                                                    Tracker(id: UUID(), name: "Test1 Test1", color: .green, emoji: "😍", schedule: [.tuesday, .wednesday])]))
-        allCategories.append(TrackerCategory(name: "Test2Test2", trackers: [Tracker(id: UUID(), name: "Test2 Test2", color: .red, emoji: "👻", schedule: [.wednesday, .thursday]),
-                                                                    Tracker(id: UUID(), name: "Test3 Test3 Test3 Test3 Test3 Test3", color: .purple, emoji: "😼", schedule: [.thursday, .friday])]))
-        allCategories.append(TrackerCategory(name: "Test3Test3Test3", trackers: [Tracker(id: UUID(), name: "Test4 Test4", color: .systemPink, emoji: "💀", schedule: [.friday, .saturday]),
-                                                                    Tracker(id: UUID(), name: "Test5 Test5 Test5 Test5 Test5 Test5", color: .gray, emoji: "👎", schedule: [.saturday, .sunday])]))
-        allCategories.append(TrackerCategory(name: "Test4Test4Test4Test4", trackers: [Tracker(id: UUID(), name: "Test6 Test6", color: .brown, emoji: "🤠", schedule: [.monday, .saturday]),
-                                                                    Tracker(id: UUID(), name: "Test7 Test7 Test7 Test7 Test7 Test7", color: .black, emoji: "🙄", schedule: [.saturday, .monday])]))
-        // swiftlint:enable line_length
-        searchTracks(named: "")
+        completedTrackers = Set(trackerRecordStore.trackers)
+        updateDataForUI()
     }
 }
 
@@ -117,7 +90,9 @@ extension TrackersScreenPresenter {
         categories = []
         if searchText == "" {
             allCategories.forEach { category in
-                let filteredCategory = category.trackers.filter { $0.schedule.contains(currentWeekDay) }
+                let filteredCategory = category.trackers.filter {
+                    $0.schedule.contains(WeekDay.giveCurrentWeekDay(forDate: currentDate))
+                }
                 if filteredCategory.count > 0 {
                     categories.append(TrackerCategory(name: category.name, trackers: filteredCategory))
                 }
@@ -125,7 +100,8 @@ extension TrackersScreenPresenter {
         } else {
             allCategories.forEach { category in
                 let filteredCategory = category.trackers.filter {
-                    $0.name.contains(searchText) && $0.schedule.contains(currentWeekDay)
+                    $0.name.contains(searchText) &&
+                    $0.schedule.contains(WeekDay.giveCurrentWeekDay(forDate: currentDate))
                 }
                 if filteredCategory.count > 0 {
                     categories.append(TrackerCategory(name: category.name, trackers: filteredCategory))
@@ -145,21 +121,32 @@ extension TrackersScreenPresenter {
     }
 
     func addNewTracker(_ data: TrackerCategory) {
+        allCategories = trackerCategoryStore.categories
         var updatedAllCategories = allCategories
-        let index: Int? = updatedAllCategories.firstIndex { category in
+        let trackerIndex: Int? = updatedAllCategories.firstIndex { category in
             category.name == data.name
         }
-        guard let index else {
+        guard let trackerIndex else {
             updatedAllCategories.append(data)
             allCategories = updatedAllCategories
+            trackerCategoryStore.addNewCategory(data)
             searchTracks(named: viewController?.trackersScreenView.searchTextField.text ?? "")
             return
         }
-        var trackersList = updatedAllCategories[index].trackers
+        var trackersList = updatedAllCategories[trackerIndex].trackers
         trackersList.append(contentsOf: data.trackers)
-        updatedAllCategories[index] = TrackerCategory(name: data.name,
+        updatedAllCategories[trackerIndex] = TrackerCategory(name: data.name,
                                                       trackers: trackersList)
         allCategories = updatedAllCategories
+        if let existingCategory = trackerCategoryStore.checkForExistingCategory(named: data.name) {
+            trackerCategoryStore.updateExistingCategory(existingCategory, with: TrackerCategory(name: data.name,
+                                                                                                trackers: trackersList))
+        }
+        searchTracks(named: viewController?.trackersScreenView.searchTextField.text ?? "")
+    }
+
+    func updateDataForUI() {
+        allCategories = trackerCategoryStore.categories
         searchTracks(named: viewController?.trackersScreenView.searchTextField.text ?? "")
     }
 }
@@ -170,8 +157,10 @@ extension TrackersScreenPresenter: TrackerCellDelegate {
         let proceededTask = TrackerRecord(id: trackerID, date: currentDate.dateString)
         if completedTrackers.contains(proceededTask) {
             completedTrackers.remove(proceededTask)
+            trackerRecordStore.deleteTracker(proceededTask)
         } else {
             completedTrackers.insert(proceededTask)
+            trackerRecordStore.addNewRecord(proceededTask)
         }
         viewController?.trackersScreenView.collectionView.reloadData()
     }

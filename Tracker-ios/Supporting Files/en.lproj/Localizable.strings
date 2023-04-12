@@ -1,4 +1,8 @@
-"WHAT_TO_MONITOR" = "What we're gonna monitoring?";
+"MONITOR_WHAT_YOU_NEED" = "Track everything you want";
+"EVEN_IF_THIS_IS_NOT_YOGA" = "Even if this is not a water balance or yoga";
+"WHAT_A_TECHNOLOGY" = "What a technology!";
+"WHAT_TO_MONITOR" = "What we're gonna track?";
+"SEARCH" = "Search";
 "CANCEL" = "Canel";
 "FILTERS" = "Filters";
 "TRACKER_CREATION" = "Tracker creation";
@@ -38,3 +42,6 @@
 "SATURDAY_SHORT" = "Sat";
 "SUNDAY_SHORT" = "Sun";
 "EVERYDAY" = "Every day";
+"DAY" = "d";
+"DAYS" = "d";
+"DAYS_LANGUAGE_SENSITIVE" = "d";

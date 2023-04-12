@@ -11,13 +11,13 @@ final class CategoryCreationScreenView: UIView {
     // MARK: - Properties and Initializers
     weak var delegate: CategoryCreationScreenViewDelegate?
 
-    let titleLabel = UICreator.shared.makeLabel(text: NSLocalizedString("NEW_CATEGORY", comment: ""),
+    let titleLabel = UICreator.shared.makeLabel(text: "NEW_CATEGORY".localized,
                                                         font: UIFont.appFont(.medium, withSize: 16))
     let stackView = UICreator.shared.makeStackView()
 
     let categoryNameTextField: UITextField = {
         let textField = UICreator.shared.makeTextField()
-        textField.placeholder = NSLocalizedString("ENTER_CATEGORY_NAME", comment: "")
+        textField.placeholder = "ENTER_CATEGORY_NAME".localized
         textField.layer.cornerRadius = 16
         textField.layer.masksToBounds = true
         textField.backgroundColor = .ypGrayField.withAlphaComponent(0.3)
@@ -29,7 +29,7 @@ final class CategoryCreationScreenView: UIView {
     }()
 
     let errorLabel: UILabel = {
-       let label = UICreator.shared.makeLabel(text: NSLocalizedString("SYMBOLS_LIMIT_18", comment: ""),
+       let label = UICreator.shared.makeLabel(text: "SYMBOLS_LIMIT_18".localized,
                                               font: UIFont.appFont(.regular, withSize: 17),
                                               color: .ypRedLight)
         label.isHidden = true
@@ -37,7 +37,7 @@ final class CategoryCreationScreenView: UIView {
     }()
 
     let doneButton: UIButton = {
-        let button = UICreator.shared.makeButton(withTitle: NSLocalizedString("DONE", comment: ""),
+        let button = UICreator.shared.makeButton(withTitle: "DONE".localized,
                                                  backgroundColor: .ypGray,
                                                  action: #selector(doneButtonTapped))
         button.isEnabled = false

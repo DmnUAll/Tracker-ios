@@ -15,13 +15,13 @@ final class TrackersScreenView: UIView {
 
     let noDataImage = UICreator.shared.makeImageView(withImage: K.ImageNames.noDataImage)
     let noDataLabel = UICreator.shared.makeLabel(
-        text: NSLocalizedString("WHAT_TO_MONITOR", comment: ""),
+        text: "WHAT_TO_MONITOR".localized,
         font: UIFont.appFont(.medium, withSize: 12))
 
     private let stackView = UICreator.shared.makeStackView(withAxis: .horizontal, andSpacing: 14)
     let searchTextField = UICreator.shared.makeSearchTextField()
     let cancelButton: UIButton = {
-        let button = UICreator.shared.makeButton(withTitle: NSLocalizedString("CANCEL", comment: ""),
+        let button = UICreator.shared.makeButton(withTitle: "CANCEL".localized,
                                                  font: UIFont.appFont(.regular, withSize: 17),
                                                  backgroundColor: .clear,
                                                  action: #selector(cancelButtonTapped))
@@ -43,7 +43,7 @@ final class TrackersScreenView: UIView {
         collectionView.keyboardDismissMode = UIScrollView.KeyboardDismissMode.onDrag
         return collectionView
     }()
-    let filterButton = UICreator.shared.makeButton(withTitle: NSLocalizedString("FILTERS", comment: ""),
+    let filterButton = UICreator.shared.makeButton(withTitle: "FILTERS".localized,
                                                    font: UIFont.appFont(.regular, withSize: 17),
                                                    backgroundColor: .ypBlue,
                                                    action: #selector(filterButtonTapped))

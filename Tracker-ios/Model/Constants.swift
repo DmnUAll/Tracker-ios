@@ -25,4 +25,10 @@ struct K {
         static let categorySelectionCell = "CategorySelectionCell"
         static let daySelectionCell = "DaySelectionCell"
     }
+
+    struct EntityNames {
+        static let trackerCD = "TrackerCD"
+        static let trackerCategoryCD = "TrackerCategoryCD"
+        static let trackerRecordCD = "TrackerRecordCD"
+    }
 }

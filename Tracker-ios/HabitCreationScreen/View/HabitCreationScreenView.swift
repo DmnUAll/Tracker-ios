@@ -12,7 +12,7 @@ final class HabitCreationScreenView: UIView {
     // MARK: - Properties and Initializers
     weak var delegate: HabitCreationScreenViewDelegate?
 
-    private let titleLabel = UICreator.shared.makeLabel(text: NSLocalizedString("NEW_HABIT", comment: ""),
+    private let titleLabel = UICreator.shared.makeLabel(text: "NEW_HABIT".localized,
                                                         font: UIFont.appFont(.medium, withSize: 16))
 
     private let scrollView: UIScrollView = {
@@ -28,7 +28,7 @@ final class HabitCreationScreenView: UIView {
 
     let trackerNameTextField: UITextField = {
         let textField = UICreator.shared.makeTextField()
-        textField.placeholder = NSLocalizedString("ENTER_TRACKER_NAME", comment: "")
+        textField.placeholder = "ENTER_TRACKER_NAME".localized
         textField.layer.cornerRadius = 16
         textField.layer.masksToBounds = true
         textField.backgroundColor = .ypGrayField.withAlphaComponent(0.3)
@@ -39,7 +39,7 @@ final class HabitCreationScreenView: UIView {
     }()
 
     let errorLabel: UILabel = {
-       let label = UICreator.shared.makeLabel(text: NSLocalizedString("SYMBOLS_LIMIT_38", comment: ""),
+       let label = UICreator.shared.makeLabel(text: "SYMBOLS_LIMIT_38".localized,
                                               font: UIFont.appFont(.regular, withSize: 17),
                                               color: .ypRedLight)
         label.isHidden = true
@@ -65,7 +65,7 @@ final class HabitCreationScreenView: UIView {
         return collectionView
     }()
 
-    private let colorTitleLabel = UICreator.shared.makeLabel(text: NSLocalizedString("COLOR", comment: ""),
+    private let colorTitleLabel = UICreator.shared.makeLabel(text: "COLOR".localized,
                                                              font: UIFont.appFont(.bold, withSize: 19))
 
     let colorCollectionView: UICollectionView = {
@@ -83,7 +83,7 @@ final class HabitCreationScreenView: UIView {
                                                                   andSpacing: 8)
 
     private let cancelButton: UIButton = {
-        let button = UICreator.shared.makeButton(withTitle: NSLocalizedString("CANCEL", comment: ""),
+        let button = UICreator.shared.makeButton(withTitle: "CANCEL".localized,
                                                  fontColor: .ypRedLight,
                                                  backgroundColor: .ypWhite,
                                                  action: #selector(cancelButtonTapped))
@@ -93,7 +93,7 @@ final class HabitCreationScreenView: UIView {
     }()
 
     let createButton: UIButton = {
-        let button = UICreator.shared.makeButton(withTitle: NSLocalizedString("CREATE", comment: ""),
+        let button = UICreator.shared.makeButton(withTitle: "CREATE".localized,
                                                  backgroundColor: .ypGray,
                                                  action: #selector(createButtonTapped))
         button.isEnabled = false
@@ -168,7 +168,6 @@ extension HabitCreationScreenView {
             optionsTableView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             optionsTableView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 24),
             optionsTableView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            optionsTableView.heightAnchor.constraint(equalToConstant: 150),
             emojiTitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 28),
             emojiTitleLabel.topAnchor.constraint(equalTo: optionsTableView.bottomAnchor, constant: 32),
             emojiCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
