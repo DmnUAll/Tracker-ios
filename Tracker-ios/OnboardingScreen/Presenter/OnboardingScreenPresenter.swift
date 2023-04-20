@@ -5,50 +5,50 @@ final class OnboardingScreenPresenter {
 
     // MARK: - Properties and Initializers
     private weak var viewController: OnboardingScreenController?
-    private let onboardingTexts = [
-        "MONITOR_WHAT_YOU_NEED".localized,
-        "EVEN_IF_THIS_IS_NOT_YOGA".localized
+    private let pages: [UIViewController] = [
+        OnboardingPageController(text: "MONITOR_WHAT_YOU_NEED".localized,
+                                 backgroundImage: UIImage(named: K.ImageNames.firstOnboardingImage) ?? UIImage()),
+        OnboardingPageController(text: "EVEN_IF_THIS_IS_NOT_YOGA".localized,
+                                 backgroundImage: UIImage(named: K.ImageNames.secondOnboardingImage) ?? UIImage())
     ]
 
     init(viewController: OnboardingScreenController? = nil) {
         self.viewController = viewController
         viewController?.onboardingScreenView.delegate = self
-        fillUI()
     }
 }
 
 // MARK: - Helpers
 extension OnboardingScreenPresenter {
 
-    func fillUI() {
-        guard let viewController else { return }
-        let width = UIScreen.main.bounds.width
-        let height = UIScreen.main.bounds.height
-        for index in 0...1 {
-            let text = onboardingTexts[index]
-            let scrollViewPage = UICreator.shared.makeView()
-            scrollViewPage.frame = CGRect(x: width * CGFloat(index),
-                                          y: 0,
-                                          width: width,
-                                          height: height)
-            var imageView: UIImageView
-            if index == 0 {
-                imageView = UICreator.shared.makeImageView(withImage: K.ImageNames.firstOnboardingImage)
-            } else {
-                imageView = UICreator.shared.makeImageView(withImage: K.ImageNames.secondOnboardingImage)
-            }
-            imageView.toAutolayout()
-            scrollViewPage.addSubview(imageView)
-            imageView.widthAnchor.constraint(equalToConstant: width).isActive = true
-            imageView.heightAnchor.constraint(equalToConstant: height).isActive = true
-            let label = UICreator.shared.makeLabel(text: text, font: UIFont.appFont(.bold, withSize: 32))
-            label.toAutolayout()
-            scrollViewPage.addSubview(label)
-            label.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: 16).isActive = true
-            label.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -16).isActive = true
-            label.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -304).isActive = true
-            viewController.onboardingScreenView.scrollView.addSubview(scrollViewPage)
+    func giveFirstPage() -> UIViewController? {
+        pages.first
+    }
+
+    func giveViewControllerBefore(_ viewController: UIViewController) -> UIViewController? {
+        guard let viewControllerIndex = pages.firstIndex(of: viewController) else {
+            return nil
         }
+        let previousIndex = viewControllerIndex - 1
+        guard previousIndex >= 0 else {
+            return nil
+        }
+        return pages[previousIndex]
+    }
+
+    func giveViewControllerAfter(_ viewController: UIViewController) -> UIViewController? {
+        guard let viewControllerIndex = pages.firstIndex(of: viewController) else {
+            return nil
+        }
+        let nextIndex = viewControllerIndex + 1
+        guard nextIndex < pages.count else {
+            return nil
+        }
+        return pages[nextIndex]
+    }
+
+    func giveIndex(for currentViewController: UIViewController) -> Int? {
+        pages.firstIndex(of: currentViewController)
     }
 }
 

@@ -10,8 +10,7 @@ final class OnboardingScreenView: UIView {
 
     // MARK: - Properties and Initializers
     weak var delegate: OnboardingScreenViewDelegate?
-    let scrollView = UICreator.shared.makeScrollView()
-    private let pageControl = UICreator.shared.makePageControll()
+    let pageControl = UICreator.shared.makePageControll()
     private let continueButton = UICreator.shared.makeButton(withTitle: "WHAT_A_TECHNOLOGY".localized,
                                                              action: #selector(continueButtonTapped))
 
@@ -20,7 +19,6 @@ final class OnboardingScreenView: UIView {
         setupAutolayout()
         addSubviews()
         setupConstraints()
-        scrollView.delegate = self
     }
 
     required init?(coder: NSCoder) {
@@ -37,23 +35,17 @@ extension OnboardingScreenView {
 
     private func setupAutolayout() {
         toAutolayout()
-        scrollView.toAutolayout()
         pageControl.toAutolayout()
         continueButton.toAutolayout()
     }
 
     private func addSubviews() {
-        addSubview(scrollView)
         addSubview(pageControl)
         addSubview(continueButton)
     }
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            scrollView.topAnchor.constraint(equalTo: topAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
             continueButton.heightAnchor.constraint(equalToConstant: 60),
             continueButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             continueButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
@@ -61,12 +53,5 @@ extension OnboardingScreenView {
             pageControl.centerXAnchor.constraint(equalTo: centerXAnchor),
             pageControl.bottomAnchor.constraint(equalTo: continueButton.topAnchor, constant: -24)
         ])
-    }
-}
-
-// MARK: - UIScrollViewDelegate
-extension OnboardingScreenView: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        pageControl.currentPage = Int(scrollView.contentOffset.x / CGFloat(self.scrollView.bounds.width))
     }
 }

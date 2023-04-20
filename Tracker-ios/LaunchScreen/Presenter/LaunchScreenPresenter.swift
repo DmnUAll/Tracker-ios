@@ -19,7 +19,10 @@ extension LaunchScreenPresenter {
         if UserDefaultsManager.shared.isOnboardAccepted {
             UIApplication.shared.windows.first?.rootViewController = TabBarController()
         } else {
-            UIApplication.shared.windows.first?.rootViewController = OnboardingScreenController()
+            UIApplication.shared.windows.first?.rootViewController = OnboardingScreenController(
+                transitionStyle: .scroll,
+                navigationOrientation: .horizontal
+            )
         }
         UIApplication.shared.windows.first?.makeKeyAndVisible()
     }
