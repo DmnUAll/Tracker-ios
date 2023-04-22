@@ -10,7 +10,7 @@ final class OnboardingScreenController: UIPageViewController {
 
     private var viewModel: OnboardingScreenViewModel?
 
-    let pageControl = UICreator.shared.makePageControll()
+    private let pageControl = UICreator.shared.makePageControll()
     private let continueButton = UICreator.shared.makeButton(withTitle: "WHAT_A_TECHNOLOGY".localized,
                                                              action: #selector(continueButtonTapped))
 
