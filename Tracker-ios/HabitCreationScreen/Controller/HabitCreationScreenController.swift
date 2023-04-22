@@ -118,7 +118,8 @@ extension HabitCreationScreenController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            let nextViewController = TrackerCategoryScreenController(delegate: presenter)
+            let nextViewController = TrackerCategoryScreenController(delegate: presenter,
+                                                                     viewModel: TrackerCategoryScreenViewModel())
             present(nextViewController, animated: true)
         } else {
             let nextViewController = ScheduleConfigurationScreenController(delegate: presenter)
