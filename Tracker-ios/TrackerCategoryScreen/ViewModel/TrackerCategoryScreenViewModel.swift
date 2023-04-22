@@ -10,6 +10,7 @@ import UIKit
 // MARK: TrackerCategoryScreenViewModel
 final class TrackerCategoryScreenViewModel {
 
+    // MARK: - Properties and Initializers
     @Observable
     private(set) var isDataExist: Bool = false
 

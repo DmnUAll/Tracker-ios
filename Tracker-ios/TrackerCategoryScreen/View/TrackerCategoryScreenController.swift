@@ -17,12 +17,12 @@ final class TrackerCategoryScreenController: UIViewController {
     weak var delegate: TrackerCategoryConfigurationDelegate?
     private var viewModel: TrackerCategoryScreenViewModel?
 
-    let titleLabel = UICreator.shared.makeLabel(text: "CATEGORY".localized,
+    private let titleLabel = UICreator.shared.makeLabel(text: "CATEGORY".localized,
                                                         font: UIFont.appFont(.medium, withSize: 16))
-    let noDataImage = UICreator.shared.makeImageView(withImage: K.ImageNames.noDataImage)
-    let noDataLabel = UICreator.shared.makeLabel(text: "WHAT_TO_CREATE".localized,
+    private let noDataImage = UICreator.shared.makeImageView(withImage: K.ImageNames.noDataImage)
+    private let noDataLabel = UICreator.shared.makeLabel(text: "WHAT_TO_CREATE".localized,
                                                  font: UIFont.appFont(.medium, withSize: 12))
-    let categoriesTableView: UITableView = {
+    private let categoriesTableView: UITableView = {
         let tableView = UICreator.shared.makeTableView()
         tableView.register(CategorySelectionCell.self,
                            forCellReuseIdentifier: K.CollectionElementNames.categorySelectionCell)
@@ -30,7 +30,7 @@ final class TrackerCategoryScreenController: UIViewController {
         tableView.backgroundColor = .ypWhite
         return tableView
     }()
-    let addButton = UICreator.shared.makeButton(withTitle: "ADD_CATEGORY".localized,
+    private let addButton = UICreator.shared.makeButton(withTitle: "ADD_CATEGORY".localized,
                                                         action: #selector(addButtonTapped))
 
     convenience init(delegate: TrackerCategoryConfigurationDelegate?, viewModel: TrackerCategoryScreenViewModel) {
