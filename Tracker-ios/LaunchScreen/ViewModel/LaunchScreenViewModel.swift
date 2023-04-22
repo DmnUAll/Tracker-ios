@@ -1,10 +1,3 @@
-//
-//  LaunchScreenViewModel.swift
-//  Tracker-ios
-//
-//  Created by Илья Валито on 22.04.2023.
-//
-
 import Foundation
 
 // MARK: - LaunchScreenViewModel
