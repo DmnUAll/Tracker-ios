@@ -33,6 +33,7 @@ final class HabitCreationScreenController: UIViewController {
         habitCreationScreenView.colorCollectionView.dataSource = self
         habitCreationScreenView.colorCollectionView.delegate = self
         if isNonRegularEvent {
+            habitCreationScreenView.titleLabel.text = "NEW_NON_REGULAR_EVENT".localized
             habitCreationScreenView.optionsTableView.heightAnchor.constraint(equalToConstant: 75).isActive = true
         } else {
             habitCreationScreenView.optionsTableView.heightAnchor.constraint(equalToConstant: 150).isActive = true

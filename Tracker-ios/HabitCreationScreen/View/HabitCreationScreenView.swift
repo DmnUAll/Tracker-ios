@@ -12,7 +12,7 @@ final class HabitCreationScreenView: UIView {
     // MARK: - Properties and Initializers
     weak var delegate: HabitCreationScreenViewDelegate?
 
-    private let titleLabel = UICreator.shared.makeLabel(text: "NEW_HABIT".localized,
+    let titleLabel = UICreator.shared.makeLabel(text: "NEW_HABIT".localized,
                                                         font: UIFont.appFont(.medium, withSize: 16))
 
     private let scrollView: UIScrollView = {

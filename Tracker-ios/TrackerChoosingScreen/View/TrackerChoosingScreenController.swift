@@ -1,16 +1,12 @@
 import UIKit
 
-// MARK: - TrackerChoosingScreenViewDelegate protocol
-protocol TrackerChoosingScreenViewDelegate: AnyObject {
-    func proceedToHabit()
-    func proceedToEvent()
-}
-
-// MARK: - TrackerChoosingScreenView
-final class TrackerChoosingScreenView: UIView {
+// MARK: - TrackerChoosingScreenController
+final class TrackerChoosingScreenController: UIViewController {
 
     // MARK: - Properties and Initializers
-    weak var delegate: TrackerChoosingScreenViewDelegate?
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
 
     private let titleLabel = UICreator.shared.makeLabel(text: "TRACKER_CREATION".localized,
                                                         font: UIFont.appFont(.medium, withSize: 16))
@@ -20,49 +16,52 @@ final class TrackerChoosingScreenView: UIView {
     private let eventButton = UICreator.shared.makeButton(withTitle: "NONREGULAR_EVENT".localized,
                                                           action: #selector(eventButtonTapped))
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    // MARK: - Life Cycle
+    override func viewDidLoad() {
+        view.backgroundColor = .ypWhite
         setupAutolayout()
         addSubviews()
         setupConstraints()
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override func viewWillDisappear(_ animated: Bool) {
+        if let topController = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first?.rootViewController {
+            let destinationViewController = topController.children.first?.children.first as? TrackersScreenController
+            destinationViewController?.updateCollectionView()
+        }
     }
 }
 
 // MARK: - Helpers
-extension TrackerChoosingScreenView {
+extension TrackerChoosingScreenController {
 
     @objc private func habitButtonTapped() {
-        delegate?.proceedToHabit()
+        present(HabitCreationScreenController(), animated: true)
     }
 
     @objc private func eventButtonTapped() {
-        delegate?.proceedToEvent()
+        present(HabitCreationScreenController(isNonRegularEvent: true), animated: true)
     }
 
     private func setupAutolayout() {
-        toAutolayout()
         titleLabel.toAutolayout()
         stackView.toAutolayout()
     }
 
     private func addSubviews() {
-        addSubview(titleLabel)
+        view.addSubview(titleLabel)
         stackView.addArrangedSubview(habitButton)
         stackView.addArrangedSubview(eventButton)
-        addSubview(stackView)
+        view.addSubview(stackView)
     }
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 27),
-            stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 27),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             habitButton.heightAnchor.constraint(equalToConstant: 60),
             eventButton.heightAnchor.constraint(equalToConstant: 60)
         ])
