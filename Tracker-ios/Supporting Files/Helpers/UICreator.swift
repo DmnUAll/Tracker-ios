@@ -56,7 +56,7 @@ struct UICreator {
         return button
     }
 
-    func makeTextField() -> UITextField {
+    func makeTextField(withTarget action: Selector? = nil) -> UITextField {
         let textField = UITextField()
         textField.backgroundColor = .ypGrayLight.withAlphaComponent(0.12)
         textField.textColor = .ypBlack
@@ -66,6 +66,9 @@ struct UICreator {
         if let button = textField.value(forKey: "clearButton") as? UIButton {
           button.tintColor = .ypGray
           button.setImage(UIImage(systemName: "xmark.circle.fill")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        }
+        if let action {
+            textField.addTarget(nil, action: action, for: .editingChanged)
         }
         return textField
     }
