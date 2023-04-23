@@ -24,6 +24,7 @@
 		61299DFA29F1692200B1A1E2 /* OnboardingPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61299DF929F1692200B1A1E2 /* OnboardingPageController.swift */; };
 		6145FC0729F516C300908613 /* HabitCreationScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6145FC0629F516C300908613 /* HabitCreationScreenViewModel.swift */; };
 		6145FC0929F5275B00908613 /* HabitCreationScreenController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6145FC0829F5275B00908613 /* HabitCreationScreenController+Extensions.swift */; };
+		6145FC0B29F52B1000908613 /* ScheduleConfigurationScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6145FC0A29F52B1000908613 /* ScheduleConfigurationScreenViewModel.swift */; };
 		6175C14229F3C03A00409E99 /* TrackerCategoryScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6175C14129F3C03A00409E99 /* TrackerCategoryScreenViewModel.swift */; };
 		6175C14429F3C53B00409E99 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6175C14329F3C53B00409E99 /* Observable.swift */; };
 		6175C14629F3DD0D00409E99 /* LaunchScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6175C14529F3DD0D00409E99 /* LaunchScreenViewModel.swift */; };
@@ -36,10 +37,8 @@
 		618C7FD629D1939E002C8B0E /* CategorySelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C7FD529D1939E002C8B0E /* CategorySelectionCell.swift */; };
 		618C7FD829D19E03002C8B0E /* TrackerCategoryScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C7FD729D19E03002C8B0E /* TrackerCategoryScreenController.swift */; };
 		618C7FE229D1C3D2002C8B0E /* CategoryCreationScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C7FE129D1C3D2002C8B0E /* CategoryCreationScreenController.swift */; };
-		618C7FE829D1C9EC002C8B0E /* ScheduleConfigurationScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C7FE729D1C9EC002C8B0E /* ScheduleConfigurationScreenView.swift */; };
 		618C7FEB29D1CB2D002C8B0E /* DaySelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C7FEA29D1CB2D002C8B0E /* DaySelectionCell.swift */; };
 		618C7FED29D1CE29002C8B0E /* ScheduleConfigurationScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C7FEC29D1CE29002C8B0E /* ScheduleConfigurationScreenController.swift */; };
-		618C7FEF29D1CE53002C8B0E /* ScheduleConfigurationScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C7FEE29D1CE53002C8B0E /* ScheduleConfigurationScreenPresenter.swift */; };
 		618C7FF529D42F2C002C8B0E /* WeekDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C7FF429D42F2C002C8B0E /* WeekDay.swift */; };
 		618C7FF729D5B371002C8B0E /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C7FF629D5B371002C8B0E /* Int+Extensions.swift */; };
 		61B3AB8929CCBA1F00EF87D6 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B3AB8829CCBA1E00EF87D6 /* UserDefaultsManager.swift */; };
@@ -80,6 +79,7 @@
 		61299DF929F1692200B1A1E2 /* OnboardingPageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingPageController.swift; sourceTree = "<group>"; };
 		6145FC0629F516C300908613 /* HabitCreationScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitCreationScreenViewModel.swift; sourceTree = "<group>"; };
 		6145FC0829F5275B00908613 /* HabitCreationScreenController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitCreationScreenController+Extensions.swift"; sourceTree = "<group>"; };
+		6145FC0A29F52B1000908613 /* ScheduleConfigurationScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleConfigurationScreenViewModel.swift; sourceTree = "<group>"; };
 		6175C14129F3C03A00409E99 /* TrackerCategoryScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerCategoryScreenViewModel.swift; sourceTree = "<group>"; };
 		6175C14329F3C53B00409E99 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		6175C14529F3DD0D00409E99 /* LaunchScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewModel.swift; sourceTree = "<group>"; };
@@ -94,10 +94,8 @@
 		618C7FD529D1939E002C8B0E /* CategorySelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectionCell.swift; sourceTree = "<group>"; };
 		618C7FD729D19E03002C8B0E /* TrackerCategoryScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerCategoryScreenController.swift; sourceTree = "<group>"; };
 		618C7FE129D1C3D2002C8B0E /* CategoryCreationScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCreationScreenController.swift; sourceTree = "<group>"; };
-		618C7FE729D1C9EC002C8B0E /* ScheduleConfigurationScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleConfigurationScreenView.swift; sourceTree = "<group>"; };
 		618C7FEA29D1CB2D002C8B0E /* DaySelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaySelectionCell.swift; sourceTree = "<group>"; };
 		618C7FEC29D1CE29002C8B0E /* ScheduleConfigurationScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleConfigurationScreenController.swift; sourceTree = "<group>"; };
-		618C7FEE29D1CE53002C8B0E /* ScheduleConfigurationScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleConfigurationScreenPresenter.swift; sourceTree = "<group>"; };
 		618C7FF429D42F2C002C8B0E /* WeekDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDay.swift; sourceTree = "<group>"; };
 		618C7FF629D5B371002C8B0E /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
 		61B3AB8829CCBA1E00EF87D6 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
@@ -290,35 +288,26 @@
 			isa = PBXGroup;
 			children = (
 				618C7FE629D1C9D5002C8B0E /* View */,
-				618C7FE529D1C9CE002C8B0E /* Controller */,
-				618C7FE929D1CA9C002C8B0E /* Presenter */,
+				618C7FE929D1CA9C002C8B0E /* ViewModel */,
 			);
 			path = ScheduleConfigurationScreen;
-			sourceTree = "<group>";
-		};
-		618C7FE529D1C9CE002C8B0E /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				618C7FEC29D1CE29002C8B0E /* ScheduleConfigurationScreenController.swift */,
-			);
-			path = Controller;
 			sourceTree = "<group>";
 		};
 		618C7FE629D1C9D5002C8B0E /* View */ = {
 			isa = PBXGroup;
 			children = (
 				618C7FEA29D1CB2D002C8B0E /* DaySelectionCell.swift */,
-				618C7FE729D1C9EC002C8B0E /* ScheduleConfigurationScreenView.swift */,
+				618C7FEC29D1CE29002C8B0E /* ScheduleConfigurationScreenController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
 		};
-		618C7FE929D1CA9C002C8B0E /* Presenter */ = {
+		618C7FE929D1CA9C002C8B0E /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				618C7FEE29D1CE53002C8B0E /* ScheduleConfigurationScreenPresenter.swift */,
+				6145FC0A29F52B1000908613 /* ScheduleConfigurationScreenViewModel.swift */,
 			);
-			path = Presenter;
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		61D7AB2229E1696800E2C5A2 /* CoreData */ = {
@@ -534,6 +523,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				61F163A329CC8C4C00C8357A /* UIView+Extensions.swift in Sources */,
+				6145FC0B29F52B1000908613 /* ScheduleConfigurationScreenViewModel.swift in Sources */,
 				6175C14A29F3EEF300409E99 /* TrackersScreenViewModel.swift in Sources */,
 				6127CC2E29CED76E002B4F3F /* TabBarController.swift in Sources */,
 				618C7FD829D19E03002C8B0E /* TrackerCategoryScreenController.swift in Sources */,
@@ -551,12 +541,10 @@
 				61299DFA29F1692200B1A1E2 /* OnboardingPageController.swift in Sources */,
 				61F163A029CC8AEE00C8357A /* UIColor+Extensions.swift in Sources */,
 				61FCA18B29D0504600013544 /* ColorCell.swift in Sources */,
-				618C7FEF29D1CE53002C8B0E /* ScheduleConfigurationScreenPresenter.swift in Sources */,
 				6127CC4829CF16B6002B4F3F /* TrackerChoosingScreenController.swift in Sources */,
 				61D7AB2E29E193C600E2C5A2 /* CoreDataManager.swift in Sources */,
 				6145FC0729F516C300908613 /* HabitCreationScreenViewModel.swift in Sources */,
 				6127CC4129CEF80D002B4F3F /* Date+Extensions.swift in Sources */,
-				618C7FE829D1C9EC002C8B0E /* ScheduleConfigurationScreenView.swift in Sources */,
 				618C7FD629D1939E002C8B0E /* CategorySelectionCell.swift in Sources */,
 				618C7FEB29D1CB2D002C8B0E /* DaySelectionCell.swift in Sources */,
 				6175C14629F3DD0D00409E99 /* LaunchScreenViewModel.swift in Sources */,

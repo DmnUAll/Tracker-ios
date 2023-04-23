@@ -178,6 +178,7 @@ extension HabitCreationScreenViewModel: ScheduleConfigurationDelegate {
 
     func updateSchedule(withDays days: [String]) {
         selectedDays = []
+        selectedSchedule = []
         selectedDaysRaw = days
         guard let cell = selectedCell as? ScheduleCell else {
             return
