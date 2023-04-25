@@ -11,6 +11,7 @@
 "CATEGORY" = "Category";
 "SCHEDULE" = "Schedule";
 "NEW_HABIT" = "New habit";
+"NEW_NON_REGULAR_EVENT" = "New non-regular event";
 "ENTER_TRACKER_NAME" = "Enter a tracker name";
 "SYMBOLS_LIMIT_38" = "38 symbols limit";
 "COLOR" = "Color";

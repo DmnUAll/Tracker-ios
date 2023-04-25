@@ -11,6 +11,7 @@
 "CATEGORY" = "Категория";
 "SCHEDULE" = "Расписание";
 "NEW_HABIT" = "Новая привычка";
+"NEW_NON_REGULAR_EVENT" = "Новое нерегулярное событие";
 "ENTER_TRACKER_NAME" = "Введите название трекера";
 "SYMBOLS_LIMIT_38" = "Ограничение 38 символов";
 "COLOR" = "Цвет";

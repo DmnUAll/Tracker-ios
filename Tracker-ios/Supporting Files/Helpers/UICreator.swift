@@ -56,7 +56,7 @@ struct UICreator {
         return button
     }
 
-    func makeTextField() -> UITextField {
+    func makeTextField(withTarget action: Selector? = nil) -> UITextField {
         let textField = UITextField()
         textField.backgroundColor = .ypGrayLight.withAlphaComponent(0.12)
         textField.textColor = .ypBlack
@@ -67,10 +67,13 @@ struct UICreator {
           button.tintColor = .ypGray
           button.setImage(UIImage(systemName: "xmark.circle.fill")?.withRenderingMode(.alwaysTemplate), for: .normal)
         }
+        if let action {
+            textField.addTarget(nil, action: action, for: .editingChanged)
+        }
         return textField
     }
 
-    func makeSearchTextField() -> UISearchTextField {
+    func makeSearchTextField(withTarget action: Selector? = nil) -> UISearchTextField {
         let searchField = UISearchTextField()
         searchField.placeholder = "SEARCH".localized
         searchField.backgroundColor = .ypGrayLight.withAlphaComponent(0.12)
@@ -83,6 +86,9 @@ struct UICreator {
             leftView.tintColor = UIColor.ypGray
         }
         searchField.clearButtonMode = .never
+        if let action {
+            searchField.addTarget(nil, action: action, for: .editingChanged)
+        }
         return searchField
     }
 

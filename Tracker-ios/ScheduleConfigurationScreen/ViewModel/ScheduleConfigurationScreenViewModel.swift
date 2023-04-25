@@ -1,11 +1,9 @@
 import UIKit
 
-// MARK: - ScheduleConfigurationScreenPresenter
-final class ScheduleConfigurationScreenPresenter {
+// MARK: - ScheduleConfigurationScreenViewModel
+final class ScheduleConfigurationScreenViewModel {
 
     // MARK: - Properties and Initializers
-    private weak var viewController: ScheduleConfigurationScreenController?
-
     private let days: [String] = WeekDay.allCases.map { $0.localizedString()}
     private var selectedDays: [String] = []
     private var previouslySelectedDays: [String] = []
@@ -20,14 +18,10 @@ final class ScheduleConfigurationScreenPresenter {
         }
         return states
     }
-
-    init(viewController: ScheduleConfigurationScreenController? = nil) {
-        self.viewController = viewController
-    }
 }
 
 // MARK: - Helpers
-extension ScheduleConfigurationScreenPresenter {
+extension ScheduleConfigurationScreenViewModel {
 
     @objc private func switchChanged(_ sender: UISwitch) {
         if sender.isOn {

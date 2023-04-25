@@ -1,41 +1,53 @@
+//
+//  TrackersScreenViewModel.swift
+//  Tracker-ios
+//
+//  Created by Илья Валито on 22.04.2023.
+//
+
 import UIKit
 
-// MARK: - TrackersScreenPresenter
-final class TrackersScreenPresenter {
+// MARK: - TrackersScreenViewModel
+final class TrackersScreenViewModel {
 
     // MARK: - Properties and Initializers
-    private weak var viewController: TrackersScreenController?
+    @Observable
+    private(set) var needToHideCollection: Bool = false
+
+    @Observable
+    private(set) var needToReloadCollection: Bool = false
+
     private let trackerCategoryStore = TrackerCategoryStore.shared
     private let trackerRecordStore = TrackerRecordStore()
     private var categories: [TrackerCategory] = []
     private var allCategories: [TrackerCategory] = []
     private var completedTrackers: Set<TrackerRecord> = []
     private var currentDate: Date = Date()
+    private var currentSearchText: String = ""
 
-    init(viewController: TrackersScreenController? = nil) {
-        self.viewController = viewController
+    init() {
         completedTrackers = Set(trackerRecordStore.trackers)
         updateDataForUI()
     }
 }
 
 // MARK: - Helpers
-extension TrackersScreenPresenter {
+extension TrackersScreenViewModel {
 
-    private func checkForData() {
+    func checkForData() {
         if categories.isEmpty {
-            viewController?.hideCollectionView()
+            needToHideCollection = true
         } else {
-            viewController?.showCollectionView()
+            needToHideCollection = false
         }
     }
 
     func giveNumberOfCategories() -> Int {
-        return categories.count
+        categories.count
     }
 
     func giveNumberOfTrackersForCategory(atIndex index: Int) -> Int {
-        return categories[index].trackers.count
+        categories[index].trackers.count
     }
 
     func configureSupplementaryElement(ofKind kind: String,
@@ -86,38 +98,12 @@ extension TrackersScreenPresenter {
         return cell
     }
 
-    func searchTracks(named searchText: String) {
-        categories = []
-        if searchText == "" {
-            allCategories.forEach { category in
-                let filteredCategory = category.trackers.filter {
-                    $0.schedule.contains(WeekDay.giveCurrentWeekDay(forDate: currentDate))
-                }
-                if filteredCategory.count > 0 {
-                    categories.append(TrackerCategory(name: category.name, trackers: filteredCategory))
-                }
-            }
+    func didEnter(_ text: String?) {
+        if let text {
+            currentSearchText = text
         } else {
-            allCategories.forEach { category in
-                let filteredCategory = category.trackers.filter {
-                    $0.name.contains(searchText) &&
-                    $0.schedule.contains(WeekDay.giveCurrentWeekDay(forDate: currentDate))
-                }
-                if filteredCategory.count > 0 {
-                    categories.append(TrackerCategory(name: category.name, trackers: filteredCategory))
-                }
-            }
+            currentSearchText = ""
         }
-        if categories.count == 0 {
-            viewController?.hideCollectionView()
-        } else {
-            viewController?.showCollectionView()
-        }
-        viewController?.trackersScreenView.collectionView.reloadData()
-    }
-
-    func updateCurrentDate(to date: Date) {
-        currentDate = date
     }
 
     func addNewTracker(_ data: TrackerCategory) {
@@ -130,7 +116,7 @@ extension TrackersScreenPresenter {
             updatedAllCategories.append(data)
             allCategories = updatedAllCategories
             trackerCategoryStore.addNewCategory(data)
-            searchTracks(named: viewController?.trackersScreenView.searchTextField.text ?? "")
+            searchTracks()
             return
         }
         var trackersList = updatedAllCategories[trackerIndex].trackers
@@ -142,17 +128,52 @@ extension TrackersScreenPresenter {
             trackerCategoryStore.updateExistingCategory(existingCategory, with: TrackerCategory(name: data.name,
                                                                                                 trackers: trackersList))
         }
-        searchTracks(named: viewController?.trackersScreenView.searchTextField.text ?? "")
+        searchTracks()
+    }
+
+    func searchTracks() {
+        categories = []
+        if currentSearchText == "" {
+            allCategories.forEach { category in
+                let filteredCategory = category.trackers.filter {
+                    $0.schedule.contains(WeekDay.giveCurrentWeekDay(forDate: currentDate))
+                }
+                if filteredCategory.count > 0 {
+                    categories.append(TrackerCategory(name: category.name, trackers: filteredCategory))
+                }
+            }
+        } else {
+            allCategories.forEach { category in
+                let filteredCategory = category.trackers.filter {
+                    $0.name.contains(currentSearchText) &&
+                    $0.schedule.contains(WeekDay.giveCurrentWeekDay(forDate: currentDate))
+                }
+                if filteredCategory.count > 0 {
+                    categories.append(TrackerCategory(name: category.name, trackers: filteredCategory))
+                }
+            }
+        }
+        if categories.count == 0 {
+            needToHideCollection = true
+        } else {
+            needToHideCollection = false
+        }
+        needToReloadCollection = true
     }
 
     func updateDataForUI() {
         allCategories = trackerCategoryStore.categories
-        searchTracks(named: viewController?.trackersScreenView.searchTextField.text ?? "")
+        searchTracks()
+        needToReloadCollection = true
+    }
+
+    func updateCurrentDate(to date: Date) {
+        currentDate = date
     }
 }
 
 // MARK: - TrackerCellDelegate
-extension TrackersScreenPresenter: TrackerCellDelegate {
+extension TrackersScreenViewModel: TrackerCellDelegate {
     func proceedTask(forID trackerID: UUID) {
         let proceededTask = TrackerRecord(id: trackerID, date: currentDate.dateString)
         if completedTrackers.contains(proceededTask) {
@@ -162,6 +183,6 @@ extension TrackersScreenPresenter: TrackerCellDelegate {
             completedTrackers.insert(proceededTask)
             trackerRecordStore.addNewRecord(proceededTask)
         }
-        viewController?.trackersScreenView.collectionView.reloadData()
+        needToReloadCollection = true
     }
 }
