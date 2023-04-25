@@ -187,13 +187,13 @@ extension TrackerCategoryScreenController: UITableViewDelegate {
         return UIContextMenuConfiguration(actionProvider: { [weak self] _ in
             guard let self else { return UIMenu() }
             return UIMenu(children: [
-                UIAction(title: "EDIT".localized) { _ in
-                    guard let viewModel = self.viewModel else { return }
+                UIAction(title: "EDIT".localized) { [weak self] _ in
+                    guard let viewModel = self?.viewModel else { return }
                     viewModel.editItem(at: indexPath.row)
-                    self.present(CategoryCreationScreenController(delegate: viewModel), animated: true)
+                    self?.present(CategoryCreationScreenController(delegate: viewModel), animated: true)
                 },
-                UIAction(title: "DELETE".localized, attributes: .destructive) { _ in
-                    self.showDeletionAlert(for: indexPath)
+                UIAction(title: "DELETE".localized, attributes: .destructive) { [weak self] _ in
+                    self?.showDeletionAlert(for: indexPath)
                 }
             ])
         })

@@ -127,20 +127,18 @@ extension TrackersScreenController {
 
     private func bind() {
         guard let viewModel = viewModel else { return }
-        // swiftlint:disable:next unused_capture_list
         viewModel.$needToReloadCollection.bind { [weak self] newValue in
             guard let self else { return }
             if newValue {
-                collectionView.reloadData()
+                self.collectionView.reloadData()
             }
         }
-        // swiftlint:disable:next unused_capture_list
         viewModel.$needToHideCollection.bind { [weak self] newValue in
             guard let self else { return }
             if newValue {
-                hideCollectionView()
+                self.hideCollectionView()
             } else {
-                showCollectionView()
+                self.showCollectionView()
             }
         }
     }
