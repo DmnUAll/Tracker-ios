@@ -83,6 +83,10 @@
 		6145FC0A29F52B1000908613 /* ScheduleConfigurationScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleConfigurationScreenViewModel.swift; sourceTree = "<group>"; };
 		61639FB52A03B0A300AA55C8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		61639FB72A03B0A700AA55C8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		61639FB82A03BA2200AA55C8 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		61639FB92A03BA2200AA55C8 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = de; path = de.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		61639FBA2A03BA2800AA55C8 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		61639FBB2A03BA2800AA55C8 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = sv; path = sv.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		6175C14129F3C03A00409E99 /* TrackerCategoryScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerCategoryScreenViewModel.swift; sourceTree = "<group>"; };
 		6175C14329F3C53B00409E99 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		6175C14529F3DD0D00409E99 /* LaunchScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewModel.swift; sourceTree = "<group>"; };
@@ -475,6 +479,8 @@
 				Base,
 				ru,
 				en,
+				de,
+				sv,
 			);
 			mainGroup = 617A807A29CC42DA00F9744D;
 			productRefGroup = 617A808429CC42DA00F9744D /* Products */;
@@ -585,6 +591,8 @@
 			children = (
 				6127E51829D9AFCC00D4EA2E /* ru */,
 				6127E51A29D9B00000D4EA2E /* en */,
+				61639FB82A03BA2200AA55C8 /* de */,
+				61639FBA2A03BA2800AA55C8 /* sv */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -594,6 +602,8 @@
 			children = (
 				61639FB52A03B0A300AA55C8 /* ru */,
 				61639FB72A03B0A700AA55C8 /* en */,
+				61639FB92A03BA2200AA55C8 /* de */,
+				61639FBB2A03BA2800AA55C8 /* sv */,
 			);
 			name = Localizable.stringsdict;
 			sourceTree = "<group>";
