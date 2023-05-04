@@ -164,6 +164,24 @@ extension TrackersScreenController {
     func updateCollectionView() {
         viewModel?.updateDataForUI()
     }
+
+    func showDeletionAlert(for indexPath: IndexPath) {
+        let alertController = UIAlertController(title: "TRACKER_DELETION".localized,
+                                                message: nil,
+                                                preferredStyle: .actionSheet)
+        let deleteAction = UIAlertAction(title: "DELETE".localized,
+                                         style: .destructive
+        ) { [weak self] _ in
+            guard let self = self else { return }
+            self.viewModel?.deleteTracker(with: indexPath)
+            self.collectionView.reloadData()
+            self.viewModel?.checkForData()
+        }
+        let cancelAction = UIAlertAction(title: "CANCEL".localized, style: .cancel)
+        alertController.addAction(deleteAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true)
+    }
 }
 
 // MARK: - UISearchTextFieldDelegate
@@ -265,6 +283,40 @@ extension TrackersScreenController: UICollectionViewDelegate {
         viewModel?.configureSupplementaryElement(ofKind: kind,
                                                  forCollectionView: collectionView,
                                                  atIndexPath: indexPath) ?? UICollectionReusableView()
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        contextMenuConfigurationForItemAt indexPath: IndexPath,
+                        point: CGPoint
+    ) -> UIContextMenuConfiguration? {
+        let havePinned = viewModel?.havePinned() ?? false
+        let configuration = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+            var pinAction = UIAction(title: "PIN".localized) { [weak self] _ in
+                guard let self else { return }
+                self.viewModel?.pinTracker(with: indexPath)
+            }
+            if havePinned,
+               indexPath.section == 0 {
+                pinAction = UIAction(title: "UNPIN".localized) { [weak self] _ in
+                    guard let self else { return }
+                    self.viewModel?.unpinTracker(with: indexPath)
+                }
+            }
+
+            let editAction = UIAction(title: "EDIT".localized) { [weak self] _ in
+                guard let self,
+                      let viewController = self.viewModel?.configureViewController(
+                        forSelectedItemAt: indexPath) else { return }
+                self.show(viewController, sender: nil)
+            }
+
+            let deleteAction = UIAction(title: "DELETE".localized, attributes: .destructive) { [weak self] _ in
+                guard let self else { return }
+                self.showDeletionAlert(for: indexPath)
+            }
+            return UIMenu(children: [pinAction, editAction, deleteAction])
+        }
+        return configuration
     }
 }
 

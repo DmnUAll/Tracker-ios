@@ -7,6 +7,7 @@ struct K {
         static let logoIcon = "YPLogo"
         static let trackerIcon = "TrackerIcon"
         static let statisticsIcon = "StatisticsIcon"
+        static let pinIcon = "PinIcon"
     }
 
     struct ImageNames {

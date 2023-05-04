@@ -46,3 +46,8 @@
 "DAY" = "Tag";
 "DAYS" = "Tage";
 "DAYS_LANGUAGE_SENSITIVE" = "Tage";
+"PIN" = "Stift";
+"UNPIN" = "Lösen";
+"EDIT" = "Bearbeiten";
+"TRACKER_DELETION" = "Möchten Sie den Tracker wirklich löschen?";
+"PINNED" = "Gepinnt";

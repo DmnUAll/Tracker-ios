@@ -46,3 +46,8 @@
 "DAY" = "dag";
 "DAYS" = "dagar";
 "DAYS_LANGUAGE_SENSITIVE" = "dagar";
+"PIN" = "Stift";
+"UNPIN" = "Lossa";
+"EDIT" = "Redigera";
+"TRACKER_DELETION" = "Är du säker på att du vill ta bort spåraren?";
+"PINNED" = "Fäst";

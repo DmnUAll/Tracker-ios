@@ -135,7 +135,9 @@ extension HabitCreationScreenViewModel {
                                         name: trackerName,
                                         color: selectedColor ?? UIColor(),
                                         emoji: selectedEmoji,
-                                        schedule: schedule)
+                                        schedule: schedule,
+                                        isPinned: false,
+                                        categoryName: selectedCategory)
                                ])
     }
 

@@ -46,3 +46,8 @@
 "DAY" = "d";
 "DAYS" = "d";
 "DAYS_LANGUAGE_SENSITIVE" = "d";
+"PIN" = "Pin";
+"UNPIN" = "Unpin";
+"EDIT" = "Edit";
+"TRACKER_DELETION" = "Are you sure you want to delete the tracker?";
+"PINNED" = "Pinned";

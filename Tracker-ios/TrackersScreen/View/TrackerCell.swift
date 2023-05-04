@@ -39,6 +39,12 @@ final class TrackerCell: UICollectionViewCell {
         return button
     }()
 
+    let pinIcon: UIImageView = {
+        let imageView = UICreator.shared.makeImageView(withImage: K.IconNames.pinIcon)
+        imageView.isHidden = true
+        return imageView
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupAutolayout()
@@ -66,6 +72,7 @@ extension TrackerCell {
         taskName.toAutolayout()
         counterLabel.toAutolayout()
         counterButton.toAutolayout()
+        pinIcon.toAutolayout()
     }
 
     private func addSubviews() {
@@ -74,6 +81,7 @@ extension TrackerCell {
         addSubview(taskView)
         addSubview(counterLabel)
         addSubview(counterButton)
+        addSubview(pinIcon)
     }
 
     private func setupConstraints() {
@@ -95,7 +103,10 @@ extension TrackerCell {
             counterButton.topAnchor.constraint(equalTo: taskView.bottomAnchor, constant: 8),
             counterButton.trailingAnchor.constraint(equalTo: taskView.trailingAnchor, constant: -12),
             counterLabel.leadingAnchor.constraint(equalTo: taskView.leadingAnchor, constant: 12),
-            counterLabel.centerYAnchor.constraint(equalTo: counterButton.centerYAnchor)
+            counterLabel.centerYAnchor.constraint(equalTo: counterButton.centerYAnchor),
+            pinIcon.heightAnchor.constraint(equalToConstant: 12),
+            pinIcon.topAnchor.constraint(equalTo: topAnchor, constant: 18),
+            pinIcon.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12)
         ])
     }
 }

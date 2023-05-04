@@ -24,6 +24,9 @@ final class TrackersScreenViewModel {
     private var completedTrackers: Set<TrackerRecord> = []
     private var currentDate: Date = Date()
     private var currentSearchText: String = ""
+    private var havePinnedCategory: Bool {
+        categories.contains(where: { $0.name == "PINNED".localized })
+    }
 
     init() {
         completedTrackers = Set(trackerRecordStore.trackers)
@@ -98,6 +101,11 @@ extension TrackersScreenViewModel {
         return cell
     }
 
+    func configureViewController(forSelectedItemAt indexPath: IndexPath) -> UIViewController {
+        let viewController = HabitCreationScreenController()
+        return viewController
+    }
+
     func didEnter(_ text: String?) {
         if let text {
             currentSearchText = text
@@ -131,6 +139,29 @@ extension TrackersScreenViewModel {
         searchTracks()
     }
 
+    func deleteTracker(with indexPath: IndexPath) {
+        let category = categories[indexPath.section]
+        var trackersList = category.trackers
+        trackersList.remove(at: indexPath.row)
+        if let existingCategory = trackerCategoryStore.checkForExistingCategory(named: category.name) {
+            trackerCategoryStore.updateExistingCategory(existingCategory, with: TrackerCategory(name: category.name,
+                                                                                                trackers: trackersList))
+        }
+        updateDataForUI()
+    }
+
+    func pinTracker(with indexPath: IndexPath) {
+        let tracker = categories[indexPath.section].trackers[indexPath.row]
+        deleteTracker(with: indexPath)
+        addNewTracker(TrackerCategory(name: "PINNED".localized, trackers: [tracker]))
+    }
+
+    func unpinTracker(with indexPath: IndexPath) {
+        let tracker = categories[indexPath.section].trackers[indexPath.row]
+        deleteTracker(with: indexPath)
+        addNewTracker(TrackerCategory(name: tracker.categoryName, trackers: [tracker]))
+    }
+
     func searchTracks() {
         categories = []
         if currentSearchText == "" {
@@ -153,6 +184,10 @@ extension TrackersScreenViewModel {
                 }
             }
         }
+        if let pinnedCategoryIndex = categories.firstIndex(where: { $0.name == "PINNED".localized }) {
+            let pinnedCategory = categories.remove(at: pinnedCategoryIndex)
+            categories.insert(pinnedCategory, at: 0)
+        }
         if categories.count == 0 {
             needToHideCollection = true
         } else {
@@ -163,12 +198,20 @@ extension TrackersScreenViewModel {
 
     func updateDataForUI() {
         allCategories = trackerCategoryStore.categories
+        if havePinnedCategory,
+           allCategories[0].trackers.isEmpty {
+            allCategories.remove(at: 0)
+        }
         searchTracks()
         needToReloadCollection = true
     }
 
     func updateCurrentDate(to date: Date) {
         currentDate = date
+    }
+
+    func havePinned() -> Bool {
+        havePinnedCategory
     }
 }
 
