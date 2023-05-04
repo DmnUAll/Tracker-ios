@@ -91,7 +91,7 @@ extension TrackersScreenViewModel {
         }
         cell.trackerID = tracker.id
         cell.taskView.backgroundColor = tracker.color
-        cell.counterLabel.text = "\(timesCompleted) \(timesCompleted.days())"
+        cell.counterLabel.text = timesCompleted.localized
         cell.taskIcon.text = tracker.emoji
         cell.taskName.text = tracker.name
         cell.delegate = self
