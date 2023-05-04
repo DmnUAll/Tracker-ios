@@ -98,6 +98,11 @@ extension TrackersScreenViewModel {
         cell.taskIcon.text = tracker.emoji
         cell.taskName.text = tracker.name
         cell.delegate = self
+        if tracker.isPinned {
+            cell.pinIcon.isHidden = false
+        } else {
+            cell.pinIcon.isHidden = true
+        }
         return cell
     }
 
@@ -151,13 +156,15 @@ extension TrackersScreenViewModel {
     }
 
     func pinTracker(with indexPath: IndexPath) {
-        let tracker = categories[indexPath.section].trackers[indexPath.row]
+        var tracker = categories[indexPath.section].trackers[indexPath.row]
+        tracker.isPinned = true
         deleteTracker(with: indexPath)
         addNewTracker(TrackerCategory(name: "PINNED".localized, trackers: [tracker]))
     }
 
     func unpinTracker(with indexPath: IndexPath) {
-        let tracker = categories[indexPath.section].trackers[indexPath.row]
+        var tracker = categories[indexPath.section].trackers[indexPath.row]
+        tracker.isPinned = false
         deleteTracker(with: indexPath)
         addNewTracker(TrackerCategory(name: tracker.categoryName, trackers: [tracker]))
     }

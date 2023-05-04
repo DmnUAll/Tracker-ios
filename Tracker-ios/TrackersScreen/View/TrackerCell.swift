@@ -39,11 +39,7 @@ final class TrackerCell: UICollectionViewCell {
         return button
     }()
 
-    let pinIcon: UIImageView = {
-        let imageView = UICreator.shared.makeImageView(withImage: K.IconNames.pinIcon)
-        imageView.isHidden = true
-        return imageView
-    }()
+    let pinIcon = UICreator.shared.makeImageView(withImage: K.IconNames.pinIcon)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
