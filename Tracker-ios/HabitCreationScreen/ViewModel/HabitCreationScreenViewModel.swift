@@ -17,7 +17,7 @@ final class HabitCreationScreenViewModel {
     private let colors: [UIColor] = [.tr0, .tr1, .tr2, .tr3, .tr4, .tr5,
                                    .tr6, .tr7, .tr8, .tr9, .tr10, .tr11,
                                    .tr12, .tr13, .tr14, .tr15, .tr16, .tr17]
-
+    private var trackerID: UUID?
     private var trackerName: String = ""
     private var selectedCategory: String = ""
     private var selectedDaysRaw: [String] = []
@@ -27,6 +27,7 @@ final class HabitCreationScreenViewModel {
     private var selectedSchedule: [WeekDay] = []
     private var isNonRegularEvent: Bool = false
     private var selectedCell: UITableViewCell?
+    private var trackerIsPinned: Bool = false
 
     convenience init(isNonRegularEvent: Bool) {
         self.init()
@@ -147,12 +148,12 @@ extension HabitCreationScreenViewModel {
         let schedule = isNonRegularEvent ? [WeekDay.giveCurrentWeekDay(forDate: Date())] : selectedSchedule
         return TrackerCategory(name: selectedCategory,
                                trackers: [
-                                Tracker(id: UUID(),
+                                Tracker(id: trackerID ?? UUID(),
                                         name: trackerName,
                                         color: selectedColor ?? UIColor(),
                                         emoji: selectedEmoji,
                                         schedule: schedule,
-                                        isPinned: false,
+                                        isPinned: trackerIsPinned,
                                         categoryName: selectedCategory)
                                ])
     }
@@ -169,13 +170,14 @@ extension HabitCreationScreenViewModel {
     }
 
     func prepareDataForEditing(_ trackerToEdit: Tracker) {
+        trackerID = trackerToEdit.id
         trackerName = trackerToEdit.name
         selectedEmoji = trackerToEdit.emoji
         selectedColor = trackerToEdit.color
         selectedSchedule = trackerToEdit.schedule
         selectedDays = selectedSchedule.map { WeekDay.giveShortWeekDayKey(for: $0) ?? "" }
+        trackerIsPinned = trackerToEdit.isPinned
         updateCategory(withCategory: trackerToEdit.categoryName)
-        selectedCell = ScheduleCell()
         updateSchedule(withDays: selectedSchedule.map { $0.rawValue.localized })
     }
 

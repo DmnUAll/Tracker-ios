@@ -161,6 +161,10 @@ extension TrackersScreenController {
         viewModel?.addNewTracker(data)
     }
 
+    func updateData(_ trackerCategory: TrackerCategory, counter: Int) {
+        viewModel?.updateTracker(trackerCategory, counter: counter)
+    }
+
     func updateCollectionView() {
         viewModel?.updateDataForUI()
     }

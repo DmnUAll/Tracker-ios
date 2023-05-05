@@ -27,6 +27,7 @@ final class TrackersScreenViewModel {
     private var havePinnedCategory: Bool {
         categories.contains(where: { $0.name == "PINNED".localized })
     }
+    private var currentlyEditingIndex: IndexPath?
 
     init() {
         completedTrackers = Set(trackerRecordStore.trackers)
@@ -38,6 +39,7 @@ final class TrackersScreenViewModel {
 extension TrackersScreenViewModel {
 
     func checkForData() {
+        print(completedTrackers)
         if categories.isEmpty {
             needToHideCollection = true
         } else {
@@ -107,6 +109,7 @@ extension TrackersScreenViewModel {
     }
 
     func configureViewController(forSelectedItemAt indexPath: IndexPath) -> UIViewController {
+        currentlyEditingIndex = indexPath
         let tracker = categories[indexPath.section].trackers[indexPath.row]
         let count = completedTrackers.filter({ $0.id == tracker.id}).count
         let viewController = HabitCreationScreenController(trackerToEdit: tracker, counter: count)
@@ -166,9 +169,37 @@ extension TrackersScreenViewModel {
 
     func unpinTracker(with indexPath: IndexPath) {
         var tracker = categories[indexPath.section].trackers[indexPath.row]
+        print(tracker)
         tracker.isPinned = false
         deleteTracker(with: indexPath)
         addNewTracker(TrackerCategory(name: tracker.categoryName, trackers: [tracker]))
+    }
+
+    func updateTracker(_ trackerCategory: TrackerCategory, counter: Int) {
+        guard let tracker = trackerCategory.trackers.first,
+              let index = currentlyEditingIndex else { return }
+        if tracker.isPinned {
+            deleteTracker(with: index)
+            addNewTracker(TrackerCategory(name: "PINNED".localized, trackers: [tracker]))
+        } else {
+            deleteTracker(with: index)
+            addNewTracker(TrackerCategory(name: tracker.categoryName, trackers: [tracker]))
+        }
+        let oldCount = completedTrackers.filter({ $0.id == tracker.id}).count
+        if oldCount > counter {
+            for _ in 1...(oldCount - counter) {
+                if let element = completedTrackers.first(where: { $0.id == tracker.id }) {
+                    completedTrackers.remove(element)
+                    trackerRecordStore.deleteTracker(element)
+                }
+            }
+        } else if oldCount < counter {
+            for _ in 1...(counter - oldCount) {
+                let newRecord = TrackerRecord(id: tracker.id, date: Date.randomDateForCounter)
+                completedTrackers.insert(newRecord)
+                trackerRecordStore.addNewRecord(newRecord)
+            }
+        }
     }
 
     func searchTracks() {

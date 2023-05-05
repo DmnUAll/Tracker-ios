@@ -27,7 +27,7 @@ final class HabitCreationScreenController: UIViewController {
     private let stackView = UICreator.shared.makeStackView()
     private let counterStackView = UICreator.shared.makeStackView(withAxis: .horizontal, align: .center, andSpacing: 24)
 
-    private let decreaseCountButton: UIButton = {
+    let decreaseCountButton: UIButton = {
         let button = UICreator.shared.makeButton(action: #selector(decreaseCountButtonTapped))
         button.setImage(UIImage(systemName: "plus"), for: .normal)
         button.tintColor = .white
@@ -38,7 +38,7 @@ final class HabitCreationScreenController: UIViewController {
 
     private let counterLabel = UICreator.shared.makeLabel(text: "0", font: UIFont.appFont(.bold, withSize: 32))
 
-    private let increaseCountButton: UIButton = {
+    let increaseCountButton: UIButton = {
         let button = UICreator.shared.makeButton(action: #selector(increaseCountButtonTapped))
         button.setImage(UIImage(systemName: "plus"), for: .normal)
         button.tintColor = .white
@@ -164,7 +164,7 @@ final class HabitCreationScreenController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let trackerToEdit {
+        if trackerToEdit != nil {
             updateUIForEditing()
         }
     }
@@ -197,7 +197,12 @@ extension HabitCreationScreenController {
         if let topController = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first?.rootViewController {
             let destinationViewController = topController.children.first?.children.first as? TrackersScreenController
             if let viewModel = viewModel {
-                destinationViewController?.addData(viewModel.createNewTracker())
+                if trackerToEdit == nil {
+                    destinationViewController?.addData(viewModel.createNewTracker())
+                } else {
+                    destinationViewController?.updateData(viewModel.createNewTracker(),
+                                                          counter: Int(counterLabel.text ?? "") ?? 0)
+                }
             }
         }
         self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
@@ -206,6 +211,7 @@ extension HabitCreationScreenController {
     private func setupAutolayout() {
         scrollView.toAutolayout()
         titleLabel.toAutolayout()
+        counterStackView.toAutolayout()
         stackView.toAutolayout()
         trackerNameTextField.toAutolayout()
         errorLabel.toAutolayout()
@@ -222,7 +228,7 @@ extension HabitCreationScreenController {
         counterStackView.addArrangedSubview(decreaseCountButton)
         counterStackView.addArrangedSubview(counterLabel)
         counterStackView.addArrangedSubview(increaseCountButton)
-        stackView.addArrangedSubview(counterStackView)
+        scrollView.addSubview(counterStackView)
         stackView.addArrangedSubview(trackerNameTextField)
         stackView.addArrangedSubview(errorLabel)
         scrollView.addSubview(stackView)
@@ -238,6 +244,7 @@ extension HabitCreationScreenController {
     }
 
     private func setupConstraints() {
+        let topInset: CGFloat = trackerToEdit == nil ? -24 : 40
         NSLayoutConstraint.activate([
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 27),
@@ -250,6 +257,8 @@ extension HabitCreationScreenController {
             increaseCountButton.heightAnchor.constraint(equalToConstant: 34),
             increaseCountButton.widthAnchor.constraint(equalTo: increaseCountButton.heightAnchor, multiplier: 1),
             counterStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            counterLabel.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            stackView.topAnchor.constraint(equalTo: counterStackView.bottomAnchor, constant: topInset),
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             trackerNameTextField.heightAnchor.constraint(equalToConstant: 75),
@@ -294,6 +303,8 @@ extension HabitCreationScreenController {
     }
 
     private func updateUIForEditing() {
+        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width,
+                                        height: 886)
         titleLabel.text = "HABIT_EDITING".localized
         createButton.setTitle("SAVE".localized, for: .normal)
         trackerNameTextField.text = trackerToEdit?.name
@@ -301,10 +312,14 @@ extension HabitCreationScreenController {
         increaseCountButton.backgroundColor = trackerToEdit?.color
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
+            let emojiIndex = viewModel?.giveEmojiIndex() ?? IndexPath(row: 0, section: 0)
+            let colorIndex = viewModel?.giveColorIndex() ?? IndexPath(row: 0, section: 0)
+            self.emojiCollectionView.selectItem(at: emojiIndex, animated: true, scrollPosition: .centeredHorizontally)
             self.collectionView(self.emojiCollectionView,
-                                didSelectItemAt: viewModel?.giveEmojiIndex() ?? IndexPath(row: 0, section: 0))
+                                didSelectItemAt: emojiIndex)
+            self.colorCollectionView.selectItem(at: colorIndex, animated: true, scrollPosition: .centeredHorizontally)
             self.collectionView(self.colorCollectionView,
-                                didSelectItemAt: viewModel?.giveColorIndex() ?? IndexPath(row: 0, section: 0))
+                                didSelectItemAt: colorIndex)
         }
     }
 }

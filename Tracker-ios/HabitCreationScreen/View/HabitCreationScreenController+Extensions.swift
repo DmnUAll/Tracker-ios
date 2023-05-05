@@ -117,11 +117,14 @@ extension HabitCreationScreenController: UICollectionViewDelegate {
             guard let cell = collectionView.cellForItem(at: indexPath) as? ColorCell else { return }
             cell.frameView.layer.borderWidth = 3
             viewModel?.setPickedColor(to: cell.colorView.backgroundColor)
+            decreaseCountButton.backgroundColor = cell.colorView.backgroundColor
+            increaseCountButton.backgroundColor = cell.colorView.backgroundColor
         }
         checkIfCanUnlockCreateeButton()
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        collectionView.deselectAllItems(animated: true)
         if collectionView.tag == 1 {
             guard let cell = collectionView.cellForItem(at: indexPath) as? EmojiCell else { return }
             cell.frameView.isHidden = true
