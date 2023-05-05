@@ -7,6 +7,9 @@ final class HabitCreationScreenViewModel {
     @Observable
     private(set) var canUnlockCreateButton: Bool = false
 
+    @Observable
+    private(set) var canUpdateUIForEditing: Bool = false
+
     private let emojis = ["🙂", "😻", "🌺", "🐶", "❤️", "😱",
                           "😇", "😡", "🥶", "🤔", "🙌", "🍔",
                           "🥦", "🏓", "🥇", "🎸", "🏝", "😪"]
@@ -34,6 +37,11 @@ final class HabitCreationScreenViewModel {
                 selectedDays.append(dayKey)
             }
         }
+    }
+
+    convenience init(trackerToEdit: Tracker) {
+        self.init()
+        prepareDataForEditing(trackerToEdit)
     }
 }
 
@@ -90,10 +98,18 @@ extension HabitCreationScreenViewModel {
             } else {
                 cell.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
             }
+            if selectedCategory != "" {
+                selectedCell = cell
+                updateCategory(withCategory: selectedCategory)
+            }
         } else {
             cell = (tableView.dequeueReusableCell(withIdentifier: K.CollectionElementNames.scheduleCell,
                                                   for: indexPath) as? ScheduleCell) ?? UITableViewCell()
             cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: tableView.bounds.width)
+            if !selectedDaysRaw.isEmpty {
+                selectedCell = cell
+                updateSchedule(withDays: selectedDaysRaw)
+            }
         }
         cell.backgroundColor = .clear
         cell.tintColor = .ypGray
@@ -150,6 +166,27 @@ extension HabitCreationScreenViewModel {
             return false
         }
         return true
+    }
+
+    func prepareDataForEditing(_ trackerToEdit: Tracker) {
+        trackerName = trackerToEdit.name
+        selectedEmoji = trackerToEdit.emoji
+        selectedColor = trackerToEdit.color
+        selectedSchedule = trackerToEdit.schedule
+        selectedDays = selectedSchedule.map { WeekDay.giveShortWeekDayKey(for: $0) ?? "" }
+        updateCategory(withCategory: trackerToEdit.categoryName)
+        selectedCell = ScheduleCell()
+        updateSchedule(withDays: selectedSchedule.map { $0.rawValue.localized })
+    }
+
+    func giveEmojiIndex() -> IndexPath {
+        IndexPath(row: emojis.firstIndex(of: selectedEmoji) ?? 0,
+                  section: 0)
+    }
+
+    func giveColorIndex() -> IndexPath {
+        return IndexPath(row: colors.map { $0.hexString() }.firstIndex(of: selectedColor?.hexString()) ?? 0,
+                  section: 0)
     }
 }
 

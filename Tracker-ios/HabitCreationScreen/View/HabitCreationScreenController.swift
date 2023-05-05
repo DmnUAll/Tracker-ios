@@ -10,6 +10,7 @@ final class HabitCreationScreenController: UIViewController {
 
     var viewModel: HabitCreationScreenViewModel?
     var isNonRegularEvent: Bool = false
+    private var trackerToEdit: Tracker?
 
     private let titleLabel = UICreator.shared.makeLabel(text: "NEW_HABIT".localized,
                                                         font: UIFont.appFont(.medium, withSize: 16))
@@ -24,6 +25,27 @@ final class HabitCreationScreenController: UIViewController {
     }()
 
     private let stackView = UICreator.shared.makeStackView()
+    private let counterStackView = UICreator.shared.makeStackView(withAxis: .horizontal, align: .center, andSpacing: 24)
+
+    private let decreaseCountButton: UIButton = {
+        let button = UICreator.shared.makeButton(action: #selector(decreaseCountButtonTapped))
+        button.setImage(UIImage(systemName: "plus"), for: .normal)
+        button.tintColor = .white
+        button.layer.masksToBounds = true
+        button.layer.cornerRadius = 17
+        return button
+    }()
+
+    private let counterLabel = UICreator.shared.makeLabel(text: "0", font: UIFont.appFont(.bold, withSize: 32))
+
+    private let increaseCountButton: UIButton = {
+        let button = UICreator.shared.makeButton(action: #selector(increaseCountButtonTapped))
+        button.setImage(UIImage(systemName: "plus"), for: .normal)
+        button.tintColor = .white
+        button.layer.masksToBounds = true
+        button.layer.cornerRadius = 17
+        return button
+    }()
 
     private let trackerNameTextField: UITextField = {
         let textField = UICreator.shared.makeTextField(withTarget: #selector(textFieldDidChange))
@@ -104,6 +126,12 @@ final class HabitCreationScreenController: UIViewController {
         self.isNonRegularEvent = isNonRegularEvent
     }
 
+    convenience init(trackerToEdit: Tracker, counter: Int) {
+        self.init()
+        self.trackerToEdit = trackerToEdit
+        self.counterLabel.text = "\(counter)"
+    }
+
     // MARK: - Life Cycle
     override func viewDidLoad() {
         view.backgroundColor = .ypWhite
@@ -111,7 +139,13 @@ final class HabitCreationScreenController: UIViewController {
         setupAutolayout()
         addSubviews()
         setupConstraints()
-        viewModel = HabitCreationScreenViewModel(isNonRegularEvent: isNonRegularEvent)
+        if let trackerToEdit {
+            counterStackView.isHidden = false
+            viewModel = HabitCreationScreenViewModel(trackerToEdit: trackerToEdit)
+        } else {
+            counterStackView.isHidden = true
+            viewModel = HabitCreationScreenViewModel(isNonRegularEvent: isNonRegularEvent)
+        }
         bind()
         trackerNameTextField.delegate = self
         optionsTableView.dataSource = self
@@ -127,6 +161,13 @@ final class HabitCreationScreenController: UIViewController {
             optionsTableView.heightAnchor.constraint(equalToConstant: 150).isActive = true
         }
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let trackerToEdit {
+            updateUIForEditing()
+        }
+    }
 }
 
 // MARK: - Helpers
@@ -134,6 +175,18 @@ extension HabitCreationScreenController {
 
     @objc private func textFieldDidChange() {
         viewModel?.didEnter(trackerNameTextField.text)
+    }
+
+    @objc private func decreaseCountButtonTapped() {
+        if let count = Int(counterLabel.text ?? "") {
+            counterLabel.text = "\(count == 0 ? 0 : count - 1)"
+        }
+    }
+
+    @objc private func increaseCountButtonTapped() {
+        if let count = Int(counterLabel.text ?? "") {
+            counterLabel.text = "\(count + 1)"
+        }
     }
 
     @objc private func cancelButtonTapped() {
@@ -166,6 +219,10 @@ extension HabitCreationScreenController {
 
     private func addSubviews() {
         view.addSubview(titleLabel)
+        counterStackView.addArrangedSubview(decreaseCountButton)
+        counterStackView.addArrangedSubview(counterLabel)
+        counterStackView.addArrangedSubview(increaseCountButton)
+        stackView.addArrangedSubview(counterStackView)
         stackView.addArrangedSubview(trackerNameTextField)
         stackView.addArrangedSubview(errorLabel)
         scrollView.addSubview(stackView)
@@ -188,6 +245,11 @@ extension HabitCreationScreenController {
             scrollView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 38),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            decreaseCountButton.heightAnchor.constraint(equalToConstant: 34),
+            decreaseCountButton.widthAnchor.constraint(equalTo: decreaseCountButton.heightAnchor, multiplier: 1),
+            increaseCountButton.heightAnchor.constraint(equalToConstant: 34),
+            increaseCountButton.widthAnchor.constraint(equalTo: increaseCountButton.heightAnchor, multiplier: 1),
+            counterStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             trackerNameTextField.heightAnchor.constraint(equalToConstant: 75),
@@ -228,6 +290,21 @@ extension HabitCreationScreenController {
         } else {
             createButton.backgroundColor = .ypGray
             createButton.isEnabled = false
+        }
+    }
+
+    private func updateUIForEditing() {
+        titleLabel.text = "HABIT_EDITING".localized
+        createButton.setTitle("SAVE".localized, for: .normal)
+        trackerNameTextField.text = trackerToEdit?.name
+        decreaseCountButton.backgroundColor = trackerToEdit?.color
+        increaseCountButton.backgroundColor = trackerToEdit?.color
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.collectionView(self.emojiCollectionView,
+                                didSelectItemAt: viewModel?.giveEmojiIndex() ?? IndexPath(row: 0, section: 0))
+            self.collectionView(self.colorCollectionView,
+                                didSelectItemAt: viewModel?.giveColorIndex() ?? IndexPath(row: 0, section: 0))
         }
     }
 }

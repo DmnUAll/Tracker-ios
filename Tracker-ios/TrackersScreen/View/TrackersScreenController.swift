@@ -307,7 +307,7 @@ extension TrackersScreenController: UICollectionViewDelegate {
                 guard let self,
                       let viewController = self.viewModel?.configureViewController(
                         forSelectedItemAt: indexPath) else { return }
-                self.show(viewController, sender: nil)
+                self.present(viewController, animated: true)
             }
 
             let deleteAction = UIAction(title: "DELETE".localized, attributes: .destructive) { [weak self] _ in

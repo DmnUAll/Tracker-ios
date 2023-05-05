@@ -51,3 +51,5 @@
 "EDIT" = "Bearbeiten";
 "TRACKER_DELETION" = "Möchten Sie den Tracker wirklich löschen?";
 "PINNED" = "Gepinnt";
+"HABIT_EDITING" = "Bearbeiten einer Gewohnheit";
+"SAVE" = "Speichern";

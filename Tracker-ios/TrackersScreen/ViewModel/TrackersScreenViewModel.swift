@@ -107,7 +107,9 @@ extension TrackersScreenViewModel {
     }
 
     func configureViewController(forSelectedItemAt indexPath: IndexPath) -> UIViewController {
-        let viewController = HabitCreationScreenController()
+        let tracker = categories[indexPath.section].trackers[indexPath.row]
+        let count = completedTrackers.filter({ $0.id == tracker.id}).count
+        let viewController = HabitCreationScreenController(trackerToEdit: tracker, counter: count)
         return viewController
     }
 
