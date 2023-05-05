@@ -169,7 +169,6 @@ extension TrackersScreenViewModel {
 
     func unpinTracker(with indexPath: IndexPath) {
         var tracker = categories[indexPath.section].trackers[indexPath.row]
-        print(tracker)
         tracker.isPinned = false
         deleteTracker(with: indexPath)
         addNewTracker(TrackerCategory(name: tracker.categoryName, trackers: [tracker]))
