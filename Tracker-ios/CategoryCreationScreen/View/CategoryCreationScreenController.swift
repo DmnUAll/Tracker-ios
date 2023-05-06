@@ -13,6 +13,7 @@ final class CategoryCreationScreenController: UIViewController {
 
     // MARK: - Properties and Initializers
     weak var delegate: CategorySavingDelegate?
+    private let analyticsService = AnalyticsService()
 
     private let titleLabel = UICreator.shared.makeLabel(text: "NEW_CATEGORY".localized,
                                                         font: UIFont.appFont(.medium, withSize: 16))
@@ -64,6 +65,9 @@ final class CategoryCreationScreenController: UIViewController {
             titleLabel.text = "CATEGORY_EDITING".localized
             categoryNameTextField.text = delegate?.categoryToEdit ?? ""
         }
+        analyticsService.report(event: K.AnalyticEventNames.open,
+                                params: ["screen": K.AnalyticScreenNames.categoryCreation,
+                                         "item": K.AnalyticItemNames.none])
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -71,12 +75,22 @@ final class CategoryCreationScreenController: UIViewController {
             delegate?.categoryEditingWasCanceled()
         }
     }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        analyticsService.report(event: K.AnalyticEventNames.close,
+                                params: ["screen": K.AnalyticScreenNames.categoryCreation,
+                                         "item": K.AnalyticItemNames.none])
+    }
 }
 
 // MARK: - Helpers
 extension CategoryCreationScreenController {
 
     @objc private func doneButtonTapped() {
+        analyticsService.report(event: K.AnalyticEventNames.click,
+                                params: ["screen": K.AnalyticScreenNames.categoryCreation,
+                                         "item": K.AnalyticItemNames.confirmCategoryCreation])
         let categoryName = categoryNameTextField.text ?? ""
         if delegate?.categoryToEdit != "" {
             delegate?.updateCategory(toName: categoryName)

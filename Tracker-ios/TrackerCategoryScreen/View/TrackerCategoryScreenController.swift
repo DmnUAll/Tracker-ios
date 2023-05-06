@@ -12,6 +12,7 @@ final class TrackerCategoryScreenController: UIViewController {
     // MARK: - Properties and Initializers
     weak var delegate: TrackerCategoryConfigurationDelegate?
     private var viewModel: TrackerCategoryScreenViewModel?
+    private let analyticsService = AnalyticsService()
 
     private let titleLabel = UICreator.shared.makeLabel(text: "CATEGORY".localized,
                                                         font: UIFont.appFont(.medium, withSize: 16))
@@ -45,6 +46,16 @@ final class TrackerCategoryScreenController: UIViewController {
         viewModel?.selectPreviouslyChoosenCategory(withName: delegate?.previousSelectedCategory ?? "")
         categoriesTableView.dataSource = self
         categoriesTableView.delegate = self
+        analyticsService.report(event: K.AnalyticEventNames.open,
+                                params: ["screen": K.AnalyticScreenNames.trackerCategory,
+                                         "item": K.AnalyticItemNames.none])
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        analyticsService.report(event: K.AnalyticEventNames.close,
+                                params: ["screen": K.AnalyticScreenNames.trackerCategory,
+                                         "item": K.AnalyticItemNames.none])
     }
 }
 
@@ -52,6 +63,9 @@ final class TrackerCategoryScreenController: UIViewController {
 extension TrackerCategoryScreenController {
 
     @objc private func addButtonTapped() {
+        analyticsService.report(event: K.AnalyticEventNames.click,
+                                params: ["screen": K.AnalyticScreenNames.trackerCategory,
+                                         "item": K.AnalyticItemNames.addCategory])
         present(CategoryCreationScreenController(delegate: viewModel), animated: true)
     }
 

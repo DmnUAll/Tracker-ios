@@ -5,6 +5,7 @@ final class StatisticsScreenController: UIViewController {
 
     // MARK: - Properties and Initializers
     private var viewModel: StatisticsScreenViewModel?
+    private let analyticsService = AnalyticsService()
 
     private let noDataImage = UICreator.shared.makeImageView(withImage: K.ImageNames.noDataToAnalyze)
     private let noDataLabel = UICreator.shared.makeLabel(
@@ -54,12 +55,22 @@ final class StatisticsScreenController: UIViewController {
         hideStatistics()
         viewModel = StatisticsScreenViewModel()
         bind()
+        analyticsService.report(event: K.AnalyticEventNames.open,
+                                params: ["screen": K.AnalyticScreenNames.statistics,
+                                         "item": K.AnalyticItemNames.none])
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         configureNestedStackViews()
         viewModel?.checkForData()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        analyticsService.report(event: K.AnalyticEventNames.close,
+                                params: ["screen": K.AnalyticScreenNames.statistics,
+                                         "item": K.AnalyticItemNames.none])
     }
 }
 

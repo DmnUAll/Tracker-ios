@@ -90,8 +90,9 @@ extension TrackersScreenController {
 
     @objc private func filterButtonTapped() {
         // TODO: - filters logic needed
-        analyticsService.report(event: K.AnalyticEventNames.click, params: ["screen": K.AnalyticScreenNames.trackers,
-                                                                           "item": K.AnalyticItemNames.filter])
+        analyticsService.report(event: K.AnalyticEventNames.click,
+                                params: ["screen": K.AnalyticScreenNames.trackers,
+                                         "item": K.AnalyticItemNames.filter])
     }
 
     private func setupAutolayout() {
@@ -314,12 +315,18 @@ extension TrackersScreenController: UICollectionViewDelegate {
             var pinAction = UIAction(title: "PIN".localized) { [weak self] _ in
                 guard let self else { return }
                 self.viewModel?.pinTracker(with: indexPath)
+                self.analyticsService.report(event: K.AnalyticEventNames.click,
+                                             params: ["screen": K.AnalyticScreenNames.trackers,
+                                                      "item": K.AnalyticItemNames.pin])
             }
             if havePinned,
                indexPath.section == 0 {
                 pinAction = UIAction(title: "UNPIN".localized) { [weak self] _ in
                     guard let self else { return }
                     self.viewModel?.unpinTracker(with: indexPath)
+                    self.analyticsService.report(event: K.AnalyticEventNames.click,
+                                                 params: ["screen": K.AnalyticScreenNames.trackers,
+                                                          "item": K.AnalyticItemNames.unpin])
                 }
             }
 

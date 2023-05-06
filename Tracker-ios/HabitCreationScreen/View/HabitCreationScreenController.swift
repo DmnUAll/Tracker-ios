@@ -5,6 +5,7 @@ final class HabitCreationScreenController: UIViewController {
 
     // MARK: - Properties and Initializers
     var viewModel: HabitCreationScreenViewModel?
+    let analyticsService = AnalyticsService()
     var isNonRegularEvent: Bool = false
     private var trackerToEdit: Tracker?
 
@@ -156,6 +157,9 @@ final class HabitCreationScreenController: UIViewController {
         } else {
             optionsTableView.heightAnchor.constraint(equalToConstant: 150).isActive = true
         }
+        analyticsService.report(event: K.AnalyticEventNames.open,
+                                params: ["screen": K.AnalyticScreenNames.trackerCreation,
+                                         "item": K.AnalyticItemNames.none])
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -163,6 +167,13 @@ final class HabitCreationScreenController: UIViewController {
         if trackerToEdit != nil {
             updateUIForEditing()
         }
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        analyticsService.report(event: K.AnalyticEventNames.close,
+                                params: ["screen": K.AnalyticScreenNames.trackerCreation,
+                                         "item": K.AnalyticItemNames.none])
     }
 }
 
@@ -186,10 +197,16 @@ extension HabitCreationScreenController {
     }
 
     @objc private func cancelButtonTapped() {
+        analyticsService.report(event: K.AnalyticEventNames.click,
+                                params: ["screen": K.AnalyticScreenNames.trackerCreation,
+                                         "item": K.AnalyticItemNames.cancelTrackerCreation])
         self.dismiss(animated: true)
     }
 
     @objc private func createButtonTapped() {
+        analyticsService.report(event: K.AnalyticEventNames.click,
+                                params: ["screen": K.AnalyticScreenNames.trackerCreation,
+                                         "item": K.AnalyticItemNames.confirmTrackerCreation])
         if let topController = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first?.rootViewController {
             let destinationViewController = topController.children.first?.children.first as? TrackersScreenController
             if let viewModel = viewModel {

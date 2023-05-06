@@ -47,6 +47,12 @@ struct K {
 
     struct AnalyticScreenNames {
         static let trackers = "Main"
+        static let trackerChoosing = "TrackerChoosing"
+        static let trackerCreation = "TrackerCreation"
+        static let trackerCategory = "TrackerCategoryChoosing"
+        static let categoryCreation = "CategoryCreation"
+        static let scheduleConfiguration = "ScheduleConfiguration"
+        static let statistics = "Statistics"
     }
 
     struct AnalyticItemNames {
@@ -54,7 +60,18 @@ struct K {
         static let addTrack = "add_track"
         static let completeTrack = "track"
         static let filter = "filter"
+        static let pin = "pin"
+        static let unpin = "unpin"
         static let edit = "edit"
         static let delete = "delete"
+        static let habit = "habit_creation"
+        static let event = "non_regular_event_creation"
+        static let cancelTrackerCreation = "cancel_tracker_creation"
+        static let confirmTrackerCreation = "confirm_tracker_creation"
+        static let color = "color_choosen_"
+        static let emoji = "emoji_choosen_"
+        static let addCategory = "add_category"
+        static let confirmCategoryCreation = "confirm_category_creation"
+        static let confirmSchedule = "confirm_schedule"
     }
 }

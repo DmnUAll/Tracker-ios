@@ -12,6 +12,7 @@ final class ScheduleConfigurationScreenController: UIViewController {
     // MARK: - Properties and Initializers
     private var viewModel: ScheduleConfigurationScreenViewModel?
     weak var delegate: ScheduleConfigurationDelegate?
+    private let analyticsService = AnalyticsService()
 
     private let titleLabel = UICreator.shared.makeLabel(text: "SCHEDULE".localized,
                                                         font: UIFont.appFont(.medium, withSize: 16))
@@ -43,6 +44,16 @@ final class ScheduleConfigurationScreenController: UIViewController {
         viewModel?.selectPreviouslyChoosenSchedule(withDays: delegate?.previousSelectedSchedule ?? [])
         daysTableView.dataSource = self
         daysTableView.delegate = self
+        analyticsService.report(event: K.AnalyticEventNames.open,
+                                params: ["screen": K.AnalyticScreenNames.scheduleConfiguration,
+                                         "item": K.AnalyticItemNames.none])
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        analyticsService.report(event: K.AnalyticEventNames.close,
+                                params: ["screen": K.AnalyticScreenNames.scheduleConfiguration,
+                                         "item": K.AnalyticItemNames.none])
     }
 }
 
@@ -50,6 +61,9 @@ final class ScheduleConfigurationScreenController: UIViewController {
 extension ScheduleConfigurationScreenController {
 
     @objc private func doneButtonTapped() {
+        analyticsService.report(event: K.AnalyticEventNames.click,
+                                params: ["screen": K.AnalyticScreenNames.scheduleConfiguration,
+                                         "item": K.AnalyticItemNames.confirmSchedule])
         delegate?.updateSchedule(withDays: viewModel?.giveSelectedDays() ?? [])
         dismiss(animated: true)
     }

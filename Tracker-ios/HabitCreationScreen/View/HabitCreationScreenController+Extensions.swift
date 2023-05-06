@@ -113,12 +113,19 @@ extension HabitCreationScreenController: UICollectionViewDelegate {
             guard let cell = collectionView.cellForItem(at: indexPath) as? EmojiCell else { return }
             cell.frameView.isHidden = false
             viewModel?.setPickedEmoji(to: cell.emojiIcon.text ?? "")
+            analyticsService.report(event: K.AnalyticEventNames.click,
+                                    params: ["screen": K.AnalyticScreenNames.trackerCreation,
+                                             "item": "\(K.AnalyticItemNames.emoji)\(cell.emojiIcon.text ?? "")"])
         } else {
             guard let cell = collectionView.cellForItem(at: indexPath) as? ColorCell else { return }
             cell.frameView.layer.borderWidth = 3
             viewModel?.setPickedColor(to: cell.colorView.backgroundColor)
             decreaseCountButton.backgroundColor = cell.colorView.backgroundColor
             increaseCountButton.backgroundColor = cell.colorView.backgroundColor
+            analyticsService.report(
+                event: K.AnalyticEventNames.click,
+                params: ["screen": K.AnalyticScreenNames.trackerCreation,
+                         "item": "\(K.AnalyticItemNames.color)\(cell.colorView.backgroundColor?.hexString() ?? "")"])
         }
         checkIfCanUnlockCreateeButton()
     }
