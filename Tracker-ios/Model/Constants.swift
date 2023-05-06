@@ -15,6 +15,7 @@ struct K {
         static let secondOnboardingImage = "OnboardingSecondPage"
         static let noDataYet = "NoDataYet"
         static let noDataFound = "NoDataFound"
+        static let noDataToAnalyze = "NoDataToAnalyze"
     }
 
     struct CollectionElementNames {

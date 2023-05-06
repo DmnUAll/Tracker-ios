@@ -54,3 +54,8 @@
 "HABIT_EDITING" = "Bearbeiten einer Gewohnheit";
 "SAVE" = "Speichern";
 "NOTHING_FOUND" = "Nichts gefunden";
+"NOTHING_TO_ANALYZE" = "Nichts zu analysieren";
+"BEST_PERIOD" = "beste Zeit";
+"IDEAL_DAYS" = "Perfekte Tage";
+"TRACKERS_COMPLETED" = "Tracker abgeschlossen";
+"AVERAGE_VALUE" = "Mittlere Bedeutung";

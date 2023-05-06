@@ -27,6 +27,8 @@
 		6145FC0929F5275B00908613 /* HabitCreationScreenController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6145FC0829F5275B00908613 /* HabitCreationScreenController+Extensions.swift */; };
 		6145FC0B29F52B1000908613 /* ScheduleConfigurationScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6145FC0A29F52B1000908613 /* ScheduleConfigurationScreenViewModel.swift */; };
 		615910702A06536500CCFF2C /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6159106F2A06536500CCFF2C /* AnalyticsService.swift */; };
+		615910752A0668F700CCFF2C /* StatisticsScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615910742A0668F700CCFF2C /* StatisticsScreenController.swift */; };
+		615910772A0669A600CCFF2C /* StatisticsScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615910762A0669A600CCFF2C /* StatisticsScreenViewModel.swift */; };
 		61639FB42A03B0A300AA55C8 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 61639FB62A03B0A300AA55C8 /* Localizable.stringsdict */; };
 		6175C14229F3C03A00409E99 /* TrackerCategoryScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6175C14129F3C03A00409E99 /* TrackerCategoryScreenViewModel.swift */; };
 		6175C14429F3C53B00409E99 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6175C14329F3C53B00409E99 /* Observable.swift */; };
@@ -103,6 +105,8 @@
 		6145FC0829F5275B00908613 /* HabitCreationScreenController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitCreationScreenController+Extensions.swift"; sourceTree = "<group>"; };
 		6145FC0A29F52B1000908613 /* ScheduleConfigurationScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleConfigurationScreenViewModel.swift; sourceTree = "<group>"; };
 		6159106F2A06536500CCFF2C /* AnalyticsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
+		615910742A0668F700CCFF2C /* StatisticsScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsScreenController.swift; sourceTree = "<group>"; };
+		615910762A0669A600CCFF2C /* StatisticsScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsScreenViewModel.swift; sourceTree = "<group>"; };
 		61639FB52A03B0A300AA55C8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		61639FB72A03B0A700AA55C8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		61639FB82A03BA2200AA55C8 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -265,6 +269,31 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		615910712A0668CE00CCFF2C /* StatisticsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				615910732A0668E800CCFF2C /* View */,
+				615910722A0668E200CCFF2C /* ViewModel */,
+			);
+			path = StatisticsScreen;
+			sourceTree = "<group>";
+		};
+		615910722A0668E200CCFF2C /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				615910762A0669A600CCFF2C /* StatisticsScreenViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		615910732A0668E800CCFF2C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				615910742A0668F700CCFF2C /* StatisticsScreenController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		6175C14029F3C02200409E99 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -306,6 +335,7 @@
 				618C7FCF29D18FA7002C8B0E /* TrackerCategoryScreen */,
 				618C7FDB29D1C1D5002C8B0E /* CategoryCreationScreen */,
 				618C7FE329D1C98B002C8B0E /* ScheduleConfigurationScreen */,
+				615910712A0668CE00CCFF2C /* StatisticsScreen */,
 				61F1639629CC896400C8357A /* Supporting Files */,
 			);
 			path = "Tracker-ios";
@@ -724,6 +754,7 @@
 				6127CC2E29CED76E002B4F3F /* TabBarController.swift in Sources */,
 				618C7FD829D19E03002C8B0E /* TrackerCategoryScreenController.swift in Sources */,
 				6175C14829F3E30A00409E99 /* OnboardingScreenViewModel.swift in Sources */,
+				615910752A0668F700CCFF2C /* StatisticsScreenController.swift in Sources */,
 				6127CC3D29CEE149002B4F3F /* TrackersScreenController.swift in Sources */,
 				61F1639E29CC8AB900C8357A /* Constants.swift in Sources */,
 				61F163B129CCA0AA00C8357A /* UICreator.swift in Sources */,
@@ -742,6 +773,7 @@
 				61D7AB2E29E193C600E2C5A2 /* CoreDataManager.swift in Sources */,
 				6145FC0729F516C300908613 /* HabitCreationScreenViewModel.swift in Sources */,
 				6127CC4129CEF80D002B4F3F /* Date+Extensions.swift in Sources */,
+				615910772A0669A600CCFF2C /* StatisticsScreenViewModel.swift in Sources */,
 				618C7FD629D1939E002C8B0E /* CategorySelectionCell.swift in Sources */,
 				618C7FEB29D1CB2D002C8B0E /* DaySelectionCell.swift in Sources */,
 				6175C14629F3DD0D00409E99 /* LaunchScreenViewModel.swift in Sources */,

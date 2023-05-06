@@ -54,3 +54,8 @@
 "HABIT_EDITING" = "Редактирование привычки";
 "SAVE" = "Сохранить";
 "NOTHING_FOUND" = "Ничего не найдено";
+"NOTHING_TO_ANALYZE" = "Анализировать пока нечего";
+"BEST_PERIOD" = "Лучший период";
+"IDEAL_DAYS" = "Идеальные дни";
+"TRACKERS_COMPLETED" = "Трекеров завершено";
+"AVERAGE_VALUE" = "Среднее значение";

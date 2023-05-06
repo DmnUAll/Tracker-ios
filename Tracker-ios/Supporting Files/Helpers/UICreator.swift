@@ -102,12 +102,14 @@ struct UICreator {
     func makeStackView(withAxis axis: NSLayoutConstraint.Axis = .vertical,
                        distribution: UIStackView.Distribution = .fill,
                        align: UIStackView.Alignment = .fill,
+                       cornerRadius: CGFloat = 0.0,
                        andSpacing spacing: CGFloat = 16
     ) -> UIStackView {
         let stackView = UIStackView()
         stackView.axis = axis
         stackView.distribution = distribution
         stackView.spacing = spacing
+        stackView.layer.cornerRadius = cornerRadius
         return stackView
     }
 
@@ -133,8 +135,8 @@ struct UICreator {
         let pageControl = UIPageControl()
         pageControl.isEnabled = false
         pageControl.backgroundColor = .clear
-        pageControl.currentPageIndicatorTintColor = .ypBlack
-        pageControl.pageIndicatorTintColor = .ypBlack.withAlphaComponent(0.3)
+        pageControl.currentPageIndicatorTintColor = .ypBlackOnly
+        pageControl.pageIndicatorTintColor = .ypBlackOnly.withAlphaComponent(0.3)
         pageControl.numberOfPages = 2
         return pageControl
     }

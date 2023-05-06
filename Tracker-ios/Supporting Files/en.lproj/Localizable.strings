@@ -54,3 +54,8 @@
 "HABIT_EDITING" = "Habit editing";
 "SAVE" = "Save";
 "NOTHING_FOUND" = "Nothing found";
+"NOTHING_TO_ANALYZE" = "Nothing to analyze";
+"BEST_PERIOD" = "Best period";
+"IDEAL_DAYS" = "Ideal days";
+"TRACKERS_COMPLETED" = "Trackers completed";
+"AVERAGE_VALUE" = "Average value";

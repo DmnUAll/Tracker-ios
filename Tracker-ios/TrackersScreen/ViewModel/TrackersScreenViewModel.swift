@@ -156,11 +156,17 @@ extension TrackersScreenViewModel {
 
     func deleteTracker(with indexPath: IndexPath) {
         let category = categories[indexPath.section]
+        let tracker = category.trackers[indexPath.row]
         var trackersList = category.trackers
         trackersList.remove(at: indexPath.row)
         if let existingCategory = trackerCategoryStore.checkForExistingCategory(named: category.name) {
             trackerCategoryStore.updateExistingCategory(existingCategory, with: TrackerCategory(name: category.name,
                                                                                                 trackers: trackersList))
+        }
+        let trackerRecordsToDelete = completedTrackers.filter { $0.id == tracker.id }
+        completedTrackers = completedTrackers.filter { $0.id != tracker.id }
+        trackerRecordsToDelete.forEach { trackerRecord in
+            trackerRecordStore.deleteTracker(trackerRecord)
         }
         updateDataForUI()
     }

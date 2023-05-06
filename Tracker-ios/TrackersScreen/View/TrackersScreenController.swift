@@ -90,7 +90,7 @@ extension TrackersScreenController {
 
     @objc private func filterButtonTapped() {
         // TODO: - filters logic needed
-        analyticsService.report(event: K.AnalyticEventNames.open, params: ["screen": K.AnalyticScreenNames.trackers,
+        analyticsService.report(event: K.AnalyticEventNames.click, params: ["screen": K.AnalyticScreenNames.trackers,
                                                                            "item": K.AnalyticItemNames.filter])
     }
 
@@ -327,7 +327,7 @@ extension TrackersScreenController: UICollectionViewDelegate {
                 guard let self,
                       let viewController = self.viewModel?.configureViewController(
                         forSelectedItemAt: indexPath) else { return }
-                self.analyticsService.report(event: K.AnalyticEventNames.open,
+                self.analyticsService.report(event: K.AnalyticEventNames.click,
                                              params: ["screen": K.AnalyticScreenNames.trackers,
                                                       "item": K.AnalyticItemNames.edit])
                 self.present(viewController, animated: true)
@@ -336,7 +336,7 @@ extension TrackersScreenController: UICollectionViewDelegate {
             let deleteAction = UIAction(title: "DELETE".localized, attributes: .destructive) { [weak self] _ in
                 guard let self else { return }
                 self.showDeletionAlert(for: indexPath)
-                self.analyticsService.report(event: K.AnalyticEventNames.open,
+                self.analyticsService.report(event: K.AnalyticEventNames.click,
                                              params: ["screen": K.AnalyticScreenNames.trackers,
                                                       "item": K.AnalyticItemNames.delete])
             }

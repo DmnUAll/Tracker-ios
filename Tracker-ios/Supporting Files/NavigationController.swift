@@ -59,6 +59,8 @@ extension NavigationController {
                 datePicker.bottomAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: -11),
                 datePicker.heightAnchor.constraint(equalToConstant: 34)
             ])
+        } else {
+            navigationBar.topItem?.title = "STATISTICS".localized
         }
     }
 }
