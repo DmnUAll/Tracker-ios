@@ -21,7 +21,6 @@ final class TrackerCategoryScreenViewModel {
     init() {
         trackerCategoryStore.delegate = self
         categoryNames = trackerCategoryStore.categories.map { $0.name }.filter { $0 != "PINNED".localized }
-        print(categoryNames)
         checkForData()
     }
 }
