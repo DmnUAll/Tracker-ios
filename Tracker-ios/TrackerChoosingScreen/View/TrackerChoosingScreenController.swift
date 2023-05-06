@@ -4,10 +4,7 @@ import UIKit
 final class TrackerChoosingScreenController: UIViewController {
 
     // MARK: - Properties and Initializers
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .darkContent
-    }
-
+    private let analyticsService = AnalyticsService()
     private let titleLabel = UICreator.shared.makeLabel(text: "TRACKER_CREATION".localized,
                                                         font: UIFont.appFont(.medium, withSize: 16))
     private let stackView = UICreator.shared.makeStackView()
@@ -22,6 +19,8 @@ final class TrackerChoosingScreenController: UIViewController {
         setupAutolayout()
         addSubviews()
         setupConstraints()
+        analyticsService.report(event: K.AnalyticEventNames.click, params: ["screen": K.AnalyticScreenNames.trackers,
+                                                                           "item": K.AnalyticItemNames.addTrack])
     }
 
     override func viewWillDisappear(_ animated: Bool) {

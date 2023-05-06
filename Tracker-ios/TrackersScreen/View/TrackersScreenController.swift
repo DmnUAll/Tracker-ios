@@ -4,11 +4,8 @@ import UIKit
 final class TrackersScreenController: UIViewController {
 
     // MARK: - Properties and Initializers
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .darkContent
-    }
-
     private var viewModel: TrackersScreenViewModel?
+    private let analyticsService = AnalyticsService()
 
     private let uiCreator = UICreator.shared
 
@@ -48,6 +45,10 @@ final class TrackersScreenController: UIViewController {
                                                            backgroundColor: .ypBlue,
                                                            action: #selector(filterButtonTapped))
 
+    deinit {
+        viewModel = nil
+    }
+
     // MARK: - Life Cycle
     override func viewDidLoad() {
         view.backgroundColor = .ypWhite
@@ -63,6 +64,12 @@ final class TrackersScreenController: UIViewController {
         searchTextField.delegate = self
         collectionView.dataSource = self
         collectionView.delegate = self
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        analyticsService.report(event: K.AnalyticEventNames.open, params: ["screen": K.AnalyticScreenNames.trackers,
+                                                                           "item": K.AnalyticItemNames.none])
     }
 }
 
@@ -83,7 +90,8 @@ extension TrackersScreenController {
 
     @objc private func filterButtonTapped() {
         // TODO: - filters logic needed
-        print(#function)
+        analyticsService.report(event: K.AnalyticEventNames.open, params: ["screen": K.AnalyticScreenNames.trackers,
+                                                                           "item": K.AnalyticItemNames.filter])
     }
 
     private func setupAutolayout() {
@@ -319,12 +327,18 @@ extension TrackersScreenController: UICollectionViewDelegate {
                 guard let self,
                       let viewController = self.viewModel?.configureViewController(
                         forSelectedItemAt: indexPath) else { return }
+                self.analyticsService.report(event: K.AnalyticEventNames.open,
+                                             params: ["screen": K.AnalyticScreenNames.trackers,
+                                                      "item": K.AnalyticItemNames.edit])
                 self.present(viewController, animated: true)
             }
 
             let deleteAction = UIAction(title: "DELETE".localized, attributes: .destructive) { [weak self] _ in
                 guard let self else { return }
                 self.showDeletionAlert(for: indexPath)
+                self.analyticsService.report(event: K.AnalyticEventNames.open,
+                                             params: ["screen": K.AnalyticScreenNames.trackers,
+                                                      "item": K.AnalyticItemNames.delete])
             }
             return UIMenu(children: [pinAction, editAction, deleteAction])
         }

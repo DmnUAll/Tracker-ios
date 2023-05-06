@@ -4,10 +4,6 @@ import UIKit
 final class HabitCreationScreenController: UIViewController {
 
     // MARK: - Properties and Initializers
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .darkContent
-    }
-
     var viewModel: HabitCreationScreenViewModel?
     var isNonRegularEvent: Bool = false
     private var trackerToEdit: Tracker?

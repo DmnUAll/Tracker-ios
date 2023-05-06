@@ -12,10 +12,6 @@ protocol CategorySavingDelegate: AnyObject {
 final class CategoryCreationScreenController: UIViewController {
 
     // MARK: - Properties and Initializers
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .darkContent
-    }
-
     weak var delegate: CategorySavingDelegate?
 
     private let titleLabel = UICreator.shared.makeLabel(text: "NEW_CATEGORY".localized,

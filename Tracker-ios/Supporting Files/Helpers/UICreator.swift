@@ -153,7 +153,6 @@ struct UICreator {
                 return .ypBlack
             }
         }
-
         datePicker.backgroundColor = dynamicColor
         datePicker.layer.masksToBounds = true
         datePicker.layer.cornerRadius = 8
@@ -161,7 +160,6 @@ struct UICreator {
         datePicker.datePickerMode = .date
         datePicker.preferredDatePickerStyle = .compact
         datePicker.locale = Locale(identifier: "ru")
-        
         return datePicker
     }
 

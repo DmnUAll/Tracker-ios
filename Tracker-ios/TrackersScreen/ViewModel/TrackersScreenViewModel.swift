@@ -19,6 +19,7 @@ final class TrackersScreenViewModel {
 
     private let trackerCategoryStore = TrackerCategoryStore.shared
     private let trackerRecordStore = TrackerRecordStore()
+    private let analyticsService = AnalyticsService()
     private var categories: [TrackerCategory] = []
     private var allCategories: [TrackerCategory] = []
     private var completedTrackers: Set<TrackerRecord> = []
@@ -32,6 +33,11 @@ final class TrackersScreenViewModel {
     init() {
         completedTrackers = Set(trackerRecordStore.trackers)
         updateDataForUI()
+    }
+
+    deinit {
+        analyticsService.report(event: K.AnalyticEventNames.close, params: ["screen": K.AnalyticScreenNames.trackers,
+                                                                           "item": K.AnalyticItemNames.none])
     }
 }
 
@@ -256,6 +262,8 @@ extension TrackersScreenViewModel {
 // MARK: - TrackerCellDelegate
 extension TrackersScreenViewModel: TrackerCellDelegate {
     func proceedTask(forID trackerID: UUID) {
+        analyticsService.report(event: K.AnalyticEventNames.click, params: ["screen": K.AnalyticScreenNames.trackers,
+                                                                           "item": K.AnalyticItemNames.completeTrack])
         let proceededTask = TrackerRecord(id: trackerID, date: currentDate.dateString)
         if completedTrackers.contains(proceededTask) {
             completedTrackers.remove(proceededTask)

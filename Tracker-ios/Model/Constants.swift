@@ -33,4 +33,27 @@ struct K {
         static let trackerCategoryCD = "TrackerCategoryCD"
         static let trackerRecordCD = "TrackerRecordCD"
     }
+
+    struct Keys {
+        static let api = "5cc2d938-f2e7-4fd6-a191-2550609796a2"
+    }
+
+    struct AnalyticEventNames {
+        static let open = "open"
+        static let close = "close"
+        static let click = "click"
+    }
+
+    struct AnalyticScreenNames {
+        static let trackers = "Main"
+    }
+
+    struct AnalyticItemNames {
+        static let none = ""
+        static let addTrack = "add_track"
+        static let completeTrack = "track"
+        static let filter = "filter"
+        static let edit = "edit"
+        static let delete = "delete"
+    }
 }

@@ -10,10 +10,6 @@ protocol ScheduleConfigurationDelegate: AnyObject {
 final class ScheduleConfigurationScreenController: UIViewController {
 
     // MARK: - Properties and Initializers
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .darkContent
-    }
-
     private var viewModel: ScheduleConfigurationScreenViewModel?
     weak var delegate: ScheduleConfigurationDelegate?
 

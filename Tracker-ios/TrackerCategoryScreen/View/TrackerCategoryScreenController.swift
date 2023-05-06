@@ -10,10 +10,6 @@ protocol TrackerCategoryConfigurationDelegate: AnyObject {
 final class TrackerCategoryScreenController: UIViewController {
 
     // MARK: - Properties and Initializers
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .darkContent
-    }
-
     weak var delegate: TrackerCategoryConfigurationDelegate?
     private var viewModel: TrackerCategoryScreenViewModel?
 
