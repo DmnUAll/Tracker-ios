@@ -19,7 +19,7 @@ final class TrackerCategoryScreenController: UIViewController {
 
     private let titleLabel = UICreator.shared.makeLabel(text: "CATEGORY".localized,
                                                         font: UIFont.appFont(.medium, withSize: 16))
-    private let noDataImage = UICreator.shared.makeImageView(withImage: K.ImageNames.noDataImage)
+    private let noDataImage = UICreator.shared.makeImageView(withImage: K.ImageNames.noDataYet)
     private let noDataLabel = UICreator.shared.makeLabel(text: "WHAT_TO_CREATE".localized,
                                                  font: UIFont.appFont(.medium, withSize: 12))
     private let categoriesTableView: UITableView = {

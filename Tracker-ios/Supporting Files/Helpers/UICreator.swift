@@ -125,6 +125,7 @@ struct UICreator {
         tableView.backgroundColor = .ypGrayField.withAlphaComponent(0.3)
         tableView.layer.cornerRadius = 16
         tableView.layer.masksToBounds = true
+        tableView.separatorColor = .ypGray
         return tableView
     }
 
@@ -139,14 +140,28 @@ struct UICreator {
     }
 
     func makeDatePicker() -> UIDatePicker {
-        let datePicker = UIDatePicker()
-        datePicker.backgroundColor = .ypGrayLight.withAlphaComponent(0.12)
+        let datePicker: UIDatePicker
+        if #available(iOS 14.0, *) {
+            datePicker = MyCompactDatePicker()
+        } else {
+            datePicker = UIDatePicker()
+        }
+        let dynamicColor = UIColor { (traits: UITraitCollection) -> UIColor in
+            if traits.userInterfaceStyle == .light {
+                return .ypGrayLight.withAlphaComponent(0.12)
+            } else {
+                return .ypBlack
+            }
+        }
+
+        datePicker.backgroundColor = dynamicColor
         datePicker.layer.masksToBounds = true
         datePicker.layer.cornerRadius = 8
         datePicker.tintColor = .blue
         datePicker.datePickerMode = .date
         datePicker.preferredDatePickerStyle = .compact
         datePicker.locale = Locale(identifier: "ru")
+        
         return datePicker
     }
 

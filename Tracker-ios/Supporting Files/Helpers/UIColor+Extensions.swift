@@ -9,6 +9,7 @@ extension UIColor {
     static var ypGrayLight: UIColor { UIColor(named: "YP Gray Light") ?? .red }
     static var ypRedLight: UIColor { UIColor(named: "YP Red Light") ?? .red }
     static var ypWhite: UIColor { UIColor(named: "YP White") ?? .red }
+    static var ypWhiteOnly: UIColor { UIColor(named: "YP White Only") ?? .red }
     static var tr0: UIColor { UIColor(named: "T0") ?? .red}
     static var tr1: UIColor { UIColor(named: "T1") ?? .red}
     static var tr2: UIColor { UIColor(named: "T2") ?? .red}

@@ -12,7 +12,7 @@ final class TrackersScreenController: UIViewController {
 
     private let uiCreator = UICreator.shared
 
-    private let noDataImage = UICreator.shared.makeImageView(withImage: K.ImageNames.noDataImage)
+    private let noDataImage = UICreator.shared.makeImageView(withImage: K.ImageNames.noDataYet)
     private let noDataLabel = UICreator.shared.makeLabel(
         text: "WHAT_TO_MONITOR".localized,
         font: UIFont.appFont(.medium, withSize: 12))
@@ -43,9 +43,10 @@ final class TrackersScreenController: UIViewController {
         return collectionView
     }()
     private let filterButton = UICreator.shared.makeButton(withTitle: "FILTERS".localized,
-                                                   font: UIFont.appFont(.regular, withSize: 17),
-                                                   backgroundColor: .ypBlue,
-                                                   action: #selector(filterButtonTapped))
+                                                           font: UIFont.appFont(.regular, withSize: 17),
+                                                           fontColor: .ypWhiteOnly,
+                                                           backgroundColor: .ypBlue,
+                                                           action: #selector(filterButtonTapped))
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -144,6 +145,13 @@ extension TrackersScreenController {
     }
 
     private func hideCollectionView() {
+        if searchTextField.text != "" {
+            noDataImage.image = UIImage(named: K.ImageNames.noDataFound)
+            noDataLabel.text = "NOTHING_FOUND".localized
+        } else {
+            noDataImage.image = UIImage(named: K.ImageNames.noDataYet)
+            noDataLabel.text = "WHAT_TO_MONITOR".localized
+        }
         noDataImage.isHidden = false
         noDataLabel.isHidden = false
         collectionView.isHidden = true

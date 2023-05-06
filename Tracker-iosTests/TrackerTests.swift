@@ -21,7 +21,7 @@ final class TrackerTests: XCTestCase {
 
     func testViewController() throws {
         let viewController = TrackersScreenController()
-//        let viewModel = TrackersScreenViewModel()
-        assertSnapshots(matching: viewController, as: [.image])
+        assertSnapshots(matching: viewController, as: [.image(traits: .init(userInterfaceStyle: .light))])
+        assertSnapshots(matching: viewController, as: [.image(traits: .init(userInterfaceStyle: .dark))])
     }
 }

@@ -39,7 +39,6 @@ final class TrackersScreenViewModel {
 extension TrackersScreenViewModel {
 
     func checkForData() {
-        print(completedTrackers)
         if categories.isEmpty {
             needToHideCollection = true
         } else {

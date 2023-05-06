@@ -22,18 +22,18 @@ final class TrackerCell: UICollectionViewCell {
         let label = UICreator.shared.makeLabel(font: UIFont.appFont(.medium, withSize: 14))
         label.layer.masksToBounds = true
         label.layer.cornerRadius = 12
-        label.backgroundColor = .ypWhite.withAlphaComponent(0.3)
+        label.backgroundColor = .ypWhiteOnly.withAlphaComponent(0.3)
         return label
     }()
     let taskName = UICreator.shared.makeLabel(font: UIFont.appFont(.medium, withSize: 12),
-                                              color: .ypWhite,
+                                              color: .ypWhiteOnly,
                                               alignment: .natural)
     let counterLabel = UICreator.shared.makeLabel(font: UIFont.appFont(.medium, withSize: 12),
                                                   color: .ypBlack)
     let counterButton: UIButton = {
         let button = UICreator.shared.makeButton(action: #selector(counterButtonTapped))
         button.setImage(UIImage(systemName: "plus"), for: .normal)
-        button.tintColor = .white
+        button.tintColor = .ypWhite
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 17
         return button

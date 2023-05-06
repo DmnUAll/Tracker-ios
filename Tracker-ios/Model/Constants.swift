@@ -13,7 +13,8 @@ struct K {
     struct ImageNames {
         static let firstOnboardingImage = "OnboardingFirstPage"
         static let secondOnboardingImage = "OnboardingSecondPage"
-        static let noDataImage = "NoDataYet"
+        static let noDataYet = "NoDataYet"
+        static let noDataFound = "NoDataFound"
     }
 
     struct CollectionElementNames {
