@@ -2,8 +2,9 @@ import Foundation
 
 private let dateDefaultFormatter: DateFormatter = {
     let dateFormatter = DateFormatter()
-    dateFormatter.locale = Locale(identifier: "ru_RU")
-    dateFormatter.dateFormat = "dd.MM.YY"
+    dateFormatter.dateStyle = .short
+    dateFormatter.timeStyle = .none
+    dateFormatter.timeZone = TimeZone(identifier: "GMT")
     return dateFormatter
 }()
 
@@ -28,11 +29,7 @@ extension Date {
         return Date(timeIntervalSinceNow: span)
     }
 
-    static func parse(_ string: String, format: String = "dd.MM.YY") -> Date {
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = NSTimeZone.default
-        dateFormatter.dateFormat = format
-        let date = dateFormatter.date(from: string)!
-        return date
+    static func parse(_ string: String) -> Date {
+        dateDefaultFormatter.date(from: string) ?? Date()
     }
 }

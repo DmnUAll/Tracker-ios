@@ -26,8 +26,8 @@ final class HabitCreationScreenController: UIViewController {
 
     let decreaseCountButton: UIButton = {
         let button = UICreator.shared.makeButton(action: #selector(decreaseCountButtonTapped))
-        button.setImage(UIImage(systemName: "plus"), for: .normal)
-        button.tintColor = .white
+        button.setImage(UIImage(systemName: "minus"), for: .normal)
+        button.tintColor = .ypWhite
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 17
         return button
@@ -38,7 +38,7 @@ final class HabitCreationScreenController: UIViewController {
     let increaseCountButton: UIButton = {
         let button = UICreator.shared.makeButton(action: #selector(increaseCountButtonTapped))
         button.setImage(UIImage(systemName: "plus"), for: .normal)
-        button.tintColor = .white
+        button.tintColor = .ypWhite
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 17
         return button

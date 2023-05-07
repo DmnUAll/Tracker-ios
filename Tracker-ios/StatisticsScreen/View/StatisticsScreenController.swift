@@ -154,6 +154,9 @@ extension StatisticsScreenController {
     }
 
     private func loadStatistics() {
+        bestPeriodCountLabel.text = viewModel?.giveBestPeriod() ?? "-"
+        idealDaysCountLabel.text = viewModel?.giveIdealDaysCount() ?? "-"
         trackersCompletedCountLabel.text = viewModel?.giveCompletedTrackersCount() ?? "-"
+        averageValueCountLabel.text = viewModel?.giveAverageCount() ?? "-"
     }
 }

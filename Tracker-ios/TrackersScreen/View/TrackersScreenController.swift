@@ -194,7 +194,7 @@ extension TrackersScreenController {
                                          style: .destructive
         ) { [weak self] _ in
             guard let self = self else { return }
-            self.viewModel?.deleteTracker(with: indexPath)
+            self.viewModel?.deleteTracker(with: indexPath, withRecords: true)
             self.collectionView.reloadData()
             self.viewModel?.checkForData()
         }
