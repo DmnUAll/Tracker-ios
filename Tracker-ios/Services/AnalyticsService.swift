@@ -10,6 +10,8 @@ struct AnalyticsService {
     func report(event: String, params: [AnyHashable: Any]) {
         YMMYandexMetrica.reportEvent(event, parameters: params, onFailure: { error in
             print("REPORT ERROR: %@", error.localizedDescription)
+            return
         })
+        print("\nREPORT SENT FOR EVENT: \(event)\nWITH PARAMETERS: \(params)")
     }
 }

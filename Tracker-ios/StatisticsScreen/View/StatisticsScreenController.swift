@@ -56,8 +56,7 @@ final class StatisticsScreenController: UIViewController {
         viewModel = StatisticsScreenViewModel()
         bind()
         analyticsService.report(event: K.AnalyticEventNames.open,
-                                params: ["screen": K.AnalyticScreenNames.statistics,
-                                         "item": K.AnalyticItemNames.none])
+                                params: ["screen": K.AnalyticScreenNames.statistics])
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -69,8 +68,7 @@ final class StatisticsScreenController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         analyticsService.report(event: K.AnalyticEventNames.close,
-                                params: ["screen": K.AnalyticScreenNames.statistics,
-                                         "item": K.AnalyticItemNames.none])
+                                params: ["screen": K.AnalyticScreenNames.statistics])
     }
 }
 

@@ -47,15 +47,13 @@ final class TrackerCategoryScreenController: UIViewController {
         categoriesTableView.dataSource = self
         categoriesTableView.delegate = self
         analyticsService.report(event: K.AnalyticEventNames.open,
-                                params: ["screen": K.AnalyticScreenNames.trackerCategory,
-                                         "item": K.AnalyticItemNames.none])
+                                params: ["screen": K.AnalyticScreenNames.trackerCategory])
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         analyticsService.report(event: K.AnalyticEventNames.close,
-                                params: ["screen": K.AnalyticScreenNames.trackerCategory,
-                                         "item": K.AnalyticItemNames.none])
+                                params: ["screen": K.AnalyticScreenNames.trackerCategory])
     }
 }
 

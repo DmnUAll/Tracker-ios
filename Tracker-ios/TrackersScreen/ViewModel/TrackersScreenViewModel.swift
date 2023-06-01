@@ -37,8 +37,7 @@ final class TrackersScreenViewModel {
 
     deinit {
         analyticsService.report(event: K.AnalyticEventNames.close,
-                                params: ["screen": K.AnalyticScreenNames.trackers,
-                                         "item": K.AnalyticItemNames.none])
+                                params: ["screen": K.AnalyticScreenNames.trackers])
     }
 }
 

@@ -66,8 +66,7 @@ final class CategoryCreationScreenController: UIViewController {
             categoryNameTextField.text = delegate?.categoryToEdit ?? ""
         }
         analyticsService.report(event: K.AnalyticEventNames.open,
-                                params: ["screen": K.AnalyticScreenNames.categoryCreation,
-                                         "item": K.AnalyticItemNames.none])
+                                params: ["screen": K.AnalyticScreenNames.categoryCreation])
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -79,8 +78,7 @@ final class CategoryCreationScreenController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         analyticsService.report(event: K.AnalyticEventNames.close,
-                                params: ["screen": K.AnalyticScreenNames.categoryCreation,
-                                         "item": K.AnalyticItemNames.none])
+                                params: ["screen": K.AnalyticScreenNames.categoryCreation])
     }
 }
 

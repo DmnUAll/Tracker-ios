@@ -99,7 +99,7 @@ extension HabitCreationScreenViewModel {
             } else {
                 cell.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
             }
-            if selectedCategory != "" {
+            if !selectedCategory.isEmpty {
                 selectedCell = cell
                 updateCategory(withCategory: selectedCategory)
             }

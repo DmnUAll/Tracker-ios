@@ -45,15 +45,13 @@ final class ScheduleConfigurationScreenController: UIViewController {
         daysTableView.dataSource = self
         daysTableView.delegate = self
         analyticsService.report(event: K.AnalyticEventNames.open,
-                                params: ["screen": K.AnalyticScreenNames.scheduleConfiguration,
-                                         "item": K.AnalyticItemNames.none])
+                                params: ["screen": K.AnalyticScreenNames.scheduleConfiguration])
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         analyticsService.report(event: K.AnalyticEventNames.close,
-                                params: ["screen": K.AnalyticScreenNames.scheduleConfiguration,
-                                         "item": K.AnalyticItemNames.none])
+                                params: ["screen": K.AnalyticScreenNames.scheduleConfiguration])
     }
 }
 

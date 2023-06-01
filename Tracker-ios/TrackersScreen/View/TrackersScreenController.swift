@@ -68,8 +68,7 @@ final class TrackersScreenController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        analyticsService.report(event: K.AnalyticEventNames.open, params: ["screen": K.AnalyticScreenNames.trackers,
-                                                                           "item": K.AnalyticItemNames.none])
+        analyticsService.report(event: K.AnalyticEventNames.open, params: ["screen": K.AnalyticScreenNames.trackers])
     }
 }
 
@@ -313,48 +312,56 @@ extension TrackersScreenController: UICollectionViewDelegate {
         let havePinned = viewModel?.havePinned() ?? false
         let configuration = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
             var pinAction = UIAction(title: "PIN".localized) { [weak self] _ in
-                guard let self else { return }
-                self.viewModel?.pinTracker(with: indexPath)
-                self.analyticsService.report(event: K.AnalyticEventNames.click,
-                                             params: ["screen": K.AnalyticScreenNames.trackers,
-                                                      "item": K.AnalyticItemNames.pin])
+                self?.proceedPinning(atIndexPath: indexPath, isPinned: false)
             }
             if havePinned,
                indexPath.section == 0 {
                 pinAction = UIAction(title: "UNPIN".localized) { [weak self] _ in
-                    guard let self else { return }
-                    self.viewModel?.unpinTracker(with: indexPath)
-                    self.analyticsService.report(event: K.AnalyticEventNames.click,
-                                                 params: ["screen": K.AnalyticScreenNames.trackers,
-                                                          "item": K.AnalyticItemNames.unpin])
+                    self?.proceedPinning(atIndexPath: indexPath, isPinned: true)
                 }
             }
 
             let editAction = UIAction(title: "EDIT".localized) { [weak self] _ in
-                guard let self,
-                      let viewController = self.viewModel?.configureViewController(
-                        forSelectedItemAt: indexPath) else { return }
-                self.analyticsService.report(event: K.AnalyticEventNames.click,
-                                             params: ["screen": K.AnalyticScreenNames.trackers,
-                                                      "item": K.AnalyticItemNames.edit])
-                self.present(viewController, animated: true)
+                self?.proceedEditingActions(delete: false, atIndexPath: indexPath)
             }
 
             let deleteAction = UIAction(title: "DELETE".localized, attributes: .destructive) { [weak self] _ in
-                guard let self else { return }
-                self.showDeletionAlert(for: indexPath)
-                self.analyticsService.report(event: K.AnalyticEventNames.click,
-                                             params: ["screen": K.AnalyticScreenNames.trackers,
-                                                      "item": K.AnalyticItemNames.delete])
+                self?.proceedEditingActions(delete: true, atIndexPath: indexPath)
             }
             return UIMenu(children: [pinAction, editAction, deleteAction])
         }
         return configuration
     }
+
+    private func proceedPinning(atIndexPath indexPath: IndexPath, isPinned: Bool) {
+        if isPinned {
+            viewModel?.unpinTracker(with: indexPath)
+        } else {
+            viewModel?.pinTracker(with: indexPath)
+        }
+        let item = isPinned ? K.AnalyticItemNames.unpin : K.AnalyticItemNames.pin
+        analyticsService.report(event: K.AnalyticEventNames.click,
+                                params: ["screen": K.AnalyticScreenNames.trackers,
+                                         "item": item])
+    }
+
+    private func proceedEditingActions(delete isDeletion: Bool, atIndexPath indexPath: IndexPath) {
+        if isDeletion {
+            showDeletionAlert(for: indexPath)
+        } else {
+            guard let viewController = viewModel?.configureViewController(forSelectedItemAt: indexPath) else { return }
+            self.present(viewController, animated: true)
+        }
+        let item = isDeletion ? K.AnalyticItemNames.delete : K.AnalyticItemNames.edit
+        analyticsService.report(event: K.AnalyticEventNames.click,
+                                params: ["screen": K.AnalyticScreenNames.trackers,
+                                         "item": item])
+    }
 }
 
 // MARK: - DateReceiveDelegate
 extension TrackersScreenController: DateReceiveDelegate {
+
     func applyDate(_ date: Date) {
         viewModel?.updateCurrentDate(to: date)
         viewModel?.searchTracks()

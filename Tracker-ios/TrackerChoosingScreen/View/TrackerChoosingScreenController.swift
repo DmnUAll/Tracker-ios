@@ -25,8 +25,7 @@ final class TrackerChoosingScreenController: UIViewController {
                                          "item": K.AnalyticItemNames.addTrack])
 
         analyticsService.report(event: K.AnalyticEventNames.open,
-                                params: ["screen": K.AnalyticScreenNames.trackerChoosing,
-                                         "item": K.AnalyticItemNames.none])
+                                params: ["screen": K.AnalyticScreenNames.trackerChoosing])
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -39,8 +38,7 @@ final class TrackerChoosingScreenController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         analyticsService.report(event: K.AnalyticEventNames.close,
-                                params: ["screen": K.AnalyticScreenNames.trackerChoosing,
-                                         "item": K.AnalyticItemNames.none])
+                                params: ["screen": K.AnalyticScreenNames.trackerChoosing])
     }
 }
 

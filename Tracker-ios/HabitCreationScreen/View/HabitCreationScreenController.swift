@@ -158,8 +158,7 @@ final class HabitCreationScreenController: UIViewController {
             optionsTableView.heightAnchor.constraint(equalToConstant: 150).isActive = true
         }
         analyticsService.report(event: K.AnalyticEventNames.open,
-                                params: ["screen": K.AnalyticScreenNames.trackerCreation,
-                                         "item": K.AnalyticItemNames.none])
+                                params: ["screen": K.AnalyticScreenNames.trackerCreation])
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -172,8 +171,7 @@ final class HabitCreationScreenController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         analyticsService.report(event: K.AnalyticEventNames.close,
-                                params: ["screen": K.AnalyticScreenNames.trackerCreation,
-                                         "item": K.AnalyticItemNames.none])
+                                params: ["screen": K.AnalyticScreenNames.trackerCreation])
     }
 }
 
