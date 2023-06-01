@@ -53,6 +53,7 @@ extension NavigationController {
             let datePicker = UICreator.shared.makeDatePicker()
             datePicker.toAutolayout()
             datePicker.addTarget(nil, action: #selector(datePicked(_:)), for: .valueChanged)
+            datePicker.locale = .autoupdatingCurrent
             navigationBar.addSubview(datePicker)
             NSLayoutConstraint.activate([
                 datePicker.rightAnchor.constraint(equalTo: navigationBar.rightAnchor, constant: -16),

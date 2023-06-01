@@ -110,6 +110,8 @@ extension TrackersScreenViewModel {
         } else {
             cell.pinIcon.isHidden = true
         }
+        cell.layer.masksToBounds = true
+        cell.layer.cornerRadius = 16
         return cell
     }
 
