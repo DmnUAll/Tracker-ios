@@ -38,6 +38,5 @@ extension UIView {
         gradient.mask = shape
 
         self.layer.addSublayer(gradient)
-        gradient.zPosition = 0.0
     }
 }
