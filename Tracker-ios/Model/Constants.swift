@@ -56,7 +56,6 @@ struct K {
     }
 
     struct AnalyticItemNames {
-//        static let none = ""
         static let addTrack = "add_track"
         static let completeTrack = "track"
         static let filter = "filter"
