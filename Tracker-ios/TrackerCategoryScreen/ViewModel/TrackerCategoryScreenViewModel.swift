@@ -20,7 +20,7 @@ final class TrackerCategoryScreenViewModel {
 
     init() {
         trackerCategoryStore.delegate = self
-        categoryNames = trackerCategoryStore.categories.map { $0.name }
+        categoryNames = trackerCategoryStore.categories.map { $0.name }.filter { $0 != "PINNED".localized }
         checkForData()
     }
 }
@@ -37,7 +37,7 @@ extension TrackerCategoryScreenViewModel {
     }
 
     func giveNumberOfItems() -> Int {
-        categoryNames = trackerCategoryStore.categories.map { $0.name }
+        categoryNames = trackerCategoryStore.categories.map { $0.name }.filter { $0 != "PINNED".localized }
         return categoryNames.count
     }
 

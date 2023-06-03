@@ -16,7 +16,7 @@ extension TabBarController {
     private func configureTabBarController() {
         tabBar.backgroundColor = .ypWhite
         let trackersNavigationController = NavigationController(rootViewController: TrackersScreenController())
-        let statisticsNavigationController = NavigationController(rootViewController: TrackersScreenController())
+        let statisticsNavigationController = NavigationController(rootViewController: StatisticsScreenController())
         self.viewControllers = [
             configureTab(withController: trackersNavigationController,
                          title: "TRACKERS".localized,

@@ -4,9 +4,7 @@ import UIKit
 final class TrackerChoosingScreenController: UIViewController {
 
     // MARK: - Properties and Initializers
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .darkContent
-    }
+    private let analyticsService = AnalyticsService()
 
     private let titleLabel = UICreator.shared.makeLabel(text: "TRACKER_CREATION".localized,
                                                         font: UIFont.appFont(.medium, withSize: 16))
@@ -22,6 +20,12 @@ final class TrackerChoosingScreenController: UIViewController {
         setupAutolayout()
         addSubviews()
         setupConstraints()
+        analyticsService.report(event: K.AnalyticEventNames.click,
+                                params: ["screen": K.AnalyticScreenNames.trackers,
+                                         "item": K.AnalyticItemNames.addTrack])
+
+        analyticsService.report(event: K.AnalyticEventNames.open,
+                                params: ["screen": K.AnalyticScreenNames.trackerChoosing])
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -30,16 +34,28 @@ final class TrackerChoosingScreenController: UIViewController {
             destinationViewController?.updateCollectionView()
         }
     }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        analyticsService.report(event: K.AnalyticEventNames.close,
+                                params: ["screen": K.AnalyticScreenNames.trackerChoosing])
+    }
 }
 
 // MARK: - Helpers
 extension TrackerChoosingScreenController {
 
     @objc private func habitButtonTapped() {
+        analyticsService.report(event: K.AnalyticEventNames.click,
+                                params: ["screen": K.AnalyticScreenNames.trackerChoosing,
+                                         "item": K.AnalyticItemNames.habit])
         present(HabitCreationScreenController(), animated: true)
     }
 
     @objc private func eventButtonTapped() {
+        analyticsService.report(event: K.AnalyticEventNames.click,
+                                params: ["screen": K.AnalyticScreenNames.trackerChoosing,
+                                         "item": K.AnalyticItemNames.event])
         present(HabitCreationScreenController(isNonRegularEvent: true), animated: true)
     }
 

@@ -10,16 +10,13 @@ protocol TrackerCategoryConfigurationDelegate: AnyObject {
 final class TrackerCategoryScreenController: UIViewController {
 
     // MARK: - Properties and Initializers
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .darkContent
-    }
-
     weak var delegate: TrackerCategoryConfigurationDelegate?
     private var viewModel: TrackerCategoryScreenViewModel?
+    private let analyticsService = AnalyticsService()
 
     private let titleLabel = UICreator.shared.makeLabel(text: "CATEGORY".localized,
                                                         font: UIFont.appFont(.medium, withSize: 16))
-    private let noDataImage = UICreator.shared.makeImageView(withImage: K.ImageNames.noDataImage)
+    private let noDataImage = UICreator.shared.makeImageView(withImage: K.ImageNames.noDataYet)
     private let noDataLabel = UICreator.shared.makeLabel(text: "WHAT_TO_CREATE".localized,
                                                  font: UIFont.appFont(.medium, withSize: 12))
     private let categoriesTableView: UITableView = {
@@ -49,6 +46,14 @@ final class TrackerCategoryScreenController: UIViewController {
         viewModel?.selectPreviouslyChoosenCategory(withName: delegate?.previousSelectedCategory ?? "")
         categoriesTableView.dataSource = self
         categoriesTableView.delegate = self
+        analyticsService.report(event: K.AnalyticEventNames.open,
+                                params: ["screen": K.AnalyticScreenNames.trackerCategory])
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        analyticsService.report(event: K.AnalyticEventNames.close,
+                                params: ["screen": K.AnalyticScreenNames.trackerCategory])
     }
 }
 
@@ -56,6 +61,9 @@ final class TrackerCategoryScreenController: UIViewController {
 extension TrackerCategoryScreenController {
 
     @objc private func addButtonTapped() {
+        analyticsService.report(event: K.AnalyticEventNames.click,
+                                params: ["screen": K.AnalyticScreenNames.trackerCategory,
+                                         "item": K.AnalyticItemNames.addCategory])
         present(CategoryCreationScreenController(delegate: viewModel), animated: true)
     }
 

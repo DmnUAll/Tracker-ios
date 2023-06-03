@@ -12,6 +12,8 @@ final class OnboardingScreenController: UIPageViewController {
 
     private let pageControl = UICreator.shared.makePageControll()
     private let continueButton = UICreator.shared.makeButton(withTitle: "WHAT_A_TECHNOLOGY".localized,
+                                                             fontColor: .ypWhiteOnly,
+                                                             backgroundColor: .ypBlackOnly,
                                                              action: #selector(continueButtonTapped))
 
     // MARK: - Life Cycle

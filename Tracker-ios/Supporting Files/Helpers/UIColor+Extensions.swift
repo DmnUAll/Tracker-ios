@@ -1,13 +1,19 @@
 import UIKit
 
 extension UIColor {
+
     static var ypBlack: UIColor { UIColor(named: "YP Black") ?? .red }
+    static var ypBlackOnly: UIColor { UIColor(named: "YP Black Only") ?? .red }
     static var ypBlue: UIColor { UIColor(named: "YP Blue") ?? .red }
     static var ypGray: UIColor { UIColor(named: "YP Gray") ?? .red }
+    static var ypGradientRed: UIColor { UIColor(named: "YP Gradient Red") ?? .red }
+    static var ypGradientBlue: UIColor { UIColor(named: "YP Gradient Blue") ?? .red }
+    static var ypGradientSky: UIColor { UIColor(named: "YP Gradient Sky") ?? .red }
     static var ypGrayField: UIColor { UIColor(named: "YP Gray Field") ?? .red }
     static var ypGrayLight: UIColor { UIColor(named: "YP Gray Light") ?? .red }
     static var ypRedLight: UIColor { UIColor(named: "YP Red Light") ?? .red }
     static var ypWhite: UIColor { UIColor(named: "YP White") ?? .red }
+    static var ypWhiteOnly: UIColor { UIColor(named: "YP White Only") ?? .red }
     static var tr0: UIColor { UIColor(named: "T0") ?? .red}
     static var tr1: UIColor { UIColor(named: "T1") ?? .red}
     static var tr2: UIColor { UIColor(named: "T2") ?? .red}

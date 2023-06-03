@@ -4,15 +4,12 @@ import UIKit
 final class TrackersScreenController: UIViewController {
 
     // MARK: - Properties and Initializers
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .darkContent
-    }
-
     private var viewModel: TrackersScreenViewModel?
+    private let analyticsService = AnalyticsService()
 
     private let uiCreator = UICreator.shared
 
-    private let noDataImage = UICreator.shared.makeImageView(withImage: K.ImageNames.noDataImage)
+    private let noDataImage = UICreator.shared.makeImageView(withImage: K.ImageNames.noDataYet)
     private let noDataLabel = UICreator.shared.makeLabel(
         text: "WHAT_TO_MONITOR".localized,
         font: UIFont.appFont(.medium, withSize: 12))
@@ -43,9 +40,14 @@ final class TrackersScreenController: UIViewController {
         return collectionView
     }()
     private let filterButton = UICreator.shared.makeButton(withTitle: "FILTERS".localized,
-                                                   font: UIFont.appFont(.regular, withSize: 17),
-                                                   backgroundColor: .ypBlue,
-                                                   action: #selector(filterButtonTapped))
+                                                           font: UIFont.appFont(.regular, withSize: 17),
+                                                           fontColor: .ypWhiteOnly,
+                                                           backgroundColor: .ypBlue,
+                                                           action: #selector(filterButtonTapped))
+
+    deinit {
+        viewModel = nil
+    }
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -62,6 +64,11 @@ final class TrackersScreenController: UIViewController {
         searchTextField.delegate = self
         collectionView.dataSource = self
         collectionView.delegate = self
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        analyticsService.report(event: K.AnalyticEventNames.open, params: ["screen": K.AnalyticScreenNames.trackers])
     }
 }
 
@@ -82,7 +89,9 @@ extension TrackersScreenController {
 
     @objc private func filterButtonTapped() {
         // TODO: - filters logic needed
-        print(#function)
+        analyticsService.report(event: K.AnalyticEventNames.click,
+                                params: ["screen": K.AnalyticScreenNames.trackers,
+                                         "item": K.AnalyticItemNames.filter])
     }
 
     private func setupAutolayout() {
@@ -144,6 +153,13 @@ extension TrackersScreenController {
     }
 
     private func hideCollectionView() {
+        if searchTextField.text != "" {
+            noDataImage.image = UIImage(named: K.ImageNames.noDataFound)
+            noDataLabel.text = "NOTHING_FOUND".localized
+        } else {
+            noDataImage.image = UIImage(named: K.ImageNames.noDataYet)
+            noDataLabel.text = "WHAT_TO_MONITOR".localized
+        }
         noDataImage.isHidden = false
         noDataLabel.isHidden = false
         collectionView.isHidden = true
@@ -161,8 +177,30 @@ extension TrackersScreenController {
         viewModel?.addNewTracker(data)
     }
 
+    func updateData(_ trackerCategory: TrackerCategory, counter: Int) {
+        viewModel?.updateTracker(trackerCategory, counter: counter)
+    }
+
     func updateCollectionView() {
         viewModel?.updateDataForUI()
+    }
+
+    func showDeletionAlert(for indexPath: IndexPath) {
+        let alertController = UIAlertController(title: "TRACKER_DELETION".localized,
+                                                message: nil,
+                                                preferredStyle: .actionSheet)
+        let deleteAction = UIAlertAction(title: "DELETE".localized,
+                                         style: .destructive
+        ) { [weak self] _ in
+            guard let self = self else { return }
+            self.viewModel?.deleteTracker(with: indexPath, withRecords: true)
+            self.collectionView.reloadData()
+            self.viewModel?.checkForData()
+        }
+        let cancelAction = UIAlertAction(title: "CANCEL".localized, style: .cancel)
+        alertController.addAction(deleteAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true)
     }
 }
 
@@ -266,10 +304,64 @@ extension TrackersScreenController: UICollectionViewDelegate {
                                                  forCollectionView: collectionView,
                                                  atIndexPath: indexPath) ?? UICollectionReusableView()
     }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        contextMenuConfigurationForItemAt indexPath: IndexPath,
+                        point: CGPoint
+    ) -> UIContextMenuConfiguration? {
+        let havePinned = viewModel?.havePinned() ?? false
+        let configuration = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+            var pinAction = UIAction(title: "PIN".localized) { [weak self] _ in
+                self?.proceedPinning(atIndexPath: indexPath, isPinned: false)
+            }
+            if havePinned,
+               indexPath.section == 0 {
+                pinAction = UIAction(title: "UNPIN".localized) { [weak self] _ in
+                    self?.proceedPinning(atIndexPath: indexPath, isPinned: true)
+                }
+            }
+
+            let editAction = UIAction(title: "EDIT".localized) { [weak self] _ in
+                self?.proceedEditingActions(delete: false, atIndexPath: indexPath)
+            }
+
+            let deleteAction = UIAction(title: "DELETE".localized, attributes: .destructive) { [weak self] _ in
+                self?.proceedEditingActions(delete: true, atIndexPath: indexPath)
+            }
+            return UIMenu(children: [pinAction, editAction, deleteAction])
+        }
+        return configuration
+    }
+
+    private func proceedPinning(atIndexPath indexPath: IndexPath, isPinned: Bool) {
+        if isPinned {
+            viewModel?.unpinTracker(with: indexPath)
+        } else {
+            viewModel?.pinTracker(with: indexPath)
+        }
+        let item = isPinned ? K.AnalyticItemNames.unpin : K.AnalyticItemNames.pin
+        analyticsService.report(event: K.AnalyticEventNames.click,
+                                params: ["screen": K.AnalyticScreenNames.trackers,
+                                         "item": item])
+    }
+
+    private func proceedEditingActions(delete isDeletion: Bool, atIndexPath indexPath: IndexPath) {
+        if isDeletion {
+            showDeletionAlert(for: indexPath)
+        } else {
+            guard let viewController = viewModel?.configureViewController(forSelectedItemAt: indexPath) else { return }
+            self.present(viewController, animated: true)
+        }
+        let item = isDeletion ? K.AnalyticItemNames.delete : K.AnalyticItemNames.edit
+        analyticsService.report(event: K.AnalyticEventNames.click,
+                                params: ["screen": K.AnalyticScreenNames.trackers,
+                                         "item": item])
+    }
 }
 
 // MARK: - DateReceiveDelegate
 extension TrackersScreenController: DateReceiveDelegate {
+
     func applyDate(_ date: Date) {
         viewModel?.updateCurrentDate(to: date)
         viewModel?.searchTracks()

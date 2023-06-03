@@ -9,7 +9,7 @@ final class OnboardingPageController: UIViewController {
     }
 
     private let backgroundImageView = UICreator.shared.makeImageView()
-    private let infoLabel = UICreator.shared.makeLabel(font: UIFont.appFont(.bold, withSize: 32))
+    private let infoLabel = UICreator.shared.makeLabel(font: UIFont.appFont(.bold, withSize: 32), color: .ypBlackOnly)
 
     convenience init(text: String, backgroundImage: UIImage) {
         self.init()
